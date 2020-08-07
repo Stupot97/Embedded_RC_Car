@@ -1,0 +1,245 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\main.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW7259.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\main.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\main.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\main.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\main.c
+      1          //------------------------------------------------------------------------------ 
+      2          // 
+      3          // Description: This file contains the Main Routine - "While" Operating System 
+      4          // 
+      5          // 
+      6          // Stuart D'Amico 
+      7          // Jan 31, 2018 
+      8          // Built with IAR Embedded Workbench Version: V4.10A/W32 (7.11.2) 
+      9          //------------------------------------------------------------------------------ 
+     10          //------------------------------------------------------------------------------ 
+     11          #include "msp430.h" 
+
+   \                                 In  segment DATA16_AN, at 0x262
+   \   union <unnamed> _A_PDOUT_L
+   \                     _A_PDOUT_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7d4
+   \   union <unnamed> _A_TA4CCR1_L
+   \                     _A_TA4CCR1_L:
+   \   000000                DS8 2
+     12          #include "functions.h" 
+     13          #include <string.h> 
+     14          #include "macros.h" 
+     15          
+     16          // Global Variables 
+     17           
+     18          extern volatile unsigned char display_changed; 
+     19          extern int ADC_Right_Detector; 
+     20          extern int ADC_Left_Detector; 
+     21          extern int ADC_Thumb;
+     22          extern volatile int B_Pressed; 
+     23          extern unsigned int counter; 
+     24          volatile extern unsigned int counter2;
+     25          extern unsigned int counter3;
+     26          extern unsigned int Baud_Select;
+     27          extern volatile char USB_Char_Rx0[SMALL_RING_SIZE];
+     28          extern volatile char USB_Char_Rx3[SMALL_RING_SIZE];
+     29          extern volatile unsigned int usb_rx_ring_wrUCA3;
+     30          extern volatile unsigned int Receive_Flag;
+     31          extern volatile unsigned int Sent_Flag;
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     32          volatile unsigned int usb_rx_ring_rUCA0;
+   \                     usb_rx_ring_rUCA0:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     33          volatile unsigned int usb_rx_ring_rUCA3;
+   \                     usb_rx_ring_rUCA3:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     34          unsigned int Counter_Snapshot2;
+   \                     Counter_Snapshot2:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     35          unsigned int Menu_Count;
+   \                     Menu_Count:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     36          unsigned int Menu_Level;
+   \                     Menu_Level:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     37          unsigned int Display_State;
+   \                     Display_State:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     38          unsigned int Receive_State;
+   \                     Receive_State:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     39          volatile unsigned int Navigating;
+   \                     Navigating:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     40          char Received_Array[SMALL_RING_SIZE];
+   \                     Received_Array:
+   \   000000                DS8 64
+     41          
+
+   \                                 In  segment CODE, align 2
+     42          void main(void){ 
+   \                     main:
+     43            //------------------------------------------------------------------------------ 
+     44            // Main Program 
+     45            // This is the main routine for the program. Execution of code starts here. 
+     46            // The operating system is Back Ground Fore Ground. 
+     47            // 
+     48            //------------------------------------------------------------------------------ 
+     49            Init_Ports(); // Initialize Ports  
+   \   000000   ........     CALLA   #Init_Ports
+     50            // Disable the GPIO power-on default high-impedance mode to activate 
+     51            // previously configured port settings
+     52            Init_Clocks(); // Initialize Clock System 
+   \   000004   ........     CALLA   #Init_Clocks
+     53            Init_Conditions(); // Initialize Variables and Initial Conditions
+   \   000008   ........     CALLA   #Init_Conditions
+     54            Init_ADC(); //Initialize ADC
+   \   00000C   ........     CALLA   #Init_ADC
+     55            Init_Timers(); // Initialize Timers
+   \   000010   ........     CALLA   #Init_Timers
+     56            Init_LCD(); // Initialize LCD
+   \   000014   ........     CALLA   #Init_LCD
+     57            Init_Serial_UCA0(BAUD_RATE_115200); //Initialize Serial Ports
+   \   000018   3C407300     MOV.W   #0x73, R12
+   \   00001C   ........     CALLA   #Init_Serial_UCA0
+     58            Init_Serial_UCA3(BAUD_RATE_115200);
+   \   000020   3C407300     MOV.W   #0x73, R12
+   \   000024   ........     CALLA   #Init_Serial_UCA3
+     59            Init_LEDs();
+   \   000028   ........     CALLA   #Init_LEDs
+     60            //------------------------------------------------------------------------------ // Begining of the "While" Operating System 
+     61            //------------------------------------------------------------------------------ 
+     62            while(ALWAYS){ // Can the Operating system run
+     63                switch(Menu_Level){
+   \                     ??main_0:
+   \   00002C   1F42....     MOV.W   &Menu_Level, R15
+   \   000030   2F82         SUB.W   #0x4, R15
+   \   000032   0624         JEQ     ??main_3
+   \   000034   2F82         SUB.W   #0x4, R15
+   \   000036   0A20         JNE     ??main_2
+     64                  case BACKLIGHT_MENU:
+     65                     BACKLIGHT_ON=ADC_Thumb;
+   \   000038   9242....D407 MOV.W   &ADC_Thumb, &0x7d4
+     66                     break;
+   \   00003E   063C         JMP     ??main_2
+     67                  case NAVIGATION_MENU:
+     68                    P8OUT|=IR_LED;
+   \                     ??main_3:
+   \   000040   D2D36302     BIS.B   #0x1, &0x263
+     69                    Navigating=TRUE;
+   \   000044   9243....     MOV.W   #0x1, &Navigating
+     70                    navigate();
+   \   000048   ........     CALLA   #navigate
+     71                    break;
+     72                }
+     73                if(Menu_Level!=NAVIGATION_MENU){
+   \                     ??main_2:
+   \   00004C   A292....     CMP.W   #0x4, &Menu_Level
+   \   000050   ED27         JEQ     ??main_0
+     74                  Navigating=FALSE;
+   \   000052   8243....     MOV.W   #0x0, &Navigating
+   \   000056   EA3F         JMP     ??main_0
+   \   000058   0343         NOP
+   \   00005A                REQUIRE _A_TA4CCR1_L
+   \   00005A                REQUIRE _A_PDOUT_L
+     75                }
+     76            } 
+     77          } //------------------------------------------------------------------------------
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   main
+        4   -> Init_ADC
+        4   -> Init_Clocks
+        4   -> Init_Conditions
+        4   -> Init_LCD
+        4   -> Init_LEDs
+        4   -> Init_Ports
+        4   -> Init_Serial_UCA0
+        4   -> Init_Serial_UCA3
+        4   -> Init_Timers
+        4   -> navigate
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       2  Counter_Snapshot2
+       2  Display_State
+       2  Menu_Count
+       2  Menu_Level
+       2  Navigating
+       2  Receive_State
+      64  Received_Array
+       2  _A_PDOUT_L
+       2  _A_TA4CCR1_L
+      90  main
+       2  usb_rx_ring_rUCA0
+       2  usb_rx_ring_rUCA3
+
+ 
+ 90 bytes in segment CODE
+  4 bytes in segment DATA16_AN
+ 80 bytes in segment DATA16_Z
+ 
+ 90 bytes of CODE memory
+ 80 bytes of DATA memory (+ 4 bytes shared)
+
+Errors: none
+Warnings: none

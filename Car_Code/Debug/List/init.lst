@@ -1,0 +1,120 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\init.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW704F.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\init.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\init.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\init.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\init.c
+      1          #include  "msp430.h"
+      2          #include  "functions.h"
+      3          #include <string.h>
+      4          #include "macros.h"
+      5          
+      6          extern char display_line[ARRAY4][ARRAY11];
+      7          extern char *display[ARRAY4];
+      8          extern volatile unsigned char update_display;
+      9          extern volatile unsigned int update_display_count;
+     10          
+
+   \                                 In  segment CODE, align 2
+     11          void Init_Conditions(void){
+   \                     Init_Conditions:
+   \   000000   0A12         PUSH.W  R10
+     12          //------------------------------------------------------------------------------
+     13            int i;
+     14          
+     15            for(i=ARRAY0;i<ARRAY11;i++){
+   \   000002   0A43         MOV.W   #0x0, R10
+   \                     ??Init_Conditions_0:
+   \   000004   3A900B00     CMP.W   #0xb, R10
+   \   000008   0A34         JGE     ??Init_Conditions_1
+     16              display_line[ARRAY0][i] = RESET_STATE;
+   \   00000A   CA43....     MOV.B   #0x0, display_line(R10)
+     17              display_line[ARRAY1][i] = RESET_STATE;
+   \   00000E   CA43....     MOV.B   #0x0, display_line + 11(R10)
+     18              display_line[ARRAY2][i] = RESET_STATE;
+   \   000012   CA43....     MOV.B   #0x0, display_line + 22(R10)
+     19              display_line[ARRAY3][i] = RESET_STATE;
+   \   000016   CA43....     MOV.B   #0x0, display_line + 33(R10)
+     20            }
+   \   00001A   1A53         ADD.W   #0x1, R10
+   \   00001C   F33F         JMP     ??Init_Conditions_0
+     21            display_line[ARRAY0][ARRAY10] = RESET_STATE;
+   \                     ??Init_Conditions_1:
+   \   00001E   C243....     MOV.B   #0x0, &display_line + 10
+     22            display_line[ARRAY1][ARRAY10] = RESET_STATE;
+   \   000022   C243....     MOV.B   #0x0, &display_line + 21
+     23            display_line[ARRAY2][ARRAY10] = RESET_STATE;
+   \   000026   C243....     MOV.B   #0x0, &display_line + 32
+     24            display_line[ARRAY3][ARRAY10] = RESET_STATE;
+   \   00002A   C243....     MOV.B   #0x0, &display_line + 43
+     25          
+     26            display[ARRAY0] = &display_line[ARRAY0][ARRAY0];
+   \   00002E   B240........ MOV.W   #display_line, &display
+     27            display[ARRAY1] = &display_line[ARRAY1][ARRAY0];
+   \   000034   B240........ MOV.W   #display_line + 11, &display + 2
+     28            display[ARRAY2] = &display_line[ARRAY2][ARRAY0];
+   \   00003A   B240........ MOV.W   #display_line + 22, &display + 4
+     29            display[ARRAY3] = &display_line[ARRAY3][ARRAY0];
+   \   000040   B240........ MOV.W   #display_line + 33, &display + 6
+     30            update_display = FALSE;
+   \   000046   C243....     MOV.B   #0x0, &update_display
+     31            update_display_count = FALSE;
+   \   00004A   8243....     MOV.W   #0x0, &update_display_count
+     32          
+     33          // Interrupts are disabled by default, enable them.
+     34            enable_interrupts();
+   \   00004E   ........     CALLA   #enable_interrupts
+     35          //------------------------------------------------------------------------------
+     36          }
+   \   000052   3A41         POP.W   R10
+   \   000054   1001         RETA
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      6   Init_Conditions
+        6   -> enable_interrupts
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      86  Init_Conditions
+
+ 
+ 86 bytes in segment CODE
+ 
+ 86 bytes of CODE memory
+
+Errors: none
+Warnings: none

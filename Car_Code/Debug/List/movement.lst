@@ -1,0 +1,195 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\movement.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW7279.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\movement.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\movement.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\movement.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\movement.c
+      1          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x3d8
+   \   union <unnamed> _A_TB0CCR3_L
+   \                     _A_TB0CCR3_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3da
+   \   union <unnamed> _A_TB0CCR4_L
+   \                     _A_TB0CCR4_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3dc
+   \   union <unnamed> _A_TB0CCR5_L
+   \                     _A_TB0CCR5_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3de
+   \   union <unnamed> _A_TB0CCR6_L
+   \                     _A_TB0CCR6_L:
+   \   000000                DS8 2
+      2          #include "functions.h"
+      3          #include <string.h>
+      4          #include "macros.h"
+      5          
+      6          extern unsigned int counter;
+      7          extern unsigned int Counter_Snapshot2;
+      8          extern unsigned int counter3;
+      9          extern unsigned int First_Time2;
+     10          extern char display_line[ARRAY4][ARRAY11];
+     11          
+     12          
+
+   \                                 In  segment CODE, align 2
+     13          void wheels_off(void){
+   \                     wheels_off:
+     14            LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \   000000   8243DA03     MOV.W   #0x0, &0x3da
+     15            RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   000004   8243DE03     MOV.W   #0x0, &0x3de
+     16            LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   000008   8243D803     MOV.W   #0x0, &0x3d8
+     17            RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   00000C   8243DC03     MOV.W   #0x0, &0x3dc
+     18          }
+   \   000010   1001         RETA
+   \   000012                REQUIRE _A_TB0CCR4_L
+   \   000012                REQUIRE _A_TB0CCR6_L
+   \   000012                REQUIRE _A_TB0CCR3_L
+   \   000012                REQUIRE _A_TB0CCR5_L
+     19          
+
+   \                                 In  segment CODE, align 2
+     20          void left(void){
+   \                     left:
+     21            LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \   000000   8243DA03     MOV.W   #0x0, &0x3da
+     22            RIGHT_FORWARD_SPEED=WHEEL_PERIOD;
+   \   000004   B240409CDE03 MOV.W   #0x9c40, &0x3de
+     23            LEFT_REVERSE_SPEED=WHEEL_PERIOD;
+   \   00000A   B240409CD803 MOV.W   #0x9c40, &0x3d8
+     24            RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   000010   8243DC03     MOV.W   #0x0, &0x3dc
+     25          }
+   \   000014   1001         RETA
+   \   000016                REQUIRE _A_TB0CCR4_L
+   \   000016                REQUIRE _A_TB0CCR6_L
+   \   000016                REQUIRE _A_TB0CCR3_L
+   \   000016                REQUIRE _A_TB0CCR5_L
+     26          
+
+   \                                 In  segment CODE, align 2
+     27          void right(void){
+   \                     right:
+     28            LEFT_FORWARD_SPEED=WHEEL_PERIOD;
+   \   000000   B240409CDA03 MOV.W   #0x9c40, &0x3da
+     29            RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   000006   8243DE03     MOV.W   #0x0, &0x3de
+     30            LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   00000A   8243D803     MOV.W   #0x0, &0x3d8
+     31            RIGHT_REVERSE_SPEED=WHEEL_PERIOD;
+   \   00000E   B240409CDC03 MOV.W   #0x9c40, &0x3dc
+     32          }
+   \   000014   1001         RETA
+   \   000016                REQUIRE _A_TB0CCR4_L
+   \   000016                REQUIRE _A_TB0CCR6_L
+   \   000016                REQUIRE _A_TB0CCR3_L
+   \   000016                REQUIRE _A_TB0CCR5_L
+     33          
+
+   \                                 In  segment CODE, align 2
+     34          void forward(void){
+   \                     forward:
+     35            LEFT_FORWARD_SPEED=WHEEL_PERIOD;
+   \   000000   B240409CDA03 MOV.W   #0x9c40, &0x3da
+     36            RIGHT_FORWARD_SPEED=WHEEL_PERIOD;
+   \   000006   B240409CDE03 MOV.W   #0x9c40, &0x3de
+     37            LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   00000C   8243D803     MOV.W   #0x0, &0x3d8
+     38            RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   000010   8243DC03     MOV.W   #0x0, &0x3dc
+     39          }
+   \   000014   1001         RETA
+   \   000016                REQUIRE _A_TB0CCR4_L
+   \   000016                REQUIRE _A_TB0CCR6_L
+   \   000016                REQUIRE _A_TB0CCR3_L
+   \   000016                REQUIRE _A_TB0CCR5_L
+     40          
+
+   \                                 In  segment CODE, align 2
+     41          void reverse(void){
+   \                     reverse:
+     42            LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \   000000   8243DA03     MOV.W   #0x0, &0x3da
+     43            RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   000004   8243DE03     MOV.W   #0x0, &0x3de
+     44            LEFT_REVERSE_SPEED=WHEEL_PERIOD;
+   \   000008   B240409CD803 MOV.W   #0x9c40, &0x3d8
+     45            RIGHT_REVERSE_SPEED=WHEEL_PERIOD;
+   \   00000E   B240409CDC03 MOV.W   #0x9c40, &0x3dc
+     46          }
+   \   000014   1001         RETA
+   \   000016                REQUIRE _A_TB0CCR4_L
+   \   000016                REQUIRE _A_TB0CCR6_L
+   \   000016                REQUIRE _A_TB0CCR3_L
+   \   000016                REQUIRE _A_TB0CCR5_L
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   forward
+      4   left
+      4   reverse
+      4   right
+      4   wheels_off
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       2  _A_TB0CCR3_L
+       2  _A_TB0CCR4_L
+       2  _A_TB0CCR5_L
+       2  _A_TB0CCR6_L
+      22  forward
+      22  left
+      22  reverse
+      22  right
+      18  wheels_off
+
+ 
+ 106 bytes in segment CODE
+   8 bytes in segment DATA16_AN
+ 
+ 106 bytes of CODE memory
+   0 bytes of DATA memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,1127 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  21:40:03
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_timers.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW33E7.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_timers.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\List\interrupts_timers.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\Obj\interrupts_timers.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_timers.c
+      1          
+      2          #include "macros.h"
+      3          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x222
+   \   union <unnamed> _A_PBOUT_L
+   \                     _A_PBOUT_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x23a
+   \   union <unnamed> _A_PBIE_L
+   \                     _A_PBIE_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x23c
+   \   union <unnamed> _A_PBIFG_L
+   \                     _A_PBIFG_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x25a
+   \   union <unnamed> _A_PCIE_L
+   \                     _A_PCIE_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x25c
+   \   union <unnamed> _A_PCIFG_L
+   \                     _A_PCIFG_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x262
+   \   union <unnamed> _A_PDOUT_L
+   \                     _A_PDOUT_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x342
+   \   union <unnamed> _A_TA0CCTL0_L
+   \                     _A_TA0CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x352
+   \   union <unnamed> _A_TA0CCR0_L
+   \                     _A_TA0CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x382
+   \   union <unnamed> _A_TA1CCTL0_L
+   \                     _A_TA1CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x392
+   \   union <unnamed> _A_TA1CCR0_L
+   \                     _A_TA1CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x412
+   \   union <unnamed> _A_TA2CCR0_L
+   \                     _A_TA2CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x442
+   \   union <unnamed> _A_TA3CCTL0_L
+   \                     _A_TA3CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x452
+   \   union <unnamed> _A_TA3CCR0_L
+   \                     _A_TA3CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3da
+   \   union <unnamed> _A_TB0CCR4_L
+   \                     _A_TB0CCR4_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3de
+   \   union <unnamed> _A_TB0CCR6_L
+   \                     _A_TB0CCR6_L:
+   \   000000                DS8 2
+      4          #include "functions.h"
+      5          #include <string.h>
+      6          
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          unsigned int counter;
+   \                     counter:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      8          unsigned volatile int counter2;
+   \                     counter2:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      9          unsigned int counter3;
+   \                     counter3:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     10          volatile unsigned int Reset_Count;
+   \                     Reset_Count:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     11          volatile unsigned int Exiting_Count;
+   \                     Exiting_Count:
+   \   000000                DS8 2
+     12          volatile extern unsigned int IOT_Reset;
+     13          extern unsigned int Menu_Count;
+     14          extern unsigned int Menu_Level;
+     15          extern unsigned int Baud_Select;
+     16          extern unsigned int Display_State;
+     17          extern unsigned int Receive_State;
+     18          extern int ADC_Right_Detector; 
+     19          extern int ADC_Left_Detector; 
+     20          extern int ADC_Thumb;
+     21          extern char string[ARRAY11]; 
+     22          extern char string2[ARRAY11]; 
+     23          extern char Command[ARRAY11];
+
+   \                                 In  segment DATA16_I, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     24          char Time_String[ARRAY11]="TIME:0000s";
+   \                     Time_String:
+   \   000000                DS8 11
+   \   00000B                REQUIRE `?<Initializer for Time_String>`
+     25          extern unsigned int Movement_Count;
+     26          extern unsigned int Left_Flag;
+     27          extern unsigned int Right_Flag;
+     28          extern char display_line[ARRAY4][ARRAY11]; 
+     29          extern volatile unsigned char update_display; 
+     30          extern volatile unsigned char display_changed;
+     31          extern volatile unsigned int IOT_Direction;
+     32          extern char Received_Array[SMALL_RING_SIZE];
+     33          extern char Ping[ARRAY25];
+     34          extern char IP_Addr1[ARRAY11];
+     35          extern char IP_Addr2[ARRAY11];
+     36          extern volatile unsigned int IP_Received;
+     37          extern volatile unsigned int Exiting;
+     38          extern volatile unsigned int Input_Received;
+     39          
+     40          
+     41          //display timer
+     42          #pragma vector = TIMER0_A0_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+     43          __interrupt void Timer0_A0_ISR(void){//T0 interrupt every 50 ms
+   \                     Timer0_A0_ISR:
+   \   000000   3F15         PUSHM.W #0x4, R15
+     44          //------------------------------------------------------------------------------
+     45          // TimerA0 0 Interrupt handler
+     46          //----------------------------------------------------------------------------
+     47          ++counter;
+   \   000002   9253....     ADD.W   #0x1, &counter
+     48          
+     49          if(Input_Received && (counter%FullSec==RESET_STATE)){//timer on display 
+   \   000006   8293....     CMP.W   #0x0, &Input_Received
+   \   00000A   3024         JEQ     ??Timer0_A0_ISR_3
+   \   00000C   3E401400     MOV.W   #0x14, R14
+   \   000010   1C42....     MOV.W   &counter, R12
+   \   000014   ........     CALLA   #?DivMod16u
+   \   000018   0E93         CMP.W   #0x0, R14
+   \   00001A   2820         JNE     ??Timer0_A0_ISR_3
+     50            if(Time_String[ARRAY8]!='9'){
+   \   00001C   F2903900.... CMP.B   #0x39, &Time_String + 8
+   \   000022   0324         JEQ     ??Timer0_A0_ISR_7
+     51              ++Time_String[ARRAY8];
+   \   000024   D253....     ADD.B   #0x1, &Time_String + 8
+   \   000028   213C         JMP     ??Timer0_A0_ISR_3
+     52            }
+     53            else{
+     54              Time_String[ARRAY8]='0';
+   \                     ??Timer0_A0_ISR_7:
+   \   00002A   F2403000.... MOV.B   #0x30, &Time_String + 8
+     55              if(Time_String[ARRAY7]!='9'){
+   \   000030   F2903900.... CMP.B   #0x39, &Time_String + 7
+   \   000036   0324         JEQ     ??Timer0_A0_ISR_8
+     56                ++Time_String[ARRAY7];
+   \   000038   D253....     ADD.B   #0x1, &Time_String + 7
+   \   00003C   173C         JMP     ??Timer0_A0_ISR_3
+     57              }
+     58              else{
+     59                Time_String[ARRAY7]='0';
+   \                     ??Timer0_A0_ISR_8:
+   \   00003E   F2403000.... MOV.B   #0x30, &Time_String + 7
+     60                if(Time_String[ARRAY6]!='9'){
+   \   000044   F2903900.... CMP.B   #0x39, &Time_String + 6
+   \   00004A   0324         JEQ     ??Timer0_A0_ISR_9
+     61                  ++Time_String[ARRAY6];
+   \   00004C   D253....     ADD.B   #0x1, &Time_String + 6
+   \   000050   0D3C         JMP     ??Timer0_A0_ISR_3
+     62                }
+     63                else{
+     64                  Time_String[ARRAY6]='0';
+   \                     ??Timer0_A0_ISR_9:
+   \   000052   F2403000.... MOV.B   #0x30, &Time_String + 6
+     65                  if(Time_String[ARRAY5]!='9'){
+   \   000058   F2903900.... CMP.B   #0x39, &Time_String + 5
+   \   00005E   0324         JEQ     ??Timer0_A0_ISR_10
+     66                    ++Time_String[ARRAY5];
+   \   000060   D253....     ADD.B   #0x1, &Time_String + 5
+   \   000064   033C         JMP     ??Timer0_A0_ISR_3
+     67                  }
+     68                  else
+     69                    Time_String[ARRAY5]='9';
+   \                     ??Timer0_A0_ISR_10:
+   \   000066   F2403900.... MOV.B   #0x39, &Time_String + 5
+     70                }
+     71              }
+     72            }
+     73          }
+     74          if(!Input_Received){
+   \                     ??Timer0_A0_ISR_3:
+   \   00006C   8293....     CMP.W   #0x0, &Input_Received
+   \   000070   0A20         JNE     ??Timer0_A0_ISR_11
+     75            Time_String[ARRAY5]=Time_String[ARRAY6]=Time_String[ARRAY7]=Time_String[ARRAY8]='0';
+   \   000072   7E403000     MOV.B   #0x30, R14
+   \   000076   C24E....     MOV.B   R14, &Time_String + 8
+   \   00007A   C24E....     MOV.B   R14, &Time_String + 7
+   \   00007E   C24E....     MOV.B   R14, &Time_String + 6
+   \   000082   C24E....     MOV.B   R14, &Time_String + 5
+     76          }
+     77          
+     78          if(counter%FifthSec==RESET_STATE){//every 200 ms
+   \                     ??Timer0_A0_ISR_11:
+   \   000086   F2B00300.... BIT.B   #0x3, &counter
+   \   00008C   9121         JNE     ??Timer0_A0_ISR_12
+     79                convert(ADC_Left_Detector,ADC_Right_Detector,ADC_Thumb);
+   \   00008E   1E42....     MOV.W   &ADC_Thumb, R14
+   \   000092   1D42....     MOV.W   &ADC_Right_Detector, R13
+   \   000096   1C42....     MOV.W   &ADC_Left_Detector, R12
+   \   00009A   ........     CALLA   #convert
+     80                switch(Menu_Level){
+   \   00009E   1F42....     MOV.W   &Menu_Level, R15
+   \   0000A2   0F83         SUB.W   #0x0, R15
+   \   0000A4   0C24         JEQ     ??Timer0_A0_ISR_13
+   \   0000A6   2F83         SUB.W   #0x2, R15
+   \   0000A8   C224         JEQ     ??Timer0_A0_ISR_14
+   \   0000AA   1F83         SUB.W   #0x1, R15
+   \   0000AC   1025         JEQ     ??Timer0_A0_ISR_15
+   \   0000AE   1F83         SUB.W   #0x1, R15
+   \   0000B0   4925         JEQ     ??Timer0_A0_ISR_16
+   \   0000B2   3F800300     SUB.W   #0x3, R15
+   \   0000B6   7F24         JEQ     ??Timer0_A0_ISR_17
+   \   0000B8   1F83         SUB.W   #0x1, R15
+   \   0000BA   A024         JEQ     ??Timer0_A0_ISR_18
+   \   0000BC   5E3D         JMP     ??Timer0_A0_ISR_0
+     81                 case START_MENU:
+     82                  if((ADC_Thumb%ITEM3)<=ITEM1){
+   \                     ??Timer0_A0_ISR_13:
+   \   0000BE   3E400006     MOV.W   #0x600, R14
+   \   0000C2   1C42....     MOV.W   &ADC_Thumb, R12
+   \   0000C6   ........     CALLA   #?DivMod16s
+   \   0000CA   3E900102     CMP.W   #0x201, R14
+   \   0000CE   0234         JGE     ??Timer0_A0_ISR_19
+     83                      Menu_Count=SEL1;
+   \   0000D0   8243....     MOV.W   #0x0, &Menu_Count
+     84                    }
+     85                  if(((ADC_Thumb%ITEM3)>ITEM1)&&((ADC_Thumb%ITEM3)<=ITEM2)){
+   \                     ??Timer0_A0_ISR_19:
+   \   0000D4   3E400006     MOV.W   #0x600, R14
+   \   0000D8   1C42....     MOV.W   &ADC_Thumb, R12
+   \   0000DC   ........     CALLA   #?DivMod16s
+   \   0000E0   3E900102     CMP.W   #0x201, R14
+   \   0000E4   0B38         JL      ??Timer0_A0_ISR_20
+   \   0000E6   3E400006     MOV.W   #0x600, R14
+   \   0000EA   1C42....     MOV.W   &ADC_Thumb, R12
+   \   0000EE   ........     CALLA   #?DivMod16s
+   \   0000F2   3E900104     CMP.W   #0x401, R14
+   \   0000F6   0234         JGE     ??Timer0_A0_ISR_20
+     86                      Menu_Count=SEL2;
+   \   0000F8   9243....     MOV.W   #0x1, &Menu_Count
+     87                    }
+     88                   if(((ADC_Thumb%ITEM3)>ITEM2)){
+   \                     ??Timer0_A0_ISR_20:
+   \   0000FC   3E400006     MOV.W   #0x600, R14
+   \   000100   1C42....     MOV.W   &ADC_Thumb, R12
+   \   000104   ........     CALLA   #?DivMod16s
+   \   000108   3E900104     CMP.W   #0x401, R14
+   \   00010C   0238         JL      ??Timer0_A0_ISR_21
+     89                      Menu_Count=SEL3;
+   \   00010E   A243....     MOV.W   #0x2, &Menu_Count
+     90                    }
+     91                  switch(Menu_Count){ 
+   \                     ??Timer0_A0_ISR_21:
+   \   000112   1F42....     MOV.W   &Menu_Count, R15
+   \   000116   0F83         SUB.W   #0x0, R15
+   \   000118   0524         JEQ     ??Timer0_A0_ISR_22
+   \   00011A   1F83         SUB.W   #0x1, R15
+   \   00011C   1624         JEQ     ??Timer0_A0_ISR_23
+   \   00011E   1F83         SUB.W   #0x1, R15
+   \   000120   2724         JEQ     ??Timer0_A0_ISR_24
+   \   000122   383C         JMP     ??Timer0_A0_ISR_4
+     92                    case LINE: 
+     93                      strcpy(display_line[ARRAY0], ">LINE     ");
+   \                     ??Timer0_A0_ISR_22:
+   \   000124   3D40....     MOV.W   #`?<Constant ">LINE     ">`, R13
+   \   000128   3C40....     MOV.W   #display_line, R12
+   \   00012C   ........     CALLA   #strcpy
+     94                      strcpy(display_line[ARRAY1], " IOT      ");
+   \   000130   3D40....     MOV.W   #`?<Constant " IOT      ">`, R13
+   \   000134   3C40....     MOV.W   #display_line + 11, R12
+   \   000138   ........     CALLA   #strcpy
+     95                      strcpy(display_line[ARRAY2], " BRIGHT   ");
+   \   00013C   3D40....     MOV.W   #`?<Constant " BRIGHT   ">`, R13
+   \   000140   3C40....     MOV.W   #display_line + 22, R12
+   \   000144   ........     CALLA   #strcpy
+     96                      break; 
+   \   000148   253C         JMP     ??Timer0_A0_ISR_4
+     97                    case BAUDMODE:
+     98                      strcpy(display_line[ARRAY0], " LINE     ");
+   \                     ??Timer0_A0_ISR_23:
+   \   00014A   3D40....     MOV.W   #`?<Constant " LINE     ">`, R13
+   \   00014E   3C40....     MOV.W   #display_line, R12
+   \   000152   ........     CALLA   #strcpy
+     99                      strcpy(display_line[ARRAY1], ">IOT      ");
+   \   000156   3D40....     MOV.W   #`?<Constant ">IOT      ">`, R13
+   \   00015A   3C40....     MOV.W   #display_line + 11, R12
+   \   00015E   ........     CALLA   #strcpy
+    100                      strcpy(display_line[ARRAY2], " BRIGHT   ");
+   \   000162   3D40....     MOV.W   #`?<Constant " BRIGHT   ">`, R13
+   \   000166   3C40....     MOV.W   #display_line + 22, R12
+   \   00016A   ........     CALLA   #strcpy
+    101                      break;
+   \   00016E   123C         JMP     ??Timer0_A0_ISR_4
+    102                    case LIGHTMODE:
+    103                      strcpy(display_line[ARRAY0], " LINE     ");
+   \                     ??Timer0_A0_ISR_24:
+   \   000170   3D40....     MOV.W   #`?<Constant " LINE     ">`, R13
+   \   000174   3C40....     MOV.W   #display_line, R12
+   \   000178   ........     CALLA   #strcpy
+    104                      strcpy(display_line[ARRAY1], " IOT      ");
+   \   00017C   3D40....     MOV.W   #`?<Constant " IOT      ">`, R13
+   \   000180   3C40....     MOV.W   #display_line + 11, R12
+   \   000184   ........     CALLA   #strcpy
+    105                      strcpy(display_line[ARRAY2], ">BRIGHT   ");
+   \   000188   3D40....     MOV.W   #`?<Constant ">BRIGHT   ">`, R13
+   \   00018C   3C40....     MOV.W   #display_line + 22, R12
+   \   000190   ........     CALLA   #strcpy
+    106                    break;
+    107                  }
+    108                  if(IP_Received){
+   \                     ??Timer0_A0_ISR_4:
+   \   000194   8293....     CMP.W   #0x0, &IP_Received
+   \   000198   0724         JEQ     ??Timer0_A0_ISR_25
+    109                    strcpy(display_line[ARRAY3], " CONNECTED");
+   \   00019A   3D40....     MOV.W   #`?<Constant " CONNECTED">`, R13
+   \   00019E   3C40....     MOV.W   #display_line + 33, R12
+   \   0001A2   ........     CALLA   #strcpy
+   \   0001A6   E93C         JMP     ??Timer0_A0_ISR_0
+    110                  }
+    111                  else
+    112                    strcpy(display_line[ARRAY3], "          ");
+   \                     ??Timer0_A0_ISR_25:
+   \   0001A8   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   0001AC   3C40....     MOV.W   #display_line + 33, R12
+   \   0001B0   ........     CALLA   #strcpy
+    113                  break;
+   \   0001B4   E23C         JMP     ??Timer0_A0_ISR_0
+    114                case RECEIVE_MENU:
+    115                  if(!Input_Received){
+   \                     ??Timer0_A0_ISR_17:
+   \   0001B6   8293....     CMP.W   #0x0, &Input_Received
+   \   0001BA   0D20         JNE     ??Timer0_A0_ISR_26
+    116                    strcpy(display_line[ARRAY0]," WAITING  ");
+   \   0001BC   3D40....     MOV.W   #`?<Constant " WAITING  ">`, R13
+   \   0001C0   3C40....     MOV.W   #display_line, R12
+   \   0001C4   ........     CALLA   #strcpy
+    117                    strcpy(display_line[ARRAY1]," FOR INPUT");
+   \   0001C8   3D40....     MOV.W   #`?<Constant " FOR INPUT">`, R13
+   \   0001CC   3C40....     MOV.W   #display_line + 11, R12
+   \   0001D0   ........     CALLA   #strcpy
+   \   0001D4   063C         JMP     ??Timer0_A0_ISR_5
+    118                  }
+    119                  else{
+    120                    strcpy(display_line[ARRAY1],Time_String);
+   \                     ??Timer0_A0_ISR_26:
+   \   0001D6   3D40....     MOV.W   #Time_String, R13
+   \   0001DA   3C40....     MOV.W   #display_line + 11, R12
+   \   0001DE   ........     CALLA   #strcpy
+    121                  }
+    122                  strcpy(display_line[ARRAY2], IP_Addr1);
+   \                     ??Timer0_A0_ISR_5:
+   \   0001E2   3D40....     MOV.W   #IP_Addr1, R13
+   \   0001E6   3C40....     MOV.W   #display_line + 22, R12
+   \   0001EA   ........     CALLA   #strcpy
+    123                  strcpy(display_line[ARRAY3], IP_Addr2);
+   \   0001EE   3D40....     MOV.W   #IP_Addr2, R13
+   \   0001F2   3C40....     MOV.W   #display_line + 33, R12
+   \   0001F6   ........     CALLA   #strcpy
+    124                  break;
+   \   0001FA   BF3C         JMP     ??Timer0_A0_ISR_0
+    125                case BACKLIGHT_MENU:
+    126                   strcpy(display_line[ARRAY0]," USE KNOB ");
+   \                     ??Timer0_A0_ISR_18:
+   \   0001FC   3D40....     MOV.W   #`?<Constant " USE KNOB ">`, R13
+   \   000200   3C40....     MOV.W   #display_line, R12
+   \   000204   ........     CALLA   #strcpy
+    127                   strcpy(display_line[ARRAY1],"  ADJUST  ");
+   \   000208   3D40....     MOV.W   #`?<Constant "  ADJUST  ">`, R13
+   \   00020C   3C40....     MOV.W   #display_line + 11, R12
+   \   000210   ........     CALLA   #strcpy
+    128                   strcpy(display_line[ARRAY2],"<<      >>");
+   \   000214   3D40....     MOV.W   #`?<Constant "<<      >>">`, R13
+   \   000218   3C40....     MOV.W   #display_line + 22, R12
+   \   00021C   ........     CALLA   #strcpy
+    129                   strcpy(display_line[ARRAY3],"BRIGHT DIM");
+   \   000220   3D40....     MOV.W   #`?<Constant "BRIGHT DIM">`, R13
+   \   000224   3C40....     MOV.W   #display_line + 33, R12
+   \   000228   ........     CALLA   #strcpy
+    130                  break;
+   \   00022C   A63C         JMP     ??Timer0_A0_ISR_0
+    131                case LINE_MENU:
+    132                  if((ADC_Thumb%ITEM2)<=ITEM1){
+   \                     ??Timer0_A0_ISR_14:
+   \   00022E   3E400004     MOV.W   #0x400, R14
+   \   000232   1C42....     MOV.W   &ADC_Thumb, R12
+   \   000236   ........     CALLA   #?DivMod16s
+   \   00023A   3E900102     CMP.W   #0x201, R14
+   \   00023E   0234         JGE     ??Timer0_A0_ISR_27
+    133                      Menu_Count=SEL1;
+   \   000240   8243....     MOV.W   #0x0, &Menu_Count
+    134                    }
+    135                  if(((ADC_Thumb%ITEM2)>ITEM1)&&((ADC_Thumb%ITEM2)<=ITEM2)){
+   \                     ??Timer0_A0_ISR_27:
+   \   000244   3E400004     MOV.W   #0x400, R14
+   \   000248   1C42....     MOV.W   &ADC_Thumb, R12
+   \   00024C   ........     CALLA   #?DivMod16s
+   \   000250   3E900102     CMP.W   #0x201, R14
+   \   000254   0B38         JL      ??Timer0_A0_ISR_28
+   \   000256   3E400004     MOV.W   #0x400, R14
+   \   00025A   1C42....     MOV.W   &ADC_Thumb, R12
+   \   00025E   ........     CALLA   #?DivMod16s
+   \   000262   3E900104     CMP.W   #0x401, R14
+   \   000266   0234         JGE     ??Timer0_A0_ISR_28
+    136                      Menu_Count=SEL2;
+   \   000268   9243....     MOV.W   #0x1, &Menu_Count
+    137                    }
+    138                   LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \                     ??Timer0_A0_ISR_28:
+   \   00026C   8243DA03     MOV.W   #0x0, &0x3da
+    139                   RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   000270   8243DE03     MOV.W   #0x0, &0x3de
+    140                  switch(Menu_Count){ 
+   \   000274   1F42....     MOV.W   &Menu_Count, R15
+   \   000278   0F83         SUB.W   #0x0, R15
+   \   00027A   0324         JEQ     ??Timer0_A0_ISR_29
+   \   00027C   1F83         SUB.W   #0x1, R15
+   \   00027E   0E24         JEQ     ??Timer0_A0_ISR_30
+   \   000280   193C         JMP     ??Timer0_A0_ISR_6
+    141                    case CALMODE: 
+    142                      strcpy(display_line[ARRAY0], ">CAL MODE "); 
+   \                     ??Timer0_A0_ISR_29:
+   \   000282   3D40....     MOV.W   #`?<Constant ">CAL MODE ">`, R13
+   \   000286   3C40....     MOV.W   #display_line, R12
+   \   00028A   ........     CALLA   #strcpy
+    143                      strcpy(display_line[ARRAY1], " NAV MODE ");   
+   \   00028E   3D40....     MOV.W   #`?<Constant " NAV MODE ">`, R13
+   \   000292   3C40....     MOV.W   #display_line + 11, R12
+   \   000296   ........     CALLA   #strcpy
+    144                    break;
+   \   00029A   0C3C         JMP     ??Timer0_A0_ISR_6
+    145                    case NAVMODE: 
+    146                      strcpy(display_line[ARRAY0], " CAL MODE "); 
+   \                     ??Timer0_A0_ISR_30:
+   \   00029C   3D40....     MOV.W   #`?<Constant " CAL MODE ">`, R13
+   \   0002A0   3C40....     MOV.W   #display_line, R12
+   \   0002A4   ........     CALLA   #strcpy
+    147                      strcpy(display_line[ARRAY1], ">NAV MODE ");  
+   \   0002A8   3D40....     MOV.W   #`?<Constant ">NAV MODE ">`, R13
+   \   0002AC   3C40....     MOV.W   #display_line + 11, R12
+   \   0002B0   ........     CALLA   #strcpy
+    148                    break;
+    149                  }
+    150                  strcpy(display_line[ARRAY2], "          ");
+   \                     ??Timer0_A0_ISR_6:
+   \   0002B4   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   0002B8   3C40....     MOV.W   #display_line + 22, R12
+   \   0002BC   ........     CALLA   #strcpy
+    151                  strcpy(display_line[ARRAY3], "          "); 
+   \   0002C0   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   0002C4   3C40....     MOV.W   #display_line + 33, R12
+   \   0002C8   ........     CALLA   #strcpy
+    152                  break;
+   \   0002CC   563C         JMP     ??Timer0_A0_ISR_0
+    153                  case CALIBRATION_MENU:
+    154                  switch(Menu_Count){
+   \                     ??Timer0_A0_ISR_15:
+   \   0002CE   1F42....     MOV.W   &Menu_Count, R15
+   \   0002D2   0F83         SUB.W   #0x0, R15
+   \   0002D4   0324         JEQ     ??Timer0_A0_ISR_31
+   \   0002D6   1F83         SUB.W   #0x1, R15
+   \   0002D8   1C24         JEQ     ??Timer0_A0_ISR_32
+   \   0002DA   4F3C         JMP     ??Timer0_A0_ISR_0
+    155                  case WHITE_SURFACE:
+    156                  P8OUT|=IR_LED;
+   \                     ??Timer0_A0_ISR_31:
+   \   0002DC   D2D36302     BIS.B   #0x1, &0x263
+    157                  strcpy(display_line[ARRAY0], "   WHITE  "); 
+   \   0002E0   3D40....     MOV.W   #`?<Constant "   WHITE  ">`, R13
+   \   0002E4   3C40....     MOV.W   #display_line, R12
+   \   0002E8   ........     CALLA   #strcpy
+    158                  strcpy(display_line[ARRAY1], "  SURFACE "); 
+   \   0002EC   3D40....     MOV.W   #`?<Constant "  SURFACE ">`, R13
+   \   0002F0   3C40....     MOV.W   #display_line + 11, R12
+   \   0002F4   ........     CALLA   #strcpy
+    159                  strcpy(display_line[ARRAY2], "LED: ON   ");
+   \   0002F8   3D40....     MOV.W   #`?<Constant "LED: ON   ">`, R13
+   \   0002FC   3C40....     MOV.W   #display_line + 22, R12
+   \   000300   ........     CALLA   #strcpy
+    160                  strcpy(display_line[ARRAY3], string); 
+   \   000304   3D40....     MOV.W   #string, R13
+   \   000308   3C40....     MOV.W   #display_line + 33, R12
+   \   00030C   ........     CALLA   #strcpy
+    161                  break;
+   \   000310   343C         JMP     ??Timer0_A0_ISR_0
+    162                   case BLACK_LINE: 
+    163                    strcpy(display_line[ARRAY0], "   BLACK  "); 
+   \                     ??Timer0_A0_ISR_32:
+   \   000312   3D40....     MOV.W   #`?<Constant "   BLACK  ">`, R13
+   \   000316   3C40....     MOV.W   #display_line, R12
+   \   00031A   ........     CALLA   #strcpy
+    164                    strcpy(display_line[ARRAY1], "   LINE   "); 
+   \   00031E   3D40....     MOV.W   #`?<Constant "   LINE   ">`, R13
+   \   000322   3C40....     MOV.W   #display_line + 11, R12
+   \   000326   ........     CALLA   #strcpy
+    165                    strcpy(display_line[ARRAY2], "LED: ON   ");
+   \   00032A   3D40....     MOV.W   #`?<Constant "LED: ON   ">`, R13
+   \   00032E   3C40....     MOV.W   #display_line + 22, R12
+   \   000332   ........     CALLA   #strcpy
+    166                    strcpy(display_line[ARRAY3], string); 
+   \   000336   3D40....     MOV.W   #string, R13
+   \   00033A   3C40....     MOV.W   #display_line + 33, R12
+   \   00033E   ........     CALLA   #strcpy
+    167                    break; 
+    168                  }
+    169                  break;
+   \   000342   1B3C         JMP     ??Timer0_A0_ISR_0
+    170                case NAVIGATION_MENU:
+    171                  if(!Input_Received){
+   \                     ??Timer0_A0_ISR_16:
+   \   000344   8293....     CMP.W   #0x0, &Input_Received
+   \   000348   1820         JNE     ??Timer0_A0_ISR_0
+    172                    strcpy(display_line[ARRAY0], "NAVIGATING"); 
+   \   00034A   3D40....     MOV.W   #`?<Constant "NAVIGATING">`, R13
+   \   00034E   3C40....     MOV.W   #display_line, R12
+   \   000352   ........     CALLA   #strcpy
+    173                    strcpy(display_line[ARRAY1], "          ");
+   \   000356   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   00035A   3C40....     MOV.W   #display_line + 11, R12
+   \   00035E   ........     CALLA   #strcpy
+    174                    strcpy(display_line[ARRAY2], "          ");
+   \   000362   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   000366   3C40....     MOV.W   #display_line + 22, R12
+   \   00036A   ........     CALLA   #strcpy
+    175                    strcpy(display_line[ARRAY3], "          ");
+   \   00036E   3D40....     MOV.W   #`?<Constant "          ">`, R13
+   \   000372   3C40....     MOV.W   #display_line + 33, R12
+   \   000376   ........     CALLA   #strcpy
+    176                  }
+    177                  break;
+    178                }
+    179                update_string(display_line[ARRAY0], ARRAY0);
+   \                     ??Timer0_A0_ISR_0:
+   \   00037A   0D43         MOV.W   #0x0, R13
+   \   00037C   3C40....     MOV.W   #display_line, R12
+   \   000380   ........     CALLA   #update_string
+    180                update_string(display_line[ARRAY1], ARRAY1);
+   \   000384   1D43         MOV.W   #0x1, R13
+   \   000386   3C40....     MOV.W   #display_line + 11, R12
+   \   00038A   ........     CALLA   #update_string
+    181                update_string(display_line[ARRAY2], ARRAY2);
+   \   00038E   2D43         MOV.W   #0x2, R13
+   \   000390   3C40....     MOV.W   #display_line + 22, R12
+   \   000394   ........     CALLA   #update_string
+    182                update_string(display_line[ARRAY3], ARRAY3);
+   \   000398   3D400300     MOV.W   #0x3, R13
+   \   00039C   3C40....     MOV.W   #display_line + 33, R12
+   \   0003A0   ........     CALLA   #update_string
+    183              update_display=TRUE; display_changed=TRUE; Display_Process();
+   \   0003A4   D243....     MOV.B   #0x1, &update_display
+   \   0003A8   D243....     MOV.B   #0x1, &display_changed
+   \   0003AC   ........     CALLA   #Display_Process
+    184          }
+    185            
+    186          TA0CCR0 += TA0CCR0_INTERVAL; // Add Offset to TACCR0
+   \                     ??Timer0_A0_ISR_12:
+   \   0003B0   B250A8615203 ADD.W   #0x61a8, &0x352
+    187          //----------------------------------------------------------------------------
+    188          }
+   \   0003B6   3C17         POPM.W  #0x4, R15
+   \   0003B8   0013         RETI
+   \   0003BA                REQUIRE _A_TB0CCR4_L
+   \   0003BA                REQUIRE _A_TB0CCR6_L
+   \   0003BA                REQUIRE _A_PDOUT_L
+   \   0003BA                REQUIRE _A_TA0CCR0_L
+    189          
+    190          //debounce timer
+    191          
+    192          #pragma vector = TIMER1_A0_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+    193          __interrupt void Timer1_A0_ISR(void){//T1 interrupt every 50ms
+   \                     Timer1_A0_ISR:
+    194          //------------------------------------------------------------------------------
+    195          // TimerA0 0 Interrupt handler
+    196          //----------------------------------------------------------------------------
+    197          ++counter2;
+   \   000000   9253....     ADD.W   #0x1, &counter2
+    198          if(counter2==HalfSec){
+   \   000004   B2900A00.... CMP.W   #0xa, &counter2
+   \   00000A   1220         JNE     ??Timer1_A0_ISR_0
+    199              TA1CCTL0 &= ~CCIE; // CCR1 disable interrupt
+   \   00000C   B2C010008203 BIC.W   #0x10, &0x382
+    200              P5IFG &= ~BUTTON1; // Clear all P5.5 interrupt flags
+   \   000012   F2C040005C02 BIC.B   #0x40, &0x25c
+    201              P5IE  |= BUTTON1; // P5.5 interrupt enabled
+   \   000018   F2D040005A02 BIS.B   #0x40, &0x25a
+    202              
+    203              P5IFG &= ~BUTTON2; // Clear all P5.6 interrupt flags
+   \   00001E   F2C020005C02 BIC.B   #0x20, &0x25c
+    204              P5IE |= BUTTON2; // P5.6 interrupt enabled
+   \   000024   F2D020005A02 BIS.B   #0x20, &0x25a
+    205              
+    206              TA0CCTL0 |= CCIE; // CCR0 enable T0 interrupt
+   \   00002A   B2D010004203 BIS.W   #0x10, &0x342
+    207          }
+    208            
+    209          TA1CCR0 += TA0CCR0_INTERVAL; // Add Offset to TACCR0
+   \                     ??Timer1_A0_ISR_0:
+   \   000030   B250A8619203 ADD.W   #0x61a8, &0x392
+    210          //----------------------------------------------------------------------------
+    211          }
+   \   000036   0013         RETI
+   \   000038                REQUIRE _A_TA1CCTL0_L
+   \   000038                REQUIRE _A_PCIFG_L
+   \   000038                REQUIRE _A_PCIE_L
+   \   000038                REQUIRE _A_TA0CCTL0_L
+   \   000038                REQUIRE _A_TA1CCR0_L
+    212          
+    213          
+    214          //movement timer
+    215          
+    216          #pragma vector = TIMER2_A0_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+    217          __interrupt void Timer2_A0_ISR(void){//T2 interrupt every 50ms
+   \                     Timer2_A0_ISR:
+   \   000000   3F15         PUSHM.W #0x4, R15
+    218          //------------------------------------------------------------------------------
+    219          // TimerA0 0 Interrupt handler
+    220          //----------------------------------------------------------------------------
+    221          counter3=TRUE;
+   \   000002   9243....     MOV.W   #0x1, &counter3
+    222          TA2CCR0 += TA0CCR0_INTERVAL; // Add Offset to TACCR0
+   \   000006   B250A8611204 ADD.W   #0x61a8, &0x412
+    223          
+    224          switch(IOT_Direction){
+   \   00000C   1F42....     MOV.W   &IOT_Direction, R15
+   \   000010   1F83         SUB.W   #0x1, R15
+   \   000012   0724         JEQ     ??Timer2_A0_ISR_2
+   \   000014   1F83         SUB.W   #0x1, R15
+   \   000016   2624         JEQ     ??Timer2_A0_ISR_3
+   \   000018   1F83         SUB.W   #0x1, R15
+   \   00001A   2F24         JEQ     ??Timer2_A0_ISR_4
+   \   00001C   1F83         SUB.W   #0x1, R15
+   \   00001E   3824         JEQ     ??Timer2_A0_ISR_5
+   \   000020   413C         JMP     ??Timer2_A0_ISR_1
+    225            case GO_FORWARD:
+    226              forward();
+   \                     ??Timer2_A0_ISR_2:
+   \   000022   ........     CALLA   #forward
+    227              if(!Exiting){
+   \   000026   8293....     CMP.W   #0x0, &Exiting
+   \   00002A   0920         JNE     ??Timer2_A0_ISR_6
+    228                strcpy(display_line[ARRAY0], "FORWARDS  ");
+   \   00002C   3D40....     MOV.W   #`?<Constant "FORWARDS  ">`, R13
+   \   000030   3C40....     MOV.W   #display_line, R12
+   \   000034   ........     CALLA   #strcpy
+    229                Reset_Timer_A2();
+   \   000038   ........     CALLA   #Reset_Timer_A2
+   \   00003C   333C         JMP     ??Timer2_A0_ISR_1
+    230              }
+    231              else{
+    232                ++Exiting_Count;
+   \                     ??Timer2_A0_ISR_6:
+   \   00003E   9253....     ADD.W   #0x1, &Exiting_Count
+    233                if(Exiting_Count==FourFullSec){
+   \   000042   B2905000.... CMP.W   #0x50, &Exiting_Count
+   \   000048   2D20         JNE     ??Timer2_A0_ISR_1
+    234                  Reset_Timer_A2();
+   \   00004A   ........     CALLA   #Reset_Timer_A2
+    235                  Exiting_Count=RESET_STATE;
+   \   00004E   8243....     MOV.W   #0x0, &Exiting_Count
+    236                  wheels_off();
+   \   000052   ........     CALLA   #wheels_off
+    237                  strcpy(display_line[ARRAY0], "DONE      ");
+   \   000056   3D40....     MOV.W   #`?<Constant "DONE      ">`, R13
+   \   00005A   3C40....     MOV.W   #display_line, R12
+   \   00005E   ........     CALLA   #strcpy
+    238                }
+    239              }
+    240            break;
+   \   000062   203C         JMP     ??Timer2_A0_ISR_1
+    241            case GO_REVERSE:
+    242               strcpy(display_line[ARRAY0], "REVERSE   ");
+   \                     ??Timer2_A0_ISR_3:
+   \   000064   3D40....     MOV.W   #`?<Constant "REVERSE   ">`, R13
+   \   000068   3C40....     MOV.W   #display_line, R12
+   \   00006C   ........     CALLA   #strcpy
+    243               reverse();
+   \   000070   ........     CALLA   #reverse
+    244               Reset_Timer_A2();
+   \   000074   ........     CALLA   #Reset_Timer_A2
+    245            break;
+   \   000078   153C         JMP     ??Timer2_A0_ISR_1
+    246            case GO_LEFT:
+    247              strcpy(display_line[ARRAY0], "LEFT      ");
+   \                     ??Timer2_A0_ISR_4:
+   \   00007A   3D40....     MOV.W   #`?<Constant "LEFT      ">`, R13
+   \   00007E   3C40....     MOV.W   #display_line, R12
+   \   000082   ........     CALLA   #strcpy
+    248              left();
+   \   000086   ........     CALLA   #left
+    249              Reset_Timer_A2();
+   \   00008A   ........     CALLA   #Reset_Timer_A2
+    250            break;
+   \   00008E   0A3C         JMP     ??Timer2_A0_ISR_1
+    251            case GO_RIGHT:
+    252              strcpy(display_line[ARRAY0], "RIGHT     ");
+   \                     ??Timer2_A0_ISR_5:
+   \   000090   3D40....     MOV.W   #`?<Constant "RIGHT     ">`, R13
+   \   000094   3C40....     MOV.W   #display_line, R12
+   \   000098   ........     CALLA   #strcpy
+    253              right();
+   \   00009C   ........     CALLA   #right
+    254              Reset_Timer_A2();
+   \   0000A0   ........     CALLA   #Reset_Timer_A2
+    255            break;
+    256          }
+    257          
+    258          //----------------------------------------------------------------------------
+    259          }
+   \                     ??Timer2_A0_ISR_1:
+   \   0000A4   3C17         POPM.W  #0x4, R15
+   \   0000A6   0013         RETI
+   \   0000A8                REQUIRE _A_TA2CCR0_L
+    260          
+    261          
+    262          //reset IOT timer
+    263          #pragma vector = TIMER3_A0_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+    264          __interrupt void Timer3_A0_ISR(void){//T3 interrupt every 50ms
+   \                     Timer3_A0_ISR:
+   \   000000   3F15         PUSHM.W #0x4, R15
+    265          //------------------------------------------------------------------------------
+    266          // TimerA3 0 Interrupt handler
+    267          //----------------------------------------------------------------------------
+    268          ++Reset_Count;
+   \   000002   9253....     ADD.W   #0x1, &Reset_Count
+    269          TA3CCR0 += TA0CCR0_INTERVAL; // Add Offset to TACCR0
+   \   000006   B250A8615204 ADD.W   #0x61a8, &0x452
+    270          if(IOT_Reset==TRUE){
+   \   00000C   9293....     CMP.W   #0x1, &IOT_Reset
+   \   000010   0420         JNE     ??Timer3_A0_ISR_0
+    271            P3OUT|=IOT_RESET;
+   \   000012   D2D32202     BIS.B   #0x1, &0x222
+    272            IOT_Reset=FALSE;
+   \   000016   8243....     MOV.W   #0x0, &IOT_Reset
+    273          }
+    274          
+    275          if(Reset_Count==ThreeFullSec){
+   \                     ??Timer3_A0_ISR_0:
+   \   00001A   B2903C00.... CMP.W   #0x3c, &Reset_Count
+   \   000020   0F20         JNE     ??Timer3_A0_ISR_1
+    276            TA3CCTL0 &= ~CCIE; //disable timer
+   \   000022   B2C010004204 BIC.W   #0x10, &0x442
+    277            P3IFG &= ~IOT_LINK;
+   \   000028   E2C23C02     BIC.B   #0x4, &0x23c
+    278            P3IE |=IOT_LINK; //enable interrupt
+   \   00002C   E2D23A02     BIS.B   #0x4, &0x23a
+    279            out_string3("AT+S.PING=152.14.99.201\r"); //ping server
+   \   000030   3C40....     MOV.W   #`?<Constant "AT+S.PING=152.14.99.201\\r">`, R12
+   \   000034   ........     CALLA   #out_string3
+    280            out_string3("AT+S.SOCKD=32000\r"); //establish socket connection
+   \   000038   3C40....     MOV.W   #`?<Constant "AT+S.SOCKD=32000\\r">`, R12
+   \   00003C   ........     CALLA   #out_string3
+    281          }
+    282            
+    283          //----------------------------------------------------------------------------
+    284          }
+   \                     ??Timer3_A0_ISR_1:
+   \   000040   3C17         POPM.W  #0x4, R15
+   \   000042   0013         RETI
+   \   000044                REQUIRE _A_TA3CCR0_L
+   \   000044                REQUIRE _A_PBOUT_L
+   \   000044                REQUIRE _A_TA3CCTL0_L
+   \   000044                REQUIRE _A_PBIFG_L
+   \   000044                REQUIRE _A_PBIE_L
+
+   \                                 In  segment INTVEC, offset 0x46, root
+   \                     `??Timer3_A0_ISR::??INTVEC 70`:
+   \   000046   ....         DC16    Timer3_A0_ISR
+
+   \                                 In  segment INTVEC, offset 0x4c, root
+   \                     `??Timer2_A0_ISR::??INTVEC 76`:
+   \   00004C   ....         DC16    Timer2_A0_ISR
+
+   \                                 In  segment INTVEC, offset 0x52, root
+   \                     `??Timer1_A0_ISR::??INTVEC 82`:
+   \   000052   ....         DC16    Timer1_A0_ISR
+
+   \                                 In  segment INTVEC, offset 0x5a, root
+   \                     `??Timer0_A0_ISR::??INTVEC 90`:
+   \   00005A   ....         DC16    Timer0_A0_ISR
+
+   \                                 In  segment DATA16_ID, align 1, align-sorted
+   \                     `?<Initializer for Time_String>`:
+   \   000000   54494D453A30 DC8 "TIME:0000s"
+   \            3030307300  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant ">LINE     ">`:
+   \   000000   3E4C494E4520 DC8 ">LINE     "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " IOT      ">`:
+   \   000000   20494F542020 DC8 " IOT      "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " BRIGHT   ">`:
+   \   000000   204252494748 DC8 " BRIGHT   "
+   \            5420202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " LINE     ">`:
+   \   000000   204C494E4520 DC8 " LINE     "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant ">IOT      ">`:
+   \   000000   3E494F542020 DC8 ">IOT      "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant ">BRIGHT   ">`:
+   \   000000   3E4252494748 DC8 ">BRIGHT   "
+   \            5420202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " CONNECTED">`:
+   \   000000   20434F4E4E45 DC8 " CONNECTED"
+   \            4354454400  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "          ">`:
+   \   000000   202020202020 DC8 "          "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " WAITING  ">`:
+   \   000000   205741495449 DC8 " WAITING  "
+   \            4E47202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " FOR INPUT">`:
+   \   000000   20464F522049 DC8 " FOR INPUT"
+   \            4E50555400  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " USE KNOB ">`:
+   \   000000   20555345204B DC8 " USE KNOB "
+   \            4E4F422000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "  ADJUST  ">`:
+   \   000000   202041444A55 DC8 "  ADJUST  "
+   \            5354202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "<<      >>">`:
+   \   000000   3C3C20202020 DC8 "<<      >>"
+   \            20203E3E00  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "BRIGHT DIM">`:
+   \   000000   425249474854 DC8 "BRIGHT DIM"
+   \            2044494D00  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant ">CAL MODE ">`:
+   \   000000   3E43414C204D DC8 ">CAL MODE "
+   \            4F44452000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " NAV MODE ">`:
+   \   000000   204E4156204D DC8 " NAV MODE "
+   \            4F44452000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant " CAL MODE ">`:
+   \   000000   2043414C204D DC8 " CAL MODE "
+   \            4F44452000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant ">NAV MODE ">`:
+   \   000000   3E4E4156204D DC8 ">NAV MODE "
+   \            4F44452000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "   WHITE  ">`:
+   \   000000   202020574849 DC8 "   WHITE  "
+   \            5445202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "  SURFACE ">`:
+   \   000000   202053555246 DC8 "  SURFACE "
+   \            4143452000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "LED: ON   ">`:
+   \   000000   4C45443A204F DC8 "LED: ON   "
+   \            4E20202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "   BLACK  ">`:
+   \   000000   202020424C41 DC8 "   BLACK  "
+   \            434B202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "   LINE   ">`:
+   \   000000   2020204C494E DC8 "   LINE   "
+   \            4520202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "NAVIGATING">`:
+   \   000000   4E4156494741 DC8 "NAVIGATING"
+   \            54494E4700  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "FORWARDS  ">`:
+   \   000000   464F52574152 DC8 "FORWARDS  "
+   \            4453202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "DONE      ">`:
+   \   000000   444F4E452020 DC8 "DONE      "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "REVERSE   ">`:
+   \   000000   524556455253 DC8 "REVERSE   "
+   \            4520202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "LEFT      ">`:
+   \   000000   4C4546542020 DC8 "LEFT      "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "RIGHT     ">`:
+   \   000000   524947485420 DC8 "RIGHT     "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "AT+S.PING=152.14.99.201\\r">`:
+   \   000000   41542B532E50 DC8 "AT+S.PING=152.14.99.201\015"
+   \            494E473D3135
+   \            322E31342E39
+   \            392E3230310D
+   \            00          
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "AT+S.SOCKD=32000\\r">`:
+   \   000000   41542B532E53 DC8 "AT+S.SOCKD=32000\015"
+   \            4F434B443D33
+   \            323030300D00
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+     12   Timer0_A0_ISR
+       12   -> Display_Process
+       12   -> convert
+       12   -> strcpy
+       12   -> update_string
+       12 ?DivMod16s
+       12 ?DivMod16u
+      4   Timer1_A0_ISR
+     12   Timer2_A0_ISR
+       12   -> Reset_Timer_A2
+       12   -> forward
+       12   -> left
+       12   -> reverse
+       12   -> right
+       12   -> strcpy
+       12   -> wheels_off
+     12   Timer3_A0_ISR
+       12   -> out_string3
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      11  ?<Constant "          ">
+      11  ?<Constant "   BLACK  ">
+      11  ?<Constant "   LINE   ">
+      11  ?<Constant "   WHITE  ">
+      11  ?<Constant "  ADJUST  ">
+      11  ?<Constant "  SURFACE ">
+      11  ?<Constant " BRIGHT   ">
+      11  ?<Constant " CAL MODE ">
+      11  ?<Constant " CONNECTED">
+      11  ?<Constant " FOR INPUT">
+      11  ?<Constant " IOT      ">
+      11  ?<Constant " LINE     ">
+      11  ?<Constant " NAV MODE ">
+      11  ?<Constant " USE KNOB ">
+      11  ?<Constant " WAITING  ">
+      11  ?<Constant "<<      >>">
+      11  ?<Constant ">BRIGHT   ">
+      11  ?<Constant ">CAL MODE ">
+      11  ?<Constant ">IOT      ">
+      11  ?<Constant ">LINE     ">
+      11  ?<Constant ">NAV MODE ">
+      25  ?<Constant "AT+S.PING=152.14.99.201\r">
+      18  ?<Constant "AT+S.SOCKD=32000\r">
+      11  ?<Constant "BRIGHT DIM">
+      11  ?<Constant "DONE      ">
+      11  ?<Constant "FORWARDS  ">
+      11  ?<Constant "LED: ON   ">
+      11  ?<Constant "LEFT      ">
+      11  ?<Constant "NAVIGATING">
+      11  ?<Constant "REVERSE   ">
+      11  ?<Constant "RIGHT     ">
+      11  ?<Initializer for Time_String>
+       2  Exiting_Count
+       2  Reset_Count
+      11  Time_String
+     954  Timer0_A0_ISR
+       2  Timer0_A0_ISR::??INTVEC 90
+      56  Timer1_A0_ISR
+       2  Timer1_A0_ISR::??INTVEC 82
+     168  Timer2_A0_ISR
+       2  Timer2_A0_ISR::??INTVEC 76
+      68  Timer3_A0_ISR
+       2  Timer3_A0_ISR::??INTVEC 70
+       2  _A_PBIE_L
+       2  _A_PBIFG_L
+       2  _A_PBOUT_L
+       2  _A_PCIE_L
+       2  _A_PCIFG_L
+       2  _A_PDOUT_L
+       2  _A_TA0CCR0_L
+       2  _A_TA0CCTL0_L
+       2  _A_TA1CCR0_L
+       2  _A_TA1CCTL0_L
+       2  _A_TA2CCR0_L
+       2  _A_TA3CCR0_L
+       2  _A_TA3CCTL0_L
+       2  _A_TB0CCR4_L
+       2  _A_TB0CCR6_L
+       2  counter
+       2  counter2
+       2  counter3
+
+ 
+    30 bytes in segment DATA16_AN
+   362 bytes in segment DATA16_C
+    11 bytes in segment DATA16_I
+    11 bytes in segment DATA16_ID
+    10 bytes in segment DATA16_Z
+     8 bytes in segment INTVEC
+ 1 246 bytes in segment ISR_CODE
+ 
+ 1 246 bytes of CODE  memory
+   373 bytes of CONST memory (+  8 bytes shared)
+    21 bytes of DATA  memory (+ 30 bytes shared)
+
+Errors: none
+Warnings: none

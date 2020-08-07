@@ -1,0 +1,74 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           15/Feb/2018  15:03:03
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 4\timer.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EWF614.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 4\timer.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 4\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 4\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 4\Debug\List\timer.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 4\Debug\Obj\timer.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 4\timer.c
+      1          #include "msp430.h"
+      2          #include "functions.h"
+      3          #include <string.h>
+      4          #include "macros.h"
+      5          
+      6          extern volatile unsigned int Time_Sequence;
+      7          
+
+   \                                 In  segment CODE, align 2
+      8          void Wait(){    //Wait for Time_Sequence to be 0
+   \                     Wait:
+   \                     ??Wait_0:
+      9            while(Time_Sequence!=0){
+   \   000000   8293....     CMP.W   #0x0, &Time_Sequence
+   \   000004   FD23         JNE     ??Wait_0
+     10            
+     11            }
+     12          }
+   \   000006   1001         RETA
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   Wait
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  Wait
+
+ 
+ 8 bytes in segment CODE
+ 
+ 8 bytes of CODE memory
+
+Errors: none
+Warnings: none

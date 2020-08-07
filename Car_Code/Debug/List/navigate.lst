@@ -1,0 +1,382 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           24/Apr/2018  17:10:07
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\navigate.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EWC751.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\navigate.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\navigate.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\navigate.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\navigate.c
+      1          #include "macros.h"
+      2          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x3d8
+   \   union <unnamed> _A_TB0CCR3_L
+   \                     _A_TB0CCR3_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3da
+   \   union <unnamed> _A_TB0CCR4_L
+   \                     _A_TB0CCR4_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3dc
+   \   union <unnamed> _A_TB0CCR5_L
+   \                     _A_TB0CCR5_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3de
+   \   union <unnamed> _A_TB0CCR6_L
+   \                     _A_TB0CCR6_L:
+   \   000000                DS8 2
+      3          #include "functions.h"
+      4          
+      5          extern int ADC_Right_Detector; 
+      6          extern int ADC_Left_Detector;
+      7          extern unsigned int counter;
+      8          extern unsigned int counter3;
+      9          extern unsigned int White;
+     10          extern unsigned int Black;
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     11          unsigned int First_Time;
+   \                     First_Time:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     12          unsigned int First_Time2;
+   \                     First_Time2:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     13          unsigned int Counter_Snapshot;
+   \                     Counter_Snapshot:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     14          unsigned int Turned;
+   \                     Turned:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     15          unsigned int Left_Flag;
+   \                     Left_Flag:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     16          unsigned int Right_Flag;
+   \                     Right_Flag:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     17          unsigned int Time_Count;
+   \                     Time_Count:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     18          unsigned int Movement_Count;
+   \                     Movement_Count:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_I, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     19          volatile unsigned int Navigate_Speed=DUTY_CYCLE_38;
+   \                     Navigate_Speed:
+   \   000000                DS8 2
+   \   000002                REQUIRE `?<Initializer for Navigate_Speed>`
+     20          
+
+   \                                 In  segment CODE, align 2
+     21          void navigate(void){
+   \                     navigate:
+     22               switch(Movement_Count){
+   \   000000   1F42....     MOV.W   &Movement_Count, R15
+   \   000004   0F83         SUB.W   #0x0, R15
+   \   000006   0924         JEQ     ??navigate_4
+   \   000008   1F83         SUB.W   #0x1, R15
+   \   00000A   2224         JEQ     ??navigate_5
+   \   00000C   1F83         SUB.W   #0x1, R15
+   \   00000E   2D24         JEQ     ??navigate_6
+   \   000010   1F83         SUB.W   #0x1, R15
+   \   000012   3624         JEQ     ??navigate_7
+   \   000014   1F83         SUB.W   #0x1, R15
+   \   000016   4F24         JEQ     ??navigate_8
+   \   000018   1001         RETA
+     23                  case STATE1: //intercepting
+     24                    if(!First_Time){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+   \                     ??navigate_4:
+   \   00001A   8293....     CMP.W   #0x0, &First_Time
+   \   00001E   0320         JNE     ??navigate_9
+     25                      Counter_Snapshot=counter;
+   \   000020   9242........ MOV.W   &counter, &Counter_Snapshot
+     26                    }
+     27                    LEFT_FORWARD_SPEED=WHEEL_PERIOD;
+   \                     ??navigate_9:
+   \   000026   B240409CDA03 MOV.W   #0x9c40, &0x3da
+     28                    RIGHT_FORWARD_SPEED=Navigate_Speed;
+   \   00002C   9242....DE03 MOV.W   &Navigate_Speed, &0x3de
+     29                      if((ADC_Left_Detector<=White)&&(ADC_Right_Detector<=White)){//if on white surface, start looking for black
+   \   000032   9292........ CMP.W   &ADC_Left_Detector, &White
+   \   000038   0828         JNC     ??navigate_10
+   \   00003A   9292........ CMP.W   &ADC_Right_Detector, &White
+   \   000040   0428         JNC     ??navigate_10
+     30                        ++Movement_Count;
+   \   000042   9253....     ADD.W   #0x1, &Movement_Count
+     31                        Time_Count=FALSE;
+   \   000046   8243....     MOV.W   #0x0, &Time_Count
+     32                      } 
+     33                    First_Time2=TRUE;
+   \                     ??navigate_10:
+   \   00004A   9243....     MOV.W   #0x1, &First_Time2
+     34                    break; 
+   \   00004E   1001         RETA
+     35                  case STATE2: //look for black
+     36                    if((ADC_Left_Detector>=Black)&&(ADC_Right_Detector>=Black)){//if on black surface, wait
+   \                     ??navigate_5:
+   \   000050   9292........ CMP.W   &Black, &ADC_Left_Detector
+   \   000056   9428         JNC     ??navigate_0
+   \   000058   9292........ CMP.W   &Black, &ADC_Right_Detector
+   \   00005E   9028         JNC     ??navigate_0
+     37                        ++Movement_Count;
+   \   000060   9253....     ADD.W   #0x1, &Movement_Count
+     38                        Time_Count=FALSE;
+   \   000064   8243....     MOV.W   #0x0, &Time_Count
+     39                      }
+     40                    break;
+   \   000068   1001         RETA
+     41                  case STATE3: //waiting
+     42                    if(Wait(HalfSec)){
+   \                     ??navigate_6:
+   \   00006A   3C400A00     MOV.W   #0xa, R12
+   \   00006E   ........     CALLA   #Wait
+   \   000072   0C93         CMP.W   #0x0, R12
+   \   000074   8524         JEQ     ??navigate_0
+     43                      First_Time2=TRUE;
+   \   000076   9243....     MOV.W   #0x1, &First_Time2
+     44                      ++Movement_Count;
+   \   00007A   9253....     ADD.W   #0x1, &Movement_Count
+     45                    }
+     46                    break;
+   \   00007E   1001         RETA
+     47                  case STATE4: //turning
+     48                    if(First_Time2){//if waiting is done
+   \                     ??navigate_7:
+   \   000080   8293....     CMP.W   #0x0, &First_Time2
+   \   000084   7D24         JEQ     ??navigate_0
+     49                      LEFT_REVERSE_SPEED=DUTY_CYCLE_50; 
+   \   000086   B240204ED803 MOV.W   #0x4e20, &0x3d8
+     50                      RIGHT_FORWARD_SPEED=DUTY_CYCLE_50;
+   \   00008C   B240204EDE03 MOV.W   #0x4e20, &0x3de
+     51                      if((ADC_Left_Detector>=Black)&&(ADC_Right_Detector>=Black)){
+   \   000092   9292........ CMP.W   &Black, &ADC_Left_Detector
+   \   000098   0B28         JNC     ??navigate_11
+   \   00009A   9292........ CMP.W   &Black, &ADC_Right_Detector
+   \   0000A0   0728         JNC     ??navigate_11
+     52                        wheels_off();
+   \   0000A2   ........     CALLA   #wheels_off
+     53                        Counter_Snapshot=counter;
+   \   0000A6   9242........ MOV.W   &counter, &Counter_Snapshot
+     54                        ++Movement_Count;
+   \   0000AC   9253....     ADD.W   #0x1, &Movement_Count
+     55                      }
+     56                      First_Time=TRUE;
+   \                     ??navigate_11:
+   \   0000B0   9243....     MOV.W   #0x1, &First_Time
+     57                    }
+     58                    break;
+   \   0000B4   1001         RETA
+     59               case STATE5: //navigate
+     60                             if((ADC_Right_Detector>=Black)&&(ADC_Left_Detector>=Black)){//if both on track
+   \                     ??navigate_8:
+   \   0000B6   9292........ CMP.W   &Black, &ADC_Right_Detector
+   \   0000BC   1E28         JNC     ??navigate_12
+   \   0000BE   9292........ CMP.W   &Black, &ADC_Left_Detector
+   \   0000C4   1A28         JNC     ??navigate_12
+     61                             if(LEFT_REVERSE_SPEED || RIGHT_REVERSE_SPEED){
+   \   0000C6   8293D803     CMP.W   #0x0, &0x3d8
+   \   0000CA   0320         JNE     ??navigate_13
+   \   0000CC   8293DC03     CMP.W   #0x0, &0x3dc
+   \   0000D0   0624         JEQ     ??navigate_14
+     62                                Init_Timer_A2();
+   \                     ??navigate_13:
+   \   0000D2   ........     CALLA   #Init_Timer_A2
+     63                                LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   0000D6   8243D803     MOV.W   #0x0, &0x3d8
+     64                                RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   0000DA   8243DC03     MOV.W   #0x0, &0x3dc
+     65                             }
+     66                             if(counter3==TRUE){
+   \                     ??navigate_14:
+   \   0000DE   9293....     CMP.W   #0x1, &counter3
+   \   0000E2   0620         JNE     ??navigate_15
+     67                              LEFT_FORWARD_SPEED=DUTY_CYCLE_50; //changed both
+   \   0000E4   B240204EDA03 MOV.W   #0x4e20, &0x3da
+     68                              RIGHT_FORWARD_SPEED=DUTY_CYCLE_50; //changed from 38
+   \   0000EA   B240204EDE03 MOV.W   #0x4e20, &0x3de
+     69                             }
+     70                             Left_Flag=FALSE;
+   \                     ??navigate_15:
+   \   0000F0   8243....     MOV.W   #0x0, &Left_Flag
+     71                             Right_Flag=FALSE;
+   \   0000F4   8243....     MOV.W   #0x0, &Right_Flag
+   \   0000F8   1001         RETA
+     72                      }
+     73                      else if((ADC_Right_Detector>=Black)&&(ADC_Left_Detector<=Black)){ //if left
+   \                     ??navigate_12:
+   \   0000FA   9292........ CMP.W   &Black, &ADC_Right_Detector
+   \   000100   1E28         JNC     ??navigate_16
+   \   000102   9292........ CMP.W   &ADC_Left_Detector, &Black
+   \   000108   1A28         JNC     ??navigate_16
+     74                               if(LEFT_REVERSE_SPEED || RIGHT_FORWARD_SPEED){
+   \   00010A   8293D803     CMP.W   #0x0, &0x3d8
+   \   00010E   0320         JNE     ??navigate_17
+   \   000110   8293DE03     CMP.W   #0x0, &0x3de
+   \   000114   0624         JEQ     ??navigate_18
+     75                                Init_Timer_A2();
+   \                     ??navigate_17:
+   \   000116   ........     CALLA   #Init_Timer_A2
+     76                                LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   00011A   8243D803     MOV.W   #0x0, &0x3d8
+     77                                RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   00011E   8243DE03     MOV.W   #0x0, &0x3de
+     78                               }
+     79                               if(counter3==TRUE){
+   \                     ??navigate_18:
+   \   000122   9293....     CMP.W   #0x1, &counter3
+   \   000126   0620         JNE     ??navigate_19
+     80                                LEFT_FORWARD_SPEED=DUTY_CYCLE_50; //changed from 38
+   \   000128   B240204EDA03 MOV.W   #0x4e20, &0x3da
+     81                                RIGHT_REVERSE_SPEED=DUTY_CYCLE_50; //changed
+   \   00012E   B240204EDC03 MOV.W   #0x4e20, &0x3dc
+     82                               }
+     83                               Left_Flag=TRUE;
+   \                     ??navigate_19:
+   \   000134   9243....     MOV.W   #0x1, &Left_Flag
+     84                               Right_Flag=FALSE;
+   \   000138   8243....     MOV.W   #0x0, &Right_Flag
+   \   00013C   1001         RETA
+     85                      }
+     86                      else if((ADC_Right_Detector<=Black)&&(ADC_Left_Detector>=Black)){ //if right
+   \                     ??navigate_16:
+   \   00013E   9292........ CMP.W   &ADC_Right_Detector, &Black
+   \   000144   1D28         JNC     ??navigate_0
+   \   000146   9292........ CMP.W   &Black, &ADC_Left_Detector
+   \   00014C   1928         JNC     ??navigate_0
+     87                            if(LEFT_FORWARD_SPEED || RIGHT_REVERSE_SPEED){
+   \   00014E   8293DA03     CMP.W   #0x0, &0x3da
+   \   000152   0320         JNE     ??navigate_20
+   \   000154   8293DC03     CMP.W   #0x0, &0x3dc
+   \   000158   0624         JEQ     ??navigate_21
+     88                                Init_Timer_A2();
+   \                     ??navigate_20:
+   \   00015A   ........     CALLA   #Init_Timer_A2
+     89                                LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \   00015E   8243DA03     MOV.W   #0x0, &0x3da
+     90                                RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   000162   8243DC03     MOV.W   #0x0, &0x3dc
+     91                               }
+     92                               if(counter3==TRUE){
+   \                     ??navigate_21:
+   \   000166   9293....     CMP.W   #0x1, &counter3
+   \   00016A   0620         JNE     ??navigate_22
+     93                                LEFT_REVERSE_SPEED=DUTY_CYCLE_50; //changed
+   \   00016C   B240204ED803 MOV.W   #0x4e20, &0x3d8
+     94                                RIGHT_FORWARD_SPEED=DUTY_CYCLE_50; //changed from 38
+   \   000172   B240204EDE03 MOV.W   #0x4e20, &0x3de
+     95                               }
+     96                            Left_Flag=FALSE;
+   \                     ??navigate_22:
+   \   000178   8243....     MOV.W   #0x0, &Left_Flag
+     97                            Right_Flag=TRUE;
+   \   00017C   9243....     MOV.W   #0x1, &Right_Flag
+     98                      }
+     99                 break;
+    100               } 
+    101          }
+   \                     ??navigate_0:
+   \   000180   1001         RETA
+   \   000182                REQUIRE _A_TB0CCR4_L
+   \   000182                REQUIRE _A_TB0CCR6_L
+   \   000182                REQUIRE _A_TB0CCR3_L
+   \   000182                REQUIRE _A_TB0CCR5_L
+
+   \                                 In  segment DATA16_ID, align 2, align-sorted
+   \                     `?<Initializer for Navigate_Speed>`:
+   \   000000   983A         DC16 15000
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   navigate
+        4   -> Init_Timer_A2
+        4   -> Wait
+        4   -> wheels_off
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       2  ?<Initializer for Navigate_Speed>
+       2  Counter_Snapshot
+       2  First_Time
+       2  First_Time2
+       2  Left_Flag
+       2  Movement_Count
+       2  Navigate_Speed
+       2  Right_Flag
+       2  Time_Count
+       2  Turned
+       2  _A_TB0CCR3_L
+       2  _A_TB0CCR4_L
+       2  _A_TB0CCR5_L
+       2  _A_TB0CCR6_L
+     386  navigate
+
+ 
+ 386 bytes in segment CODE
+   8 bytes in segment DATA16_AN
+   2 bytes in segment DATA16_I
+   2 bytes in segment DATA16_ID
+  16 bytes in segment DATA16_Z
+ 
+ 386 bytes of CODE  memory
+   2 bytes of CONST memory
+  18 bytes of DATA  memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,46 @@
+#include "msp430.h"
+#include "functions.h"
+#include <string.h>
+#include "macros.h"
+
+extern unsigned int counter;
+extern unsigned int Counter_Snapshot2;
+extern unsigned int counter3;
+extern unsigned int First_Time2;
+extern char display_line[ARRAY4][ARRAY11];
+
+
+void wheels_off(void){
+  LEFT_FORWARD_SPEED=WHEEL_OFF;
+  RIGHT_FORWARD_SPEED=WHEEL_OFF;
+  LEFT_REVERSE_SPEED=WHEEL_OFF;
+  RIGHT_REVERSE_SPEED=WHEEL_OFF;
+}
+
+void left(void){
+  LEFT_FORWARD_SPEED=WHEEL_OFF;
+  RIGHT_FORWARD_SPEED=WHEEL_PERIOD;
+  LEFT_REVERSE_SPEED=WHEEL_PERIOD;
+  RIGHT_REVERSE_SPEED=WHEEL_OFF;
+}
+
+void right(void){
+  LEFT_FORWARD_SPEED=WHEEL_PERIOD;
+  RIGHT_FORWARD_SPEED=WHEEL_OFF;
+  LEFT_REVERSE_SPEED=WHEEL_OFF;
+  RIGHT_REVERSE_SPEED=WHEEL_PERIOD;
+}
+
+void forward(void){
+  LEFT_FORWARD_SPEED=WHEEL_PERIOD;
+  RIGHT_FORWARD_SPEED=WHEEL_PERIOD;
+  LEFT_REVERSE_SPEED=WHEEL_OFF;
+  RIGHT_REVERSE_SPEED=WHEEL_OFF;
+}
+
+void reverse(void){
+  LEFT_FORWARD_SPEED=WHEEL_OFF;
+  RIGHT_FORWARD_SPEED=WHEEL_OFF;
+  LEFT_REVERSE_SPEED=WHEEL_PERIOD;
+  RIGHT_REVERSE_SPEED=WHEEL_PERIOD;
+}

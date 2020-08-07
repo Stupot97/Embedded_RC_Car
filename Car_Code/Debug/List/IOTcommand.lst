@@ -1,0 +1,338 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           12/Apr/2018  20:15:02
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\IOTcommand.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW9C46.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\IOTcommand.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\IOTcommand.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\IOTcommand.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\IOTcommand.c
+      1          #include "macros.h"
+      2          #include "functions.h"
+      3          #include "msp430.h"
+      4          #include <string.h>
+      5          
+
+   \                                 In  segment DATA16_Z, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      6          char IOT_Buffer[SMALL_RING_SIZE];//IOT Buffer
+   \                     IOT_Buffer:
+   \   000000                DS8 64
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          unsigned int IOT_Read;//IOT read pointer
+   \                     IOT_Read:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      8          unsigned int IOT_Write;//IOT write pointer
+   \                     IOT_Write:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_I, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+      9          char Command[ARRAY11]="          ";
+   \                     Command:
+   \   000000                DS8 11
+   \   00000B                REQUIRE `?<Initializer for Command>`
+     10          extern unsigned int First_Time2;
+     11          extern char display_line[ARRAY4][ARRAY11]; 
+     12          extern volatile unsigned int Command_Flag;
+     13          extern volatile unsigned int Command_Index;
+     14          extern volatile char Command_Buff[SMALL_RING_SIZE];
+     15          
+
+   \                                 In  segment CODE, align 2
+     16          void process_command(void){
+   \                     process_command:
+     17            if(Command_Flag){//if command was sent
+   \   000000   8293....     CMP.W   #0x0, &Command_Flag
+   \   000004   BC24         JEQ     ??process_command_9
+     18              while(Command_Buff[Command_Index]!='\r'){
+   \                     ??process_command_0:
+   \   000006   1F42....     MOV.W   &Command_Index, R15
+   \   00000A   FF900D00.... CMP.B   #0xd, Command_Buff(R15)
+   \   000010   B624         JEQ     ??process_command_9
+     19              if(++Command_Index>=SMALL_RING_SIZE){
+   \   000012   1F42....     MOV.W   &Command_Index, R15
+   \   000016   1F53         ADD.W   #0x1, R15
+   \   000018   824F....     MOV.W   R15, &Command_Index
+   \   00001C   3F904000     CMP.W   #0x40, R15
+   \   000020   0228         JNC     ??process_command_10
+     20                Command_Index=BEGINNING;
+   \   000022   8243....     MOV.W   #0x0, &Command_Index
+     21              }
+     22              switch(Command_Buff[Command_Index]){
+   \                     ??process_command_10:
+   \   000026   1F42....     MOV.W   &Command_Index, R15
+   \   00002A   5E4F....     MOV.B   Command_Buff(R15), R14
+   \   00002E   7E804200     SUB.B   #0x42, R14
+   \   000032   2824         JEQ     ??process_command_11
+   \   000034   6E82         SUB.B   #0x4, R14
+   \   000036   0724         JEQ     ??process_command_12
+   \   000038   7E800600     SUB.B   #0x6, R14
+   \   00003C   7124         JEQ     ??process_command_13
+   \   00003E   7E800600     SUB.B   #0x6, R14
+   \   000042   3F24         JEQ     ??process_command_14
+   \   000044   E03F         JMP     ??process_command_0
+     23                case 'F':
+     24                  if(++Command_Index>=SMALL_RING_SIZE){
+   \                     ??process_command_12:
+   \   000046   1F42....     MOV.W   &Command_Index, R15
+   \   00004A   1F53         ADD.W   #0x1, R15
+   \   00004C   824F....     MOV.W   R15, &Command_Index
+   \   000050   3F904000     CMP.W   #0x40, R15
+   \   000054   0228         JNC     ??process_command_15
+     25                    Command_Index=BEGINNING;
+   \   000056   8243....     MOV.W   #0x0, &Command_Index
+     26                  }
+     27                  if(Command_Buff[Command_Index]=='4'){//if F4
+   \                     ??process_command_15:
+   \   00005A   1F42....     MOV.W   &Command_Index, R15
+   \   00005E   FF903400.... CMP.B   #0x34, Command_Buff(R15)
+   \   000064   D023         JNE     ??process_command_0
+     28                    strcpy(display_line[ARRAY2], "FORWARD 4S");
+   \   000066   3D40....     MOV.W   #`?<Constant "FORWARD 4S">`, R13
+   \   00006A   3C40....     MOV.W   #display_line + 22, R12
+   \   00006E   ........     CALLA   #strcpy
+     29                    First_Time2=TRUE;
+   \   000072   9243....     MOV.W   #0x1, &First_Time2
+     30                    while(!forward(FourFullSec)){
+   \                     ??process_command_1:
+   \   000076   3C405000     MOV.W   #0x50, R12
+   \   00007A   ........     CALLA   #forward
+   \   00007E   0C93         CMP.W   #0x0, R12
+   \   000080   FA27         JEQ     ??process_command_1
+     31                    
+     32                    }
+     33                  }
+     34                break;
+   \   000082   C13F         JMP     ??process_command_0
+     35                case 'B':
+     36                  if(++Command_Index>=SMALL_RING_SIZE){
+   \                     ??process_command_11:
+   \   000084   1F42....     MOV.W   &Command_Index, R15
+   \   000088   1F53         ADD.W   #0x1, R15
+   \   00008A   824F....     MOV.W   R15, &Command_Index
+   \   00008E   3F904000     CMP.W   #0x40, R15
+   \   000092   0228         JNC     ??process_command_16
+     37                    Command_Index=BEGINNING;
+   \   000094   8243....     MOV.W   #0x0, &Command_Index
+     38                  }
+     39                  if(Command_Buff[Command_Index]=='1'){//if B1
+   \                     ??process_command_16:
+   \   000098   1F42....     MOV.W   &Command_Index, R15
+   \   00009C   FF903100.... CMP.B   #0x31, Command_Buff(R15)
+   \   0000A2   B123         JNE     ??process_command_0
+     40                  strcpy(display_line[ARRAY2], "REVERSE 1S");
+   \   0000A4   3D40....     MOV.W   #`?<Constant "REVERSE 1S">`, R13
+   \   0000A8   3C40....     MOV.W   #display_line + 22, R12
+   \   0000AC   ........     CALLA   #strcpy
+     41                  First_Time2=TRUE;
+   \   0000B0   9243....     MOV.W   #0x1, &First_Time2
+     42                    while(!reverse(FullSec)){
+   \                     ??process_command_2:
+   \   0000B4   3C401400     MOV.W   #0x14, R12
+   \   0000B8   ........     CALLA   #reverse
+   \   0000BC   0C93         CMP.W   #0x0, R12
+   \   0000BE   FA27         JEQ     ??process_command_2
+     43                    
+     44                    }
+     45                  }
+     46                break; 
+   \   0000C0   A23F         JMP     ??process_command_0
+     47                case 'R':
+     48                  if(++Command_Index>=SMALL_RING_SIZE){
+   \                     ??process_command_14:
+   \   0000C2   1F42....     MOV.W   &Command_Index, R15
+   \   0000C6   1F53         ADD.W   #0x1, R15
+   \   0000C8   824F....     MOV.W   R15, &Command_Index
+   \   0000CC   3F904000     CMP.W   #0x40, R15
+   \   0000D0   0228         JNC     ??process_command_17
+     49                    Command_Index=BEGINNING;
+   \   0000D2   8243....     MOV.W   #0x0, &Command_Index
+     50                  }
+     51                  if(Command_Buff[Command_Index]=='9'){//if R9
+   \                     ??process_command_17:
+   \   0000D6   1F42....     MOV.W   &Command_Index, R15
+   \   0000DA   FF903900.... CMP.B   #0x39, Command_Buff(R15)
+   \   0000E0   9223         JNE     ??process_command_0
+     52                    if(++Command_Index>=SMALL_RING_SIZE){
+   \   0000E2   1F42....     MOV.W   &Command_Index, R15
+   \   0000E6   1F53         ADD.W   #0x1, R15
+   \   0000E8   824F....     MOV.W   R15, &Command_Index
+   \   0000EC   3F904000     CMP.W   #0x40, R15
+   \   0000F0   0228         JNC     ??process_command_18
+     53                      Command_Index=BEGINNING;
+   \   0000F2   8243....     MOV.W   #0x0, &Command_Index
+     54                    }
+     55                    if(Command_Buff[Command_Index]=='0'){//if R90
+   \                     ??process_command_18:
+   \   0000F6   1F42....     MOV.W   &Command_Index, R15
+   \   0000FA   FF903000.... CMP.B   #0x30, Command_Buff(R15)
+   \   000100   8223         JNE     ??process_command_0
+     56                      strcpy(display_line[ARRAY2], "RIGHT TURN");
+   \   000102   3D40....     MOV.W   #`?<Constant "RIGHT TURN">`, R13
+   \   000106   3C40....     MOV.W   #display_line + 22, R12
+   \   00010A   ........     CALLA   #strcpy
+     57                      First_Time2=TRUE;
+   \   00010E   9243....     MOV.W   #0x1, &First_Time2
+     58                      while(!clockwise(HalfSec)){
+   \                     ??process_command_3:
+   \   000112   3C400A00     MOV.W   #0xa, R12
+   \   000116   ........     CALLA   #clockwise
+   \   00011A   0C93         CMP.W   #0x0, R12
+   \   00011C   FA27         JEQ     ??process_command_3
+     59                    
+     60                      }
+     61                    }
+     62                  }
+     63                break;
+   \   00011E   733F         JMP     ??process_command_0
+     64                case 'L':
+     65                  if(++Command_Index>=SMALL_RING_SIZE){
+   \                     ??process_command_13:
+   \   000120   1F42....     MOV.W   &Command_Index, R15
+   \   000124   1F53         ADD.W   #0x1, R15
+   \   000126   824F....     MOV.W   R15, &Command_Index
+   \   00012A   3F904000     CMP.W   #0x40, R15
+   \   00012E   0228         JNC     ??process_command_19
+     66                    Command_Index=BEGINNING;
+   \   000130   8243....     MOV.W   #0x0, &Command_Index
+     67                  }
+     68                  if(Command_Buff[Command_Index]=='4'){//if L4
+   \                     ??process_command_19:
+   \   000134   1F42....     MOV.W   &Command_Index, R15
+   \   000138   FF903400.... CMP.B   #0x34, Command_Buff(R15)
+   \   00013E   6323         JNE     ??process_command_0
+     69                    if(++Command_Index>=SMALL_RING_SIZE){
+   \   000140   1F42....     MOV.W   &Command_Index, R15
+   \   000144   1F53         ADD.W   #0x1, R15
+   \   000146   824F....     MOV.W   R15, &Command_Index
+   \   00014A   3F904000     CMP.W   #0x40, R15
+   \   00014E   0228         JNC     ??process_command_20
+     70                      Command_Index=BEGINNING;
+   \   000150   8243....     MOV.W   #0x0, &Command_Index
+     71                    }
+     72                    if(Command_Buff[Command_Index]=='5'){//if L45
+   \                     ??process_command_20:
+   \   000154   1F42....     MOV.W   &Command_Index, R15
+   \   000158   FF903500.... CMP.B   #0x35, Command_Buff(R15)
+   \   00015E   5323         JNE     ??process_command_0
+     73                      strcpy(display_line[ARRAY2], "LEFT TURN ");
+   \   000160   3D40....     MOV.W   #`?<Constant "LEFT TURN ">`, R13
+   \   000164   3C40....     MOV.W   #display_line + 22, R12
+   \   000168   ........     CALLA   #strcpy
+     74                      First_Time2=TRUE;
+   \   00016C   9243....     MOV.W   #0x1, &First_Time2
+     75                      while(!counterclockwise(HalfSec)){
+   \                     ??process_command_4:
+   \   000170   3C400A00     MOV.W   #0xa, R12
+   \   000174   ........     CALLA   #counterclockwise
+   \   000178   0C93         CMP.W   #0x0, R12
+   \   00017A   FA27         JEQ     ??process_command_4
+     76                    
+     77                      }
+     78                    }
+     79                  }
+     80                break;
+   \   00017C   443F         JMP     ??process_command_0
+     81              }
+     82              }
+     83            }
+     84            }
+   \                     ??process_command_9:
+   \   00017E   1001         RETA
+
+   \                                 In  segment DATA16_ID, align 1, align-sorted
+   \                     `?<Initializer for Command>`:
+   \   000000   202020202020 DC8 "          "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "FORWARD 4S">`:
+   \   000000   464F52574152 DC8 "FORWARD 4S"
+   \            4420345300  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "REVERSE 1S">`:
+   \   000000   524556455253 DC8 "REVERSE 1S"
+   \            4520315300  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "RIGHT TURN">`:
+   \   000000   524947485420 DC8 "RIGHT TURN"
+   \            5455524E00  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "LEFT TURN ">`:
+   \   000000   4C4546542054 DC8 "LEFT TURN "
+   \            55524E2000  
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   process_command
+        4   -> clockwise
+        4   -> counterclockwise
+        4   -> forward
+        4   -> reverse
+        4   -> strcpy
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      11  ?<Constant "FORWARD 4S">
+      11  ?<Constant "LEFT TURN ">
+      11  ?<Constant "REVERSE 1S">
+      11  ?<Constant "RIGHT TURN">
+      11  ?<Initializer for Command>
+      11  Command
+      64  IOT_Buffer
+       2  IOT_Read
+       2  IOT_Write
+     384  process_command
+
+ 
+ 384 bytes in segment CODE
+  44 bytes in segment DATA16_C
+  11 bytes in segment DATA16_I
+  11 bytes in segment DATA16_ID
+  68 bytes in segment DATA16_Z
+ 
+ 384 bytes of CODE  memory
+  55 bytes of CONST memory
+  79 bytes of DATA  memory
+
+Errors: none
+Warnings: none

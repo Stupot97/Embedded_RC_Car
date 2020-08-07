@@ -1,0 +1,551 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_ports.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW714B.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_ports.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\List\interrupts_ports.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\Obj\interrupts_ports.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_ports.c
+      1          #include "macros.h"
+      2          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x222
+   \   union <unnamed> _A_PBOUT_L
+   \                     _A_PBOUT_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x23a
+   \   union <unnamed> _A_PBIE_L
+   \                     _A_PBIE_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x23c
+   \   union <unnamed> _A_PBIFG_L
+   \                     _A_PBIFG_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x25a
+   \   union <unnamed> _A_PCIE_L
+   \                     _A_PCIE_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x25c
+   \   union <unnamed> _A_PCIFG_L
+   \                     _A_PCIFG_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x262
+   \   union <unnamed> _A_PDOUT_L
+   \                     _A_PDOUT_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x342
+   \   union <unnamed> _A_TA0CCTL0_L
+   \                     _A_TA0CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x352
+   \   union <unnamed> _A_TA0CCR0_L
+   \                     _A_TA0CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x442
+   \   union <unnamed> _A_TA3CCTL0_L
+   \                     _A_TA3CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7d4
+   \   union <unnamed> _A_TA4CCR1_L
+   \                     _A_TA4CCR1_L:
+   \   000000                DS8 2
+      3          #include "functions.h"
+      4          #include <string.h>
+      5          
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      6          int debounce_B1;
+   \                     debounce_B1:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          int debounce_B2;
+   \                     debounce_B2:
+   \   000000                DS8 2
+      8          
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      9          volatile int B_Pressed;
+   \                     B_Pressed:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     10          unsigned int Menu_Change;
+   \                     Menu_Change:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     11          int B1_pressed;
+   \                     B1_pressed:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     12          int B2_pressed;
+   \                     B2_pressed:
+   \   000000                DS8 2
+     13          
+     14          extern unsigned int Receive_State;
+     15          extern unsigned int Movement_Count;
+     16          extern unsigned int Display_State;
+     17          extern unsigned int Menu_Count;
+     18          extern unsigned int Menu_Level;
+     19          extern char display_line[ARRAY4][ARRAY11];
+     20          extern int ADC_Right_Detector; 
+     21          extern int ADC_Left_Detector;
+     22          extern unsigned int First_Time;
+     23          extern unsigned int First_Time2;
+     24          extern volatile unsigned int Receive_Flag;
+     25          extern volatile unsigned int Reset_Count;
+     26          extern volatile unsigned int Receive_Flag;
+     27          
+
+   \                                 In  segment DATA16_I, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     28          unsigned int White=DEFAULT_WHITE;
+   \                     White:
+   \   000000                DS8 2
+   \   000002                REQUIRE `?<Initializer for White>`
+
+   \                                 In  segment DATA16_I, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     29          unsigned int Black=DEFAULT_BLACK;
+   \                     Black:
+   \   000000                DS8 2
+   \   000002                REQUIRE `?<Initializer for Black>`
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     30          volatile unsigned int IOT_Reset;
+   \                     IOT_Reset:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     31          volatile unsigned int Backlight_Setting;
+   \                     Backlight_Setting:
+   \   000000                DS8 2
+     32          extern volatile unsigned int IP_Received;
+     33          extern volatile unsigned int Navigating;
+     34          extern volatile unsigned int Input_Received;
+     35          
+     36          #pragma vector=PORT5_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+     37          __interrupt void BUTTON_interrupt(void){//interrupt for button press
+   \                     BUTTON_interrupt:
+   \   000000   3F15         PUSHM.W #0x4, R15
+     38          // BUTTON 1
+     39          if (P5IFG & BUTTON1) {//if button 1 pressed
+   \   000002   F2B040005C02 BIT.B   #0x40, &0x25c
+   \   000008   9728         JNC     ??BUTTON_interrupt_4
+     40            if(B1_pressed){
+   \   00000A   8293....     CMP.W   #0x0, &B1_pressed
+   \   00000E   8D24         JEQ     ??BUTTON_interrupt_5
+     41              if(debounce_B1){
+   \   000010   8293....     CMP.W   #0x0, &debounce_B1
+   \   000014   8E24         JEQ     ??BUTTON_interrupt_2
+     42                 Init_Timer_A1();
+   \   000016   ........     CALLA   #Init_Timer_A1
+     43                 TA0CCTL0 &= ~CCIE; // CCR0 disable interrupt
+   \   00001A   B2C010004203 BIC.W   #0x10, &0x342
+     44                 TA0CCR0 = TA0CCR0_INTERVAL;
+   \   000020   B240A8615203 MOV.W   #0x61a8, &0x352
+     45                 if(Menu_Level==CALIBRATION_MENU){
+   \   000026   B2900300.... CMP.W   #0x3, &Menu_Level
+   \   00002C   2920         JNE     ??BUTTON_interrupt_6
+     46                   switch(Menu_Count){
+   \   00002E   1F42....     MOV.W   &Menu_Count, R15
+   \   000032   0F83         SUB.W   #0x0, R15
+   \   000034   0324         JEQ     ??BUTTON_interrupt_7
+   \   000036   1F83         SUB.W   #0x1, R15
+   \   000038   0D24         JEQ     ??BUTTON_interrupt_8
+   \   00003A   173C         JMP     ??BUTTON_interrupt_0
+     47                   case SEL1:
+     48                     White=(ADC_Left_Detector>=ADC_Right_Detector)?(ADC_Left_Detector):(ADC_Right_Detector);
+   \                     ??BUTTON_interrupt_7:
+   \   00003C   9292........ CMP.W   &ADC_Right_Detector, &ADC_Left_Detector
+   \   000042   0438         JL      ??BUTTON_interrupt_9
+   \   000044   9242........ MOV.W   &ADC_Left_Detector, &White
+   \   00004A   0F3C         JMP     ??BUTTON_interrupt_0
+   \                     ??BUTTON_interrupt_9:
+   \   00004C   9242........ MOV.W   &ADC_Right_Detector, &White
+     49                     break;
+   \   000052   0B3C         JMP     ??BUTTON_interrupt_0
+     50                   case SEL2:
+     51                      Black=(ADC_Left_Detector>=ADC_Right_Detector)?(ADC_Left_Detector):(ADC_Right_Detector);
+   \                     ??BUTTON_interrupt_8:
+   \   000054   9292........ CMP.W   &ADC_Right_Detector, &ADC_Left_Detector
+   \   00005A   0438         JL      ??BUTTON_interrupt_10
+   \   00005C   9242........ MOV.W   &ADC_Left_Detector, &Black
+   \   000062   033C         JMP     ??BUTTON_interrupt_0
+   \                     ??BUTTON_interrupt_10:
+   \   000064   9242........ MOV.W   &ADC_Right_Detector, &Black
+     52                      break;
+     53                   }
+     54                 ++Menu_Count;
+   \                     ??BUTTON_interrupt_0:
+   \   00006A   9253....     ADD.W   #0x1, &Menu_Count
+     55                  if(Menu_Count>SEL2){
+   \   00006E   A293....     CMP.W   #0x2, &Menu_Count
+   \   000072   0428         JNC     ??BUTTON_interrupt_11
+     56                    P8OUT&=~IR_LED;
+   \   000074   D2C36302     BIC.B   #0x1, &0x263
+     57                    Menu_Level=LINE_MENU;
+   \   000078   A243....     MOV.W   #0x2, &Menu_Level
+     58                  }
+     59                  Menu_Change=TRUE;
+   \                     ??BUTTON_interrupt_11:
+   \   00007C   9243....     MOV.W   #0x1, &Menu_Change
+     60                 }
+     61                 if((Menu_Level==LINE_MENU)&&(!Menu_Change)){
+   \                     ??BUTTON_interrupt_6:
+   \   000080   A293....     CMP.W   #0x2, &Menu_Level
+   \   000084   1420         JNE     ??BUTTON_interrupt_12
+   \   000086   8293....     CMP.W   #0x0, &Menu_Change
+   \   00008A   1120         JNE     ??BUTTON_interrupt_12
+     62                   if(Menu_Count==SEL1){
+   \   00008C   8293....     CMP.W   #0x0, &Menu_Count
+   \   000090   0320         JNE     ??BUTTON_interrupt_13
+     63                    Menu_Level=CALIBRATION_MENU;
+   \   000092   B2400300.... MOV.W   #0x3, &Menu_Level
+     64                   }
+     65                   if(Menu_Count==SEL2){
+   \                     ??BUTTON_interrupt_13:
+   \   000098   9293....     CMP.W   #0x1, &Menu_Count
+   \   00009C   0620         JNE     ??BUTTON_interrupt_14
+     66                      P8OUT|=IR_LED;
+   \   00009E   D2D36302     BIS.B   #0x1, &0x263
+     67                      Menu_Level=NAVIGATION_MENU;
+   \   0000A2   A242....     MOV.W   #0x4, &Menu_Level
+     68                      Movement_Count=STATE1;
+   \   0000A6   8243....     MOV.W   #0x0, &Movement_Count
+     69                   }
+     70                  Menu_Change=TRUE;
+   \                     ??BUTTON_interrupt_14:
+   \   0000AA   9243....     MOV.W   #0x1, &Menu_Change
+     71                 }
+     72                 if((Menu_Level==START_MENU)&&(!Menu_Change)){
+   \                     ??BUTTON_interrupt_12:
+   \   0000AE   8293....     CMP.W   #0x0, &Menu_Level
+   \   0000B2   1A20         JNE     ??BUTTON_interrupt_15
+   \   0000B4   8293....     CMP.W   #0x0, &Menu_Change
+   \   0000B8   1720         JNE     ??BUTTON_interrupt_15
+     73                   if(Menu_Count==SEL1){
+   \   0000BA   8293....     CMP.W   #0x0, &Menu_Count
+   \   0000BE   0220         JNE     ??BUTTON_interrupt_16
+     74                    Menu_Level=LINE_MENU;
+   \   0000C0   A243....     MOV.W   #0x2, &Menu_Level
+     75                   }
+     76                   if((Menu_Count==SEL2)&&(IP_Received)){
+   \                     ??BUTTON_interrupt_16:
+   \   0000C4   9293....     CMP.W   #0x1, &Menu_Count
+   \   0000C8   0820         JNE     ??BUTTON_interrupt_17
+   \   0000CA   8293....     CMP.W   #0x0, &IP_Received
+   \   0000CE   0524         JEQ     ??BUTTON_interrupt_17
+     77                    Menu_Level=RECEIVE_MENU;
+   \   0000D0   B2400700.... MOV.W   #0x7, &Menu_Level
+     78                    Receive_Flag=TRUE;
+   \   0000D6   9243....     MOV.W   #0x1, &Receive_Flag
+     79                   }
+     80                   if(Menu_Count==SEL3){
+   \                     ??BUTTON_interrupt_17:
+   \   0000DA   A293....     CMP.W   #0x2, &Menu_Count
+   \   0000DE   0220         JNE     ??BUTTON_interrupt_18
+     81                    Menu_Level=BACKLIGHT_MENU;
+   \   0000E0   B242....     MOV.W   #0x8, &Menu_Level
+     82                   }
+     83                    Menu_Change=TRUE;
+   \                     ??BUTTON_interrupt_18:
+   \   0000E4   9243....     MOV.W   #0x1, &Menu_Change
+     84                 }
+     85                 if((Menu_Level==BACKLIGHT_MENU)&&(!Menu_Change)){
+   \                     ??BUTTON_interrupt_15:
+   \   0000E8   B292....     CMP.W   #0x8, &Menu_Level
+   \   0000EC   0820         JNE     ??BUTTON_interrupt_19
+   \   0000EE   8293....     CMP.W   #0x0, &Menu_Change
+   \   0000F2   0520         JNE     ??BUTTON_interrupt_19
+     86                    Backlight_Setting=BACKLIGHT_ON;
+   \   0000F4   9242D407.... MOV.W   &0x7d4, &Backlight_Setting
+     87                    Menu_Change=TRUE;
+   \   0000FA   9243....     MOV.W   #0x1, &Menu_Change
+     88                 }
+     89                 if((Menu_Level==RECEIVE_MENU)&&(!Menu_Change)){
+   \                     ??BUTTON_interrupt_19:
+   \   0000FE   B2900700.... CMP.W   #0x7, &Menu_Level
+   \   000104   0520         JNE     ??BUTTON_interrupt_20
+   \   000106   8293....     CMP.W   #0x0, &Menu_Change
+   \   00010A   0220         JNE     ??BUTTON_interrupt_20
+     90                    Menu_Change=TRUE;
+   \   00010C   9243....     MOV.W   #0x1, &Menu_Change
+     91                 }
+     92                 P5IFG &= ~BUTTON1; // Clear all P5.5 interrupt flags
+   \                     ??BUTTON_interrupt_20:
+   \   000110   F2C040005C02 BIC.B   #0x40, &0x25c
+     93                 P5IE  &= ~BUTTON1; // P5.5 interrupt disabled
+   \   000116   F2C040005A02 BIC.B   #0x40, &0x25a
+     94                 debounce_B1=FALSE;
+   \   00011C   8243....     MOV.W   #0x0, &debounce_B1
+     95                 B1_pressed=FALSE;
+   \   000120   8243....     MOV.W   #0x0, &B1_pressed
+     96                 Menu_Change=FALSE;
+   \   000124   8243....     MOV.W   #0x0, &Menu_Change
+   \   000128   043C         JMP     ??BUTTON_interrupt_2
+     97                }
+     98              }
+     99            else{
+    100              B1_pressed=TRUE;
+   \                     ??BUTTON_interrupt_5:
+   \   00012A   9243....     MOV.W   #0x1, &B1_pressed
+    101              debounce_B1=TRUE;
+   \   00012E   9243....     MOV.W   #0x1, &debounce_B1
+    102            }
+    103          
+    104            B_Pressed=BUTTON1;
+   \                     ??BUTTON_interrupt_2:
+   \   000132   B2404000.... MOV.W   #0x40, &B_Pressed
+    105            }
+    106            
+    107          // BUTTON 2
+    108          if (P5IFG & BUTTON2){//if button 2 pressed
+   \                     ??BUTTON_interrupt_4:
+   \   000138   F2B020005C02 BIT.B   #0x20, &0x25c
+   \   00013E   4328         JNC     ??BUTTON_interrupt_21
+    109             if(B2_pressed){
+   \   000140   8293....     CMP.W   #0x0, &B2_pressed
+   \   000144   3724         JEQ     ??BUTTON_interrupt_22
+    110              if(debounce_B2){
+   \   000146   8293....     CMP.W   #0x0, &debounce_B2
+   \   00014A   3824         JEQ     ??BUTTON_interrupt_3
+    111                 Init_Timer_A1();
+   \   00014C   ........     CALLA   #Init_Timer_A1
+    112                 TA0CCTL0 &= ~CCIE; // CCR0 disable interrupt
+   \   000150   B2C010004203 BIC.W   #0x10, &0x342
+    113                 TA0CCR0 = TA0CCR0_INTERVAL;
+   \   000156   B240A8615203 MOV.W   #0x61a8, &0x352
+    114                 if((Menu_Level==LINE_MENU)||(Menu_Level==RECEIVE_MENU)||(Menu_Level==BACKLIGHT_MENU)){
+   \   00015C   A293....     CMP.W   #0x2, &Menu_Level
+   \   000160   0724         JEQ     ??BUTTON_interrupt_23
+   \   000162   B2900700.... CMP.W   #0x7, &Menu_Level
+   \   000168   0324         JEQ     ??BUTTON_interrupt_23
+   \   00016A   B292....     CMP.W   #0x8, &Menu_Level
+   \   00016E   0820         JNE     ??BUTTON_interrupt_24
+    115                   if(Menu_Level==BACKLIGHT_MENU){
+   \                     ??BUTTON_interrupt_23:
+   \   000170   B292....     CMP.W   #0x8, &Menu_Level
+   \   000174   0320         JNE     ??BUTTON_interrupt_25
+    116                      BACKLIGHT_ON=Backlight_Setting;
+   \   000176   9242....D407 MOV.W   &Backlight_Setting, &0x7d4
+    117                   }
+    118                   Menu_Level=START_MENU;
+   \                     ??BUTTON_interrupt_25:
+   \   00017C   8243....     MOV.W   #0x0, &Menu_Level
+    119                 }
+    120                 if(Menu_Level==NAVIGATION_MENU){
+   \                     ??BUTTON_interrupt_24:
+   \   000180   A292....     CMP.W   #0x4, &Menu_Level
+   \   000184   0A20         JNE     ??BUTTON_interrupt_26
+    121                 wheels_off();
+   \   000186   ........     CALLA   #wheels_off
+    122                 Menu_Level=LINE_MENU;
+   \   00018A   A243....     MOV.W   #0x2, &Menu_Level
+    123                 Movement_Count=STATE1;
+   \   00018E   8243....     MOV.W   #0x0, &Movement_Count
+    124                 Receive_Flag=FALSE;
+   \   000192   8243....     MOV.W   #0x0, &Receive_Flag
+    125                 Init_LEDs();
+   \   000196   ........     CALLA   #Init_LEDs
+    126                 }
+    127                 P8OUT &= ~IR_LED; //Turn LED OFF 
+   \                     ??BUTTON_interrupt_26:
+   \   00019A   D2C36302     BIC.B   #0x1, &0x263
+    128                 P5IFG &= ~BUTTON2; // Clear all P5.5 interrupt flags
+   \   00019E   F2C020005C02 BIC.B   #0x20, &0x25c
+    129                 P5IE  &= ~BUTTON2; // P5.5 interrupt disabled
+   \   0001A4   F2C020005A02 BIC.B   #0x20, &0x25a
+    130                 debounce_B2=FALSE;
+   \   0001AA   8243....     MOV.W   #0x0, &debounce_B2
+    131                 B2_pressed=FALSE;
+   \   0001AE   8243....     MOV.W   #0x0, &B2_pressed
+   \   0001B2   043C         JMP     ??BUTTON_interrupt_3
+    132                }
+    133              }
+    134            else{
+    135              B2_pressed=TRUE;
+   \                     ??BUTTON_interrupt_22:
+   \   0001B4   9243....     MOV.W   #0x1, &B2_pressed
+    136              debounce_B2=TRUE;
+   \   0001B8   9243....     MOV.W   #0x1, &debounce_B2
+    137            }
+    138          B_Pressed=BUTTON2;
+   \                     ??BUTTON_interrupt_3:
+   \   0001BC   B2402000.... MOV.W   #0x20, &B_Pressed
+    139          Menu_Change=FALSE;
+   \   0001C2   8243....     MOV.W   #0x0, &Menu_Change
+    140          }
+    141          }
+   \                     ??BUTTON_interrupt_21:
+   \   0001C6   3C17         POPM.W  #0x4, R15
+   \   0001C8   0013         RETI
+   \   0001CA                REQUIRE _A_PCIFG_L
+   \   0001CA                REQUIRE _A_TA0CCTL0_L
+   \   0001CA                REQUIRE _A_TA0CCR0_L
+   \   0001CA                REQUIRE _A_PDOUT_L
+   \   0001CA                REQUIRE _A_TA4CCR1_L
+   \   0001CA                REQUIRE _A_PCIE_L
+    142          
+    143          //interrupt for disconnecting IOT link
+    144          #pragma vector=PORT3_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+    145          __interrupt void LINK_interrupt(void){
+   \                     LINK_interrupt:
+   \   000000   3F15         PUSHM.W #0x4, R15
+    146            if ((P3IFG & IOT_LINK)){ //if board loses connection
+   \   000002   E2B23C02     BIT.B   #0x4, &0x23c
+   \   000006   1228         JNC     ??LINK_interrupt_0
+    147              if(!Navigating){
+   \   000008   8293....     CMP.W   #0x0, &Navigating
+   \   00000C   0220         JNE     ??LINK_interrupt_1
+    148                wheels_off();
+   \   00000E   ........     CALLA   #wheels_off
+    149              }
+    150              P3OUT &= ~IOT_RESET;
+   \                     ??LINK_interrupt_1:
+   \   000012   D2C32202     BIC.B   #0x1, &0x222
+    151              IOT_Reset=TRUE;
+   \   000016   9243....     MOV.W   #0x1, &IOT_Reset
+    152              TA3CCTL0 |= CCIE; //disable timer
+   \   00001A   B2D010004204 BIS.W   #0x10, &0x442
+    153              P3IFG &=~IOT_LINK;
+   \   000020   E2C23C02     BIC.B   #0x4, &0x23c
+    154              P3IE &=~IOT_LINK;
+   \   000024   E2C23A02     BIC.B   #0x4, &0x23a
+    155              Reset_Count=RESET_STATE;
+   \   000028   8243....     MOV.W   #0x0, &Reset_Count
+    156            }
+    157          }
+   \                     ??LINK_interrupt_0:
+   \   00002C   3C17         POPM.W  #0x4, R15
+   \   00002E   0013         RETI
+   \   000030                REQUIRE _A_PBIFG_L
+   \   000030                REQUIRE _A_PBOUT_L
+   \   000030                REQUIRE _A_TA3CCTL0_L
+   \   000030                REQUIRE _A_PBIE_L
+
+   \                                 In  segment INTVEC, offset 0x36, root
+   \                     `??BUTTON_interrupt::??INTVEC 54`:
+   \   000036   ....         DC16    BUTTON_interrupt
+
+   \                                 In  segment INTVEC, offset 0x42, root
+   \                     `??LINK_interrupt::??INTVEC 66`:
+   \   000042   ....         DC16    LINK_interrupt
+
+   \                                 In  segment DATA16_ID, align 2, align-sorted
+   \                     `?<Initializer for White>`:
+   \   000000   6C07         DC16 1900
+
+   \                                 In  segment DATA16_ID, align 2, align-sorted
+   \                     `?<Initializer for Black>`:
+   \   000000   E40C         DC16 3300
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+     12   BUTTON_interrupt
+       12   -> Init_LEDs
+       12   -> Init_Timer_A1
+       12   -> wheels_off
+     12   LINK_interrupt
+       12   -> wheels_off
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       2  ?<Initializer for Black>
+       2  ?<Initializer for White>
+       2  B1_pressed
+       2  B2_pressed
+     458  BUTTON_interrupt
+       2  BUTTON_interrupt::??INTVEC 54
+       2  B_Pressed
+       2  Backlight_Setting
+       2  Black
+       2  IOT_Reset
+      48  LINK_interrupt
+       2  LINK_interrupt::??INTVEC 66
+       2  Menu_Change
+       2  White
+       2  _A_PBIE_L
+       2  _A_PBIFG_L
+       2  _A_PBOUT_L
+       2  _A_PCIE_L
+       2  _A_PCIFG_L
+       2  _A_PDOUT_L
+       2  _A_TA0CCR0_L
+       2  _A_TA0CCTL0_L
+       2  _A_TA3CCTL0_L
+       2  _A_TA4CCR1_L
+       2  debounce_B1
+       2  debounce_B2
+
+ 
+  20 bytes in segment DATA16_AN
+   4 bytes in segment DATA16_I
+   4 bytes in segment DATA16_ID
+  16 bytes in segment DATA16_Z
+   4 bytes in segment INTVEC
+ 506 bytes in segment ISR_CODE
+ 
+ 506 bytes of CODE  memory
+   4 bytes of CONST memory (+  4 bytes shared)
+  20 bytes of DATA  memory (+ 20 bytes shared)
+
+Errors: none
+Warnings: none

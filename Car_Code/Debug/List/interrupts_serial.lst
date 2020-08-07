@@ -1,0 +1,750 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           23/Apr/2018  10:59:39
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_serial.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW42C8.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_serial.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\List\interrupts_serial.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\Obj\interrupts_serial.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_serial.c
+      1          #include "macros.h"
+      2          #include "functions.h"
+      3          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x5cc
+   \   union <unnamed> _A_UCA0RXBUF_L
+   \                     _A_UCA0RXBUF_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x5de
+   \   union <unnamed> _A_UCA0IV_L
+   \                     _A_UCA0IV_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x62c
+   \   union <unnamed> _A_UCA3RXBUF_L
+   \                     _A_UCA3RXBUF_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x63a
+   \   union <unnamed> _A_UCA3IE_L
+   \                     _A_UCA3IE_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x63e
+   \   union <unnamed> _A_UCA3IV_L
+   \                     _A_UCA3IV_L:
+   \   000000                DS8 2
+      4          #include <string.h>
+
+   \                                 In  segment CODE, align 2
+   \   __intrinsic __nounwind __cc_version2 char *strstr(char const *, char const *)
+   \                     strstr:
+   \   000000   1B15         PUSHM.W #0x2, R11
+   \   000002   0A4C         MOV.W   R12, R10
+   \   000004   0B4D         MOV.W   R13, R11
+   \   000006   0D4B         MOV.W   R11, R13
+   \   000008   0C4A         MOV.W   R10, R12
+   \   00000A   ........     CALLA   #__iar_Strstr
+   \   00000E   1A17         POPM.W  #0x2, R11
+   \   000010   1001         RETA
+      5          
+      6          // global variables
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          volatile unsigned int usb_rx_ring_wrUCA0;
+   \                     usb_rx_ring_wrUCA0:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      8          volatile unsigned int usb_rx_ring_wrUCA3;
+   \                     usb_rx_ring_wrUCA3:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      9          volatile unsigned int Receive_Flag;
+   \                     Receive_Flag:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     10          volatile unsigned int Sent_Flag;
+   \                     Sent_Flag:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     11          volatile unsigned int Wifi_Up;
+   \                     Wifi_Up:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     12          volatile unsigned int Wifi_Up_Temp;
+   \                     Wifi_Up_Temp:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     13          volatile unsigned int Wifi_Up_Temp2;
+   \                     Wifi_Up_Temp2:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     14          volatile unsigned int Wifi_Up_Temp3;
+   \                     Wifi_Up_Temp3:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     15          volatile unsigned int Wifi_Up_Temp4;
+   \                     Wifi_Up_Temp4:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     16          volatile unsigned int Wifi_Up_Temp5;
+   \                     Wifi_Up_Temp5:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     17          volatile unsigned int Wifi_Up_Temp6;
+   \                     Wifi_Up_Temp6:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     18          volatile unsigned int IP_Received;
+   \                     IP_Received:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     19          volatile unsigned int IP_Received_Temp;
+   \                     IP_Received_Temp:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     20          volatile unsigned int Command_Flag;
+   \                     Command_Flag:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     21          volatile unsigned int IOT_Direction;
+   \                     IOT_Direction:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     22          volatile unsigned int Exiting;
+   \                     Exiting:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     23          volatile unsigned int Input_Received;
+   \                     Input_Received:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_I, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     24          char IP_Addr1[ARRAY11]="          ";
+   \                     IP_Addr1:
+   \   000000                DS8 11
+   \   00000B                REQUIRE `?<Initializer for IP_Addr1>`
+
+   \                                 In  segment DATA16_I, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_copy
+     25          char IP_Addr2[ARRAY11]="          ";
+   \                     IP_Addr2:
+   \   000000                DS8 11
+   \   00000B                REQUIRE `?<Initializer for IP_Addr2>`
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+     26          unsigned int IP_End;
+   \                     IP_End:
+   \   000000                DS8 2
+     27          extern volatile char USB_Char_Rx0[SMALL_RING_SIZE];
+     28          extern volatile char USB_Char_Rx3[SMALL_RING_SIZE];
+     29          extern volatile unsigned int usb_rx_ring_rUCA3;
+     30          extern volatile unsigned int usb_rx_ring_rUCA0;
+     31          extern char display_line[ARRAY4][ARRAY11];
+     32          extern unsigned int Menu_Level;
+     33          extern volatile unsigned int Navigating;
+     34          extern volatile unsigned int Navigate_Speed;
+     35          
+     36          //------------------------------------------------------------------------------
+     37          #pragma vector=USCI_A0_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+     38          __interrupt void USCI_A0_ISR(void){
+   \                     USCI_A0_ISR:
+   \   000000   5F15         PUSHM.W #0x6, R15
+     39           unsigned int temp;
+     40           switch(__even_in_range(UCA0IV,UCA0IVMAX)){
+   \   000002   1F42DE05     MOV.W   &0x5de, R15
+   \   000006   E00F         ADDA    R15, PC
+   \                     `?<Jumptable for USCI_A0_ISR>_0`:
+   \   000008   183C         JMP     ??USCI_A0_ISR_2
+   \   00000A   033C         JMP     ??USCI_A0_ISR_3
+   \   00000C   163C         JMP     ??USCI_A0_ISR_2
+   \   00000E   153C         JMP     ??USCI_A0_ISR_2
+   \   000010   143C         JMP     ??USCI_A0_ISR_2
+     41           case NOVECTOR: // Vector 0 - no interrupt
+     42           break;
+     43           case RECEIVEVECTOR: // Vector 2 - RXIFG
+     44           temp = usb_rx_ring_wrUCA0;
+   \                     ??USCI_A0_ISR_3:
+   \   000012   1A42....     MOV.W   &usb_rx_ring_wrUCA0, R10
+     45           USB_Char_Rx0[temp] = UCA0RXBUF; // RX -> USB_Char_Rx character
+   \   000016   1E42CC05     MOV.W   &0x5cc, R14
+   \   00001A   CA4E....     MOV.B   R14, USB_Char_Rx0(R10)
+     46           out_character3(USB_Char_Rx0[temp]); //echo
+   \   00001E   5C4A....     MOV.B   USB_Char_Rx0(R10), R12
+   \   000022   ........     CALLA   #out_character3
+     47           if (++usb_rx_ring_wrUCA0 >= (SMALL_RING_SIZE)){
+   \   000026   1F42....     MOV.W   &usb_rx_ring_wrUCA0, R15
+   \   00002A   1F53         ADD.W   #0x1, R15
+   \   00002C   824F....     MOV.W   R15, &usb_rx_ring_wrUCA0
+   \   000030   3F904000     CMP.W   #0x40, R15
+   \   000034   0228         JNC     ??USCI_A0_ISR_2
+     48           usb_rx_ring_wrUCA0 = BEGINNING; // Circular buffer back to beginning
+   \   000036   8243....     MOV.W   #0x0, &usb_rx_ring_wrUCA0
+     49           }
+     50           break;
+     51           case TRANSMIT: 
+     52           break;
+     53           default: break;
+     54           }
+     55          }
+   \                     ??USCI_A0_ISR_2:
+   \   00003A   5A17         POPM.W  #0x6, R15
+   \   00003C   0013         RETI
+   \   00003E                REQUIRE _A_UCA0RXBUF_L
+   \   00003E                REQUIRE _A_UCA0IV_L
+     56          //------------------------------------------------------------------------------
+     57          
+     58          #pragma vector=USCI_A3_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+     59          __interrupt void USCI_A3_ISR(void){
+   \                     USCI_A3_ISR:
+   \   000000   7F15         PUSHM.W #0x8, R15
+   \   000002   B1004000     SUBA    #0x40, SP
+     60           unsigned int temp;
+     61           char* IP_Index_ptr;
+     62           char temp_array[SMALL_RING_SIZE];
+     63            unsigned int i;
+     64            unsigned int IP_Index;
+     65          
+     66           switch(__even_in_range(UCA3IV,UCA3IVMAX)){
+   \   000006   1F423E06     MOV.W   &0x63e, R15
+   \   00000A   E00F         ADDA    R15, PC
+   \                     `?<Jumptable for USCI_A3_ISR>_0`:
+   \   00000C   473D         JMP     ??USCI_A3_ISR_23
+   \   00000E   033C         JMP     ??USCI_A3_ISR_28
+   \   000010   453D         JMP     ??USCI_A3_ISR_23
+   \   000012   443D         JMP     ??USCI_A3_ISR_23
+   \   000014   433D         JMP     ??USCI_A3_ISR_23
+     67           case NOVECTOR: // Vector 0 - no interrupt
+     68           break;
+     69           case RECEIVEVECTOR: // Vector 2 – RXIFG
+     70          // code for Receive
+     71           temp = usb_rx_ring_wrUCA3;
+   \                     ??USCI_A3_ISR_28:
+   \   000016   1A42....     MOV.W   &usb_rx_ring_wrUCA3, R10
+     72           USB_Char_Rx3[temp] = UCA3RXBUF; // RX -> USB_Char_Rx character
+   \   00001A   1E422C06     MOV.W   &0x62c, R14
+   \   00001E   CA4E....     MOV.B   R14, USB_Char_Rx3(R10)
+     73           out_character0(USB_Char_Rx3[temp]); //echo
+   \   000022   5C4A....     MOV.B   USB_Char_Rx3(R10), R12
+   \   000026   ........     CALLA   #out_character0
+     74           if (++usb_rx_ring_wrUCA3 >= (SMALL_RING_SIZE)){
+   \   00002A   1F42....     MOV.W   &usb_rx_ring_wrUCA3, R15
+   \   00002E   1F53         ADD.W   #0x1, R15
+   \   000030   824F....     MOV.W   R15, &usb_rx_ring_wrUCA3
+   \   000034   3F904000     CMP.W   #0x40, R15
+   \   000038   0228         JNC     ??USCI_A3_ISR_5
+     75           usb_rx_ring_wrUCA3 = BEGINNING; // Circular buffer back to beginning
+   \   00003A   8243....     MOV.W   #0x0, &usb_rx_ring_wrUCA3
+     76           }
+     77           if(Wifi_Up_Temp6&&(USB_Char_Rx3[temp]=='i')){
+   \                     ??USCI_A3_ISR_5:
+   \   00003E   8293....     CMP.W   #0x0, &Wifi_Up_Temp6
+   \   000042   0624         JEQ     ??USCI_A3_ISR_6
+   \   000044   FA906900.... CMP.B   #0x69, USB_Char_Rx3(R10)
+   \   00004A   0220         JNE     ??USCI_A3_ISR_6
+     78            Wifi_Up=TRUE;
+   \   00004C   9243....     MOV.W   #0x1, &Wifi_Up
+     79           }
+     80           if(Wifi_Up_Temp5&&(USB_Char_Rx3[temp]=='F')){
+   \                     ??USCI_A3_ISR_6:
+   \   000050   8293....     CMP.W   #0x0, &Wifi_Up_Temp5
+   \   000054   0624         JEQ     ??USCI_A3_ISR_7
+   \   000056   FA904600.... CMP.B   #0x46, USB_Char_Rx3(R10)
+   \   00005C   0220         JNE     ??USCI_A3_ISR_7
+     81            Wifi_Up_Temp6=TRUE;
+   \   00005E   9243....     MOV.W   #0x1, &Wifi_Up_Temp6
+     82           }
+     83           if(Wifi_Up_Temp4&&(USB_Char_Rx3[temp]=='i')){
+   \                     ??USCI_A3_ISR_7:
+   \   000062   8293....     CMP.W   #0x0, &Wifi_Up_Temp4
+   \   000066   0624         JEQ     ??USCI_A3_ISR_8
+   \   000068   FA906900.... CMP.B   #0x69, USB_Char_Rx3(R10)
+   \   00006E   0220         JNE     ??USCI_A3_ISR_8
+     84            Wifi_Up_Temp5=TRUE;
+   \   000070   9243....     MOV.W   #0x1, &Wifi_Up_Temp5
+     85           }
+     86           if(Wifi_Up_Temp3&&(USB_Char_Rx3[temp]=='W')){
+   \                     ??USCI_A3_ISR_8:
+   \   000074   8293....     CMP.W   #0x0, &Wifi_Up_Temp3
+   \   000078   0624         JEQ     ??USCI_A3_ISR_9
+   \   00007A   FA905700.... CMP.B   #0x57, USB_Char_Rx3(R10)
+   \   000080   0220         JNE     ??USCI_A3_ISR_9
+     87            Wifi_Up_Temp4=TRUE;
+   \   000082   9243....     MOV.W   #0x1, &Wifi_Up_Temp4
+     88           }
+     89           if(Wifi_Up_Temp2&&(USB_Char_Rx3[temp]==':')){
+   \                     ??USCI_A3_ISR_9:
+   \   000086   8293....     CMP.W   #0x0, &Wifi_Up_Temp2
+   \   00008A   0624         JEQ     ??USCI_A3_ISR_10
+   \   00008C   FA903A00.... CMP.B   #0x3a, USB_Char_Rx3(R10)
+   \   000092   0220         JNE     ??USCI_A3_ISR_10
+     90            Wifi_Up_Temp3=TRUE;
+   \   000094   9243....     MOV.W   #0x1, &Wifi_Up_Temp3
+     91           }
+     92           if(Wifi_Up_Temp&&(USB_Char_Rx3[temp]=='4')){
+   \                     ??USCI_A3_ISR_10:
+   \   000098   8293....     CMP.W   #0x0, &Wifi_Up_Temp
+   \   00009C   0624         JEQ     ??USCI_A3_ISR_11
+   \   00009E   FA903400.... CMP.B   #0x34, USB_Char_Rx3(R10)
+   \   0000A4   0220         JNE     ??USCI_A3_ISR_11
+     93            Wifi_Up_Temp2=TRUE;
+   \   0000A6   9243....     MOV.W   #0x1, &Wifi_Up_Temp2
+     94           }
+     95           if(USB_Char_Rx3[temp]=='2'){
+   \                     ??USCI_A3_ISR_11:
+   \   0000AA   FA903200.... CMP.B   #0x32, USB_Char_Rx3(R10)
+   \   0000B0   0220         JNE     ??USCI_A3_ISR_12
+     96           Wifi_Up_Temp=TRUE;
+   \   0000B2   9243....     MOV.W   #0x1, &Wifi_Up_Temp
+     97           }
+     98           if(Receive_Flag){
+   \                     ??USCI_A3_ISR_12:
+   \   0000B6   8293....     CMP.W   #0x0, &Receive_Flag
+   \   0000BA   9C24         JEQ     ??USCI_A3_ISR_4
+     99           if(Command_Flag){
+   \   0000BC   8293....     CMP.W   #0x0, &Command_Flag
+   \   0000C0   8B24         JEQ     ??USCI_A3_ISR_3
+    100             switch(USB_Char_Rx3[temp]){
+   \   0000C2   5E4A....     MOV.B   USB_Char_Rx3(R10), R14
+   \   0000C6   7E804200     SUB.B   #0x42, R14
+   \   0000CA   1E24         JEQ     ??USCI_A3_ISR_13
+   \   0000CC   7E800300     SUB.B   #0x3, R14
+   \   0000D0   6E24         JEQ     ??USCI_A3_ISR_14
+   \   0000D2   5E83         SUB.B   #0x1, R14
+   \   0000D4   1024         JEQ     ??USCI_A3_ISR_15
+   \   0000D6   7E800600     SUB.B   #0x6, R14
+   \   0000DA   1F24         JEQ     ??USCI_A3_ISR_16
+   \   0000DC   7E800600     SUB.B   #0x6, R14
+   \   0000E0   2624         JEQ     ??USCI_A3_ISR_17
+   \   0000E2   5E83         SUB.B   #0x1, R14
+   \   0000E4   2D24         JEQ     ??USCI_A3_ISR_18
+   \   0000E6   7E800500     SUB.B   #0x5, R14
+   \   0000EA   3124         JEQ     ??USCI_A3_ISR_19
+   \   0000EC   5E83         SUB.B   #0x1, R14
+   \   0000EE   3F24         JEQ     ??USCI_A3_ISR_20
+   \   0000F0   5E83         SUB.B   #0x1, R14
+   \   0000F2   4D24         JEQ     ??USCI_A3_ISR_21
+   \   0000F4   713C         JMP     ??USCI_A3_ISR_3
+    101              case 'F':
+    102                Init_Timer_A2();
+   \                     ??USCI_A3_ISR_15:
+   \   0000F6   ........     CALLA   #Init_Timer_A2
+    103                wheels_off();
+   \   0000FA   ........     CALLA   #wheels_off
+    104                IOT_Direction=GO_FORWARD;
+   \   0000FE   9243....     MOV.W   #0x1, &IOT_Direction
+    105                Command_Flag=FALSE;
+   \   000102   8243....     MOV.W   #0x0, &Command_Flag
+    106                break;
+   \   000106   683C         JMP     ??USCI_A3_ISR_3
+    107              case 'B':
+    108                Init_Timer_A2();
+   \                     ??USCI_A3_ISR_13:
+   \   000108   ........     CALLA   #Init_Timer_A2
+    109                wheels_off();
+   \   00010C   ........     CALLA   #wheels_off
+    110                IOT_Direction=GO_REVERSE;
+   \   000110   A243....     MOV.W   #0x2, &IOT_Direction
+    111                Command_Flag=FALSE;
+   \   000114   8243....     MOV.W   #0x0, &Command_Flag
+    112                break;
+   \   000118   5F3C         JMP     ??USCI_A3_ISR_3
+    113              case 'L':
+    114                Init_Timer_A2();
+   \                     ??USCI_A3_ISR_16:
+   \   00011A   ........     CALLA   #Init_Timer_A2
+    115                wheels_off();
+   \   00011E   ........     CALLA   #wheels_off
+    116                IOT_Direction=GO_LEFT;
+   \   000122   B2400300.... MOV.W   #0x3, &IOT_Direction
+    117                Command_Flag=FALSE;
+   \   000128   8243....     MOV.W   #0x0, &Command_Flag
+    118                break;
+   \   00012C   553C         JMP     ??USCI_A3_ISR_3
+    119              case 'R':
+    120                Init_Timer_A2();
+   \                     ??USCI_A3_ISR_17:
+   \   00012E   ........     CALLA   #Init_Timer_A2
+    121                wheels_off();
+   \   000132   ........     CALLA   #wheels_off
+    122                IOT_Direction=GO_RIGHT;
+   \   000136   A242....     MOV.W   #0x4, &IOT_Direction
+    123                Command_Flag=FALSE;
+   \   00013A   8243....     MOV.W   #0x0, &Command_Flag
+    124                break;
+   \   00013E   4C3C         JMP     ??USCI_A3_ISR_3
+    125              case 'S':
+    126                IOT_Direction=DEFAULT;
+   \                     ??USCI_A3_ISR_18:
+   \   000140   8243....     MOV.W   #0x0, &IOT_Direction
+    127                wheels_off();
+   \   000144   ........     CALLA   #wheels_off
+    128                Command_Flag=FALSE;
+   \   000148   8243....     MOV.W   #0x0, &Command_Flag
+    129               break;
+   \   00014C   453C         JMP     ??USCI_A3_ISR_3
+    130              case 'X': //slow speed
+    131                 Navigate_Speed=DUTY_CYCLE_38;
+   \                     ??USCI_A3_ISR_19:
+   \   00014E   B240983A.... MOV.W   #0x3a98, &Navigate_Speed
+    132                 Menu_Level=NAVIGATION_MENU;
+   \   000154   A242....     MOV.W   #0x4, &Menu_Level
+    133                 wheels_off();
+   \   000158   ........     CALLA   #wheels_off
+    134                 Command_Flag=FALSE;
+   \   00015C   8243....     MOV.W   #0x0, &Command_Flag
+    135                 strcpy(display_line[ARRAY0],"NAVIGATING");
+   \   000160   3D40....     MOV.W   #`?<Constant "NAVIGATING">`, R13
+   \   000164   3C40....     MOV.W   #display_line, R12
+   \   000168   ........     CALLA   #strcpy
+    136               break;
+   \   00016C   353C         JMP     ??USCI_A3_ISR_3
+    137               case 'Y': //medium speed
+    138                 Navigate_Speed=DUTY_CYCLE_50;
+   \                     ??USCI_A3_ISR_20:
+   \   00016E   B240204E.... MOV.W   #0x4e20, &Navigate_Speed
+    139                 Menu_Level=NAVIGATION_MENU;
+   \   000174   A242....     MOV.W   #0x4, &Menu_Level
+    140                 wheels_off();
+   \   000178   ........     CALLA   #wheels_off
+    141                 Command_Flag=FALSE;
+   \   00017C   8243....     MOV.W   #0x0, &Command_Flag
+    142                 strcpy(display_line[ARRAY0],"NAVIGATING");
+   \   000180   3D40....     MOV.W   #`?<Constant "NAVIGATING">`, R13
+   \   000184   3C40....     MOV.W   #display_line, R12
+   \   000188   ........     CALLA   #strcpy
+    143               break;
+   \   00018C   253C         JMP     ??USCI_A3_ISR_3
+    144               case 'Z': //fast speed
+    145                 Navigate_Speed=DUTY_CYCLE_56;  //63
+   \                     ??USCI_A3_ISR_21:
+   \   00018E   B240A05A.... MOV.W   #0x5aa0, &Navigate_Speed
+    146                 Menu_Level=NAVIGATION_MENU;
+   \   000194   A242....     MOV.W   #0x4, &Menu_Level
+    147                 wheels_off();
+   \   000198   ........     CALLA   #wheels_off
+    148                 Command_Flag=FALSE;
+   \   00019C   8243....     MOV.W   #0x0, &Command_Flag
+    149                 strcpy(display_line[ARRAY0],"NAVIGATING");
+   \   0001A0   3D40....     MOV.W   #`?<Constant "NAVIGATING">`, R13
+   \   0001A4   3C40....     MOV.W   #display_line, R12
+   \   0001A8   ........     CALLA   #strcpy
+    150               break;
+   \   0001AC   153C         JMP     ??USCI_A3_ISR_3
+    151              case 'E':
+    152                 Init_Timer_A2();
+   \                     ??USCI_A3_ISR_14:
+   \   0001AE   ........     CALLA   #Init_Timer_A2
+    153                 wheels_off();
+   \   0001B2   ........     CALLA   #wheels_off
+    154                 IOT_Direction=GO_FORWARD;
+   \   0001B6   9243....     MOV.W   #0x1, &IOT_Direction
+    155                 Navigating=FALSE;
+   \   0001BA   8243....     MOV.W   #0x0, &Navigating
+    156                 Exiting=TRUE;
+   \   0001BE   9243....     MOV.W   #0x1, &Exiting
+    157                 Menu_Level=RECEIVE_MENU;
+   \   0001C2   B2400700.... MOV.W   #0x7, &Menu_Level
+    158                 Command_Flag=FALSE;
+   \   0001C8   8243....     MOV.W   #0x0, &Command_Flag
+    159                 strcpy(display_line[ARRAY0],"EXITING   ");
+   \   0001CC   3D40....     MOV.W   #`?<Constant "EXITING   ">`, R13
+   \   0001D0   3C40....     MOV.W   #display_line, R12
+   \   0001D4   ........     CALLA   #strcpy
+    160               break;
+    161             }
+    162           }
+    163           if((USB_Char_Rx3[temp]=='/')&&(!Command_Flag)){
+   \                     ??USCI_A3_ISR_3:
+   \   0001D8   FA902F00.... CMP.B   #0x2f, USB_Char_Rx3(R10)
+   \   0001DE   0820         JNE     ??USCI_A3_ISR_22
+   \   0001E0   8293....     CMP.W   #0x0, &Command_Flag
+   \   0001E4   0520         JNE     ??USCI_A3_ISR_22
+    164               Command_Flag=TRUE;
+   \   0001E6   9243....     MOV.W   #0x1, &Command_Flag
+    165               Input_Received=TRUE;
+   \   0001EA   9243....     MOV.W   #0x1, &Input_Received
+   \   0001EE   023C         JMP     ??USCI_A3_ISR_4
+    166           }
+    167           else
+    168             Command_Flag=FALSE;
+   \                     ??USCI_A3_ISR_22:
+   \   0001F0   8243....     MOV.W   #0x0, &Command_Flag
+    169           }
+    170           if(USB_Char_Rx3[temp]=='\r'){
+   \                     ??USCI_A3_ISR_4:
+   \   0001F4   FA900D00.... CMP.B   #0xd, USB_Char_Rx3(R10)
+   \   0001FA   5020         JNE     ??USCI_A3_ISR_23
+    171             if(Wifi_Up){
+   \   0001FC   8293....     CMP.W   #0x0, &Wifi_Up
+   \   000200   4D24         JEQ     ??USCI_A3_ISR_23
+    172               UCA3IE &= ~UCRXIE; //disable interrupt
+   \   000202   92C33A06     BIC.W   #0x1, &0x63a
+    173               IP_End=temp;
+   \   000206   824A....     MOV.W   R10, &IP_End
+    174               for(i=RESET_STATE;i<SMALL_RING_SIZE;++i){
+   \   00020A   0843         MOV.W   #0x0, R8
+   \                     ??USCI_A3_ISR_0:
+   \   00020C   38904000     CMP.W   #0x40, R8
+   \   000210   072C         JC      ??USCI_A3_ISR_24
+    175                  temp_array[i]=USB_Char_Rx3[i];
+   \   000212   0F48         MOV.W   R8, R15
+   \   000214   0F51         ADD.W   SP, R15
+   \   000216   DF48....0000 MOV.B   USB_Char_Rx3(R8), 0(R15)
+    176               }
+   \   00021C   1853         ADD.W   #0x1, R8
+   \   00021E   F63F         JMP     ??USCI_A3_ISR_0
+    177               IP_Index_ptr = strstr(temp_array, "Up:");//get IP Address
+   \                     ??USCI_A3_ISR_24:
+   \   000220   3D40....     MOV.W   #`?<Constant "Up:">`, R13
+   \   000224   0C41         MOV.W   SP, R12
+   \   000226   ........     CALLA   #strstr
+   \   00022A   0B4C         MOV.W   R12, R11
+    178               IP_Index=IP_Index_ptr-temp_array+ARRAY3;
+   \   00022C   0F41         MOV.W   SP, R15
+   \   00022E   0E4B         MOV.W   R11, R14
+   \   000230   0E8F         SUB.W   R15, R14
+   \   000232   3E500300     ADD.W   #0x3, R14
+   \   000236   094E         MOV.W   R14, R9
+    179               i=RESET_STATE;
+   \   000238   0843         MOV.W   #0x0, R8
+    180                 while((temp_array[IP_Index]>='.')&&(temp_array[IP_Index]<='9')){
+   \                     ??USCI_A3_ISR_1:
+   \   00023A   0F49         MOV.W   R9, R15
+   \   00023C   0F51         ADD.W   SP, R15
+   \   00023E   FF902E000000 CMP.B   #0x2e, 0(R15)
+   \   000244   1928         JNC     ??USCI_A3_ISR_25
+   \   000246   0F49         MOV.W   R9, R15
+   \   000248   0F51         ADD.W   SP, R15
+   \   00024A   FF903A000000 CMP.B   #0x3a, 0(R15)
+   \   000250   132C         JC      ??USCI_A3_ISR_25
+    181                   if(i>=ARRAY10){
+   \   000252   38900A00     CMP.W   #0xa, R8
+   \   000256   0428         JNC     ??USCI_A3_ISR_26
+    182                    IP_Addr2[i-ARRAY10]=temp_array[IP_Index];
+   \   000258   0F49         MOV.W   R9, R15
+   \   00025A   0F51         ADD.W   SP, R15
+   \   00025C   E84F....     MOV.B   @R15, LWRD(IP_Addr2 + 65526)(R8)
+    183                   }
+    184                   if(i<ARRAY10){
+   \                     ??USCI_A3_ISR_26:
+   \   000260   38900A00     CMP.W   #0xa, R8
+   \   000264   042C         JC      ??USCI_A3_ISR_27
+    185                     IP_Addr1[i]=temp_array[IP_Index];
+   \   000266   0F49         MOV.W   R9, R15
+   \   000268   0F51         ADD.W   SP, R15
+   \   00026A   E84F....     MOV.B   @R15, IP_Addr1(R8)
+    186                   }
+    187                       ++i;
+   \                     ??USCI_A3_ISR_27:
+   \   00026E   1853         ADD.W   #0x1, R8
+    188                   IP_Index=(IP_Index+ONE)%SMALL_RING_SIZE;
+   \   000270   1953         ADD.W   #0x1, R9
+   \   000272   39F03F00     AND.W   #0x3f, R9
+   \   000276   E13F         JMP     ??USCI_A3_ISR_1
+    189                 }
+    190                 Wifi_Up=FALSE;
+   \                     ??USCI_A3_ISR_25:
+   \   000278   8243....     MOV.W   #0x0, &Wifi_Up
+    191                 Wifi_Up_Temp=FALSE;
+   \   00027C   8243....     MOV.W   #0x0, &Wifi_Up_Temp
+    192                 Wifi_Up_Temp2=FALSE;
+   \   000280   8243....     MOV.W   #0x0, &Wifi_Up_Temp2
+    193                 Wifi_Up_Temp3=FALSE;
+   \   000284   8243....     MOV.W   #0x0, &Wifi_Up_Temp3
+    194                 Wifi_Up_Temp4=FALSE;
+   \   000288   8243....     MOV.W   #0x0, &Wifi_Up_Temp4
+    195                 Wifi_Up_Temp5=FALSE;
+   \   00028C   8243....     MOV.W   #0x0, &Wifi_Up_Temp5
+    196                 Wifi_Up_Temp6=FALSE;
+   \   000290   8243....     MOV.W   #0x0, &Wifi_Up_Temp6
+    197                 UCA3IE |= UCRXIE; //enable interrupt 
+   \   000294   92D33A06     BIS.W   #0x1, &0x63a
+    198                IP_Received=TRUE;
+   \   000298   9243....     MOV.W   #0x1, &IP_Received
+    199              }
+    200           }
+    201           break;
+    202           default: break;
+    203          }
+    204          }
+   \                     ??USCI_A3_ISR_23:
+   \   00029C   A1004000     ADDA    #0x40, SP
+   \   0002A0   7817         POPM.W  #0x8, R15
+   \   0002A2   0013         RETI
+   \   0002A4                REQUIRE _A_UCA3RXBUF_L
+   \   0002A4                REQUIRE _A_UCA3IE_L
+   \   0002A4                REQUIRE _A_UCA3IV_L
+
+   \                                 In  segment INTVEC, offset 0x30, root
+   \                     `??USCI_A3_ISR::??INTVEC 48`:
+   \   000030   ....         DC16    USCI_A3_ISR
+
+   \                                 In  segment INTVEC, offset 0x60, root
+   \                     `??USCI_A0_ISR::??INTVEC 96`:
+   \   000060   ....         DC16    USCI_A0_ISR
+
+   \                                 In  segment DATA16_ID, align 1, align-sorted
+   \                     `?<Initializer for IP_Addr1>`:
+   \   000000   202020202020 DC8 "          "
+   \            2020202000  
+
+   \                                 In  segment DATA16_ID, align 1, align-sorted
+   \                     `?<Initializer for IP_Addr2>`:
+   \   000000   202020202020 DC8 "          "
+   \            2020202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "NAVIGATING">`:
+   \   000000   4E4156494741 DC8 "NAVIGATING"
+   \            54494E4700  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "EXITING   ">`:
+   \   000000   45584954494E DC8 "EXITING   "
+   \            4720202000  
+
+   \                                 In  segment DATA16_C, align 1, align-sorted
+   \                     `?<Constant "Up:">`:
+   \   000000   55703A00     DC8 "Up:"
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+     16   USCI_A0_ISR
+       16   -> out_character3
+     84   USCI_A3_ISR
+       84   -> Init_Timer_A2
+       84   -> out_character0
+       84   -> strcpy
+       84   -> strstr
+       84   -> wheels_off
+      8   strstr
+        8   -> __iar_Strstr
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      11  ?<Constant "EXITING   ">
+      11  ?<Constant "NAVIGATING">
+       4  ?<Constant "Up:">
+      11  ?<Initializer for IP_Addr1>
+      11  ?<Initializer for IP_Addr2>
+       2  Command_Flag
+       2  Exiting
+       2  IOT_Direction
+      11  IP_Addr1
+      11  IP_Addr2
+       2  IP_End
+       2  IP_Received
+       2  IP_Received_Temp
+       2  Input_Received
+       2  Receive_Flag
+       2  Sent_Flag
+      62  USCI_A0_ISR
+       2  USCI_A0_ISR::??INTVEC 96
+     676  USCI_A3_ISR
+       2  USCI_A3_ISR::??INTVEC 48
+       2  Wifi_Up
+       2  Wifi_Up_Temp
+       2  Wifi_Up_Temp2
+       2  Wifi_Up_Temp3
+       2  Wifi_Up_Temp4
+       2  Wifi_Up_Temp5
+       2  Wifi_Up_Temp6
+       2  _A_UCA0IV_L
+       2  _A_UCA0RXBUF_L
+       2  _A_UCA3IE_L
+       2  _A_UCA3IV_L
+       2  _A_UCA3RXBUF_L
+      18  strstr
+       2  usb_rx_ring_wrUCA0
+       2  usb_rx_ring_wrUCA3
+
+ 
+  18 bytes in segment CODE
+  10 bytes in segment DATA16_AN
+  26 bytes in segment DATA16_C
+  22 bytes in segment DATA16_I
+  22 bytes in segment DATA16_ID
+  36 bytes in segment DATA16_Z
+   4 bytes in segment INTVEC
+ 738 bytes in segment ISR_CODE
+ 
+ 738 bytes of CODE  memory (+ 18 bytes shared)
+  48 bytes of CONST memory (+  4 bytes shared)
+  58 bytes of DATA  memory (+ 10 bytes shared)
+
+Errors: none
+Warnings: none

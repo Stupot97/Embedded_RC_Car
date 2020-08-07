@@ -1,0 +1,224 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_adc.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW713B.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_adc.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\List\interrupts_adc.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project
+#        10\Debug\Obj\interrupts_adc.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\interrupts_adc.c
+      1          #include "macros.h"
+      2          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x818
+   \   union <unnamed> _A_ADC12IV_L
+   \                     _A_ADC12IV_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x860
+   \   union <unnamed> _A_ADC12MEM0_L
+   \                     _A_ADC12MEM0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x862
+   \   union <unnamed> _A_ADC12MEM1_L
+   \                     _A_ADC12MEM1_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x864
+   \   union <unnamed> _A_ADC12MEM2_L
+   \                     _A_ADC12MEM2_L:
+   \   000000                DS8 2
+      3          #include "functions.h"
+      4          
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      5          int ADC_Thumb;
+   \                     ADC_Thumb:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      6          int ADC_Right_Detector; 
+   \                     ADC_Right_Detector:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          int ADC_Left_Detector;
+   \                     ADC_Left_Detector:
+   \   000000                DS8 2
+      8          
+      9          #pragma vector = ADC12_B_VECTOR
+
+   \                                 In  segment ISR_CODE, align 2
+     10          __interrupt void ADC12_ISR(void){
+   \                     ADC12_ISR:
+   \   000000   0F12         PUSH.W  R15
+     11           switch(__even_in_range(ADC12IV, ADC12IV__ADC12RDYIFG)){
+   \   000002   1F421808     MOV.W   &0x818, R15
+   \   000006   E00F         ADDA    R15, PC
+   \                     `?<Jumptable for ADC12_ISR>_0`:
+   \   000008   2F3C         JMP     ??ADC12_ISR_1
+   \   00000A   2E3C         JMP     ??ADC12_ISR_1
+   \   00000C   2D3C         JMP     ??ADC12_ISR_1
+   \   00000E   2C3C         JMP     ??ADC12_ISR_1
+   \   000010   2B3C         JMP     ??ADC12_ISR_1
+   \   000012   2A3C         JMP     ??ADC12_ISR_1
+   \   000014   293C         JMP     ??ADC12_ISR_1
+   \   000016   283C         JMP     ??ADC12_ISR_1
+   \   000018   1E3C         JMP     ??ADC12_ISR_2
+   \   00001A   263C         JMP     ??ADC12_ISR_1
+   \   00001C   253C         JMP     ??ADC12_ISR_1
+   \   00001E   243C         JMP     ??ADC12_ISR_1
+   \   000020   233C         JMP     ??ADC12_ISR_1
+   \   000022   223C         JMP     ??ADC12_ISR_1
+   \   000024   213C         JMP     ??ADC12_ISR_1
+   \   000026   203C         JMP     ??ADC12_ISR_1
+   \   000028   1F3C         JMP     ??ADC12_ISR_1
+   \   00002A   1E3C         JMP     ??ADC12_ISR_1
+   \   00002C   1D3C         JMP     ??ADC12_ISR_1
+   \   00002E   1C3C         JMP     ??ADC12_ISR_1
+   \   000030   1B3C         JMP     ??ADC12_ISR_1
+   \   000032   1A3C         JMP     ??ADC12_ISR_1
+   \   000034   193C         JMP     ??ADC12_ISR_1
+   \   000036   183C         JMP     ??ADC12_ISR_1
+   \   000038   173C         JMP     ??ADC12_ISR_1
+   \   00003A   163C         JMP     ??ADC12_ISR_1
+   \   00003C   153C         JMP     ??ADC12_ISR_1
+   \   00003E   143C         JMP     ??ADC12_ISR_1
+   \   000040   133C         JMP     ??ADC12_ISR_1
+   \   000042   123C         JMP     ??ADC12_ISR_1
+   \   000044   113C         JMP     ??ADC12_ISR_1
+   \   000046   103C         JMP     ??ADC12_ISR_1
+   \   000048   0F3C         JMP     ??ADC12_ISR_1
+   \   00004A   0E3C         JMP     ??ADC12_ISR_1
+   \   00004C   0D3C         JMP     ??ADC12_ISR_1
+   \   00004E   0C3C         JMP     ??ADC12_ISR_1
+   \   000050   0B3C         JMP     ??ADC12_ISR_1
+   \   000052   0A3C         JMP     ??ADC12_ISR_1
+   \   000054   093C         JMP     ??ADC12_ISR_1
+     12           case ADC12IV__NONE: break; // Vector 0: No interrupt
+     13           case ADC12IV__ADC12OVIFG: break; // Vector 2: ADC12MEMx Overflow
+     14           case ADC12IV__ADC12TOVIFG: break; // Vector 4: Conversion time overflow
+     15           case ADC12IV__ADC12HIIFG: break; // Vector 6: ADC12BHI
+     16           case ADC12IV__ADC12LOIFG: break; // Vector 8: ADC12BLO
+     17           case ADC12IV__ADC12INIFG: break; // Vector 10: ADC12BIN
+     18           case ADC12IV__ADC12IFG0: break; // Vector 12: ADC12MEM0 Interrupt
+     19           case ADC12IV__ADC12IFG1: break; // Vector 14: ADC12MEM1 Interrupt
+     20           case ADC12IV__ADC12IFG2: // Vector 16: ADC12MEM2 Interrupt
+     21           ADC_Thumb = ADC12MEM0; // A02 ADC10INCH_2
+   \                     ??ADC12_ISR_2:
+   \   000056   92426008.... MOV.W   &0x860, &ADC_Thumb
+     22           ADC_Right_Detector = ADC12MEM1; // A05 ADC10INCH_4
+   \   00005C   92426208.... MOV.W   &0x862, &ADC_Right_Detector
+     23           ADC_Left_Detector = ADC12MEM2; // A04 ADC10INCH_5
+   \   000062   92426408.... MOV.W   &0x864, &ADC_Left_Detector
+     24           break;
+     25           case ADC12IV__ADC12IFG3: break; // Vector 18: ADC12MEM3
+     26           case ADC12IV__ADC12IFG4: break; // Vector 20: ADC12MEM4
+     27           case ADC12IV__ADC12IFG5: break; // Vector 22: ADC12MEM5
+     28           case ADC12IV__ADC12IFG6: break; // Vector 24: ADC12MEM6
+     29           case ADC12IV__ADC12IFG7: break; // Vector 26: ADC12MEM7
+     30           case ADC12IV__ADC12IFG8: break; // Vector 28: ADC12MEM8
+     31           case ADC12IV__ADC12IFG9: break; // Vector 30: ADC12MEM9
+     32           case ADC12IV__ADC12IFG10: break; // Vector 32: ADC12MEM10
+     33           case ADC12IV__ADC12IFG11: break; // Vector 34: ADC12MEM11
+     34           case ADC12IV__ADC12IFG12: break; // Vector 36: ADC12MEM12
+     35           case ADC12IV__ADC12IFG13: break; // Vector 38: ADC12MEM13
+     36           case ADC12IV__ADC12IFG14: break; // Vector 40: ADC12MEM14
+     37           case ADC12IV__ADC12IFG15: break; // Vector 42: ADC12MEM15
+     38           case ADC12IV__ADC12IFG16: break; // Vector 44: ADC12MEM16
+     39           case ADC12IV__ADC12IFG17: break; // Vector 46: ADC12MEM17
+     40           case ADC12IV__ADC12IFG18: break; // Vector 48: ADC12MEM18
+     41           case ADC12IV__ADC12IFG19: break; // Vector 50: ADC12MEM19
+     42           case ADC12IV__ADC12IFG20: break; // Vector 52: ADC12MEM20
+     43           case ADC12IV__ADC12IFG21: break; // Vector 54: ADC12MEM21
+     44           case ADC12IV__ADC12IFG22: break; // Vector 56: ADC12MEM22
+     45           case ADC12IV__ADC12IFG23: break; // Vector 58: ADC12MEM23
+     46           case ADC12IV__ADC12IFG24: break; // Vector 60: ADC12MEM24
+     47           case ADC12IV__ADC12IFG25: break; // Vector 62: ADC12MEM25
+     48           case ADC12IV__ADC12IFG26: break; // Vector 64: ADC12MEM26
+     49           case ADC12IV__ADC12IFG27: break; // Vector 66: ADC12MEM27
+     50           case ADC12IV__ADC12IFG28: break; // Vector 68: ADC12MEM28
+     51           case ADC12IV__ADC12IFG29: break; // Vector 70: ADC12MEM29
+     52           case ADC12IV__ADC12IFG30: break; // Vector 72: ADC12MEM30
+     53           case ADC12IV__ADC12IFG31: break; // Vector 74: ADC12MEM31
+     54           case ADC12IV__ADC12RDYIFG: break; // Vector 76: ADC12RDY
+     55           default: break;
+     56           }
+     57          }
+   \                     ??ADC12_ISR_1:
+   \   000068   3F41         POP.W   R15
+   \   00006A   0013         RETI
+   \   00006C                REQUIRE _A_ADC12MEM0_L
+   \   00006C                REQUIRE _A_ADC12MEM1_L
+   \   00006C                REQUIRE _A_ADC12MEM2_L
+   \   00006C                REQUIRE _A_ADC12IV_L
+
+   \                                 In  segment INTVEC, offset 0x5c, root
+   \                     `??ADC12_ISR::??INTVEC 92`:
+   \   00005C   ....         DC16    ADC12_ISR
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      6   ADC12_ISR
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     108  ADC12_ISR
+       2  ADC12_ISR::??INTVEC 92
+       2  ADC_Left_Detector
+       2  ADC_Right_Detector
+       2  ADC_Thumb
+       2  _A_ADC12IV_L
+       2  _A_ADC12MEM0_L
+       2  _A_ADC12MEM1_L
+       2  _A_ADC12MEM2_L
+
+ 
+   8 bytes in segment DATA16_AN
+   6 bytes in segment DATA16_Z
+   2 bytes in segment INTVEC
+ 108 bytes in segment ISR_CODE
+ 
+ 108 bytes of CODE  memory
+   0 bytes of CONST memory (+ 2 bytes shared)
+   6 bytes of DATA  memory (+ 8 bytes shared)
+
+Errors: none
+Warnings: none

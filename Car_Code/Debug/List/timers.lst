@@ -1,0 +1,562 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\timers.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW7377.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\timers.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\timers.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\timers.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\timers.c
+      1          #include "macros.h"
+      2          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x340
+   \   union <unnamed> _A_TA0CTL_L
+   \                     _A_TA0CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x342
+   \   union <unnamed> _A_TA0CCTL0_L
+   \                     _A_TA0CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x352
+   \   union <unnamed> _A_TA0CCR0_L
+   \                     _A_TA0CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x360
+   \   union <unnamed> _A_TA0EX0_L
+   \                     _A_TA0EX0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x380
+   \   union <unnamed> _A_TA1CTL_L
+   \                     _A_TA1CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x382
+   \   union <unnamed> _A_TA1CCTL0_L
+   \                     _A_TA1CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x392
+   \   union <unnamed> _A_TA1CCR0_L
+   \                     _A_TA1CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3a0
+   \   union <unnamed> _A_TA1EX0_L
+   \                     _A_TA1EX0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x400
+   \   union <unnamed> _A_TA2CTL_L
+   \                     _A_TA2CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x402
+   \   union <unnamed> _A_TA2CCTL0_L
+   \                     _A_TA2CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x412
+   \   union <unnamed> _A_TA2CCR0_L
+   \                     _A_TA2CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x420
+   \   union <unnamed> _A_TA2EX0_L
+   \                     _A_TA2EX0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x440
+   \   union <unnamed> _A_TA3CTL_L
+   \                     _A_TA3CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x442
+   \   union <unnamed> _A_TA3CCTL0_L
+   \                     _A_TA3CCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x452
+   \   union <unnamed> _A_TA3CCR0_L
+   \                     _A_TA3CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x460
+   \   union <unnamed> _A_TA3EX0_L
+   \                     _A_TA3EX0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7c0
+   \   union <unnamed> _A_TA4CTL_L
+   \                     _A_TA4CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7c4
+   \   union <unnamed> _A_TA4CCTL1_L
+   \                     _A_TA4CCTL1_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7d2
+   \   union <unnamed> _A_TA4CCR0_L
+   \                     _A_TA4CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x7d4
+   \   union <unnamed> _A_TA4CCR1_L
+   \                     _A_TA4CCR1_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3c0
+   \   union <unnamed> _A_TB0CTL_L
+   \                     _A_TB0CTL_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3c8
+   \   union <unnamed> _A_TB0CCTL3_L
+   \                     _A_TB0CCTL3_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3ca
+   \   union <unnamed> _A_TB0CCTL4_L
+   \                     _A_TB0CCTL4_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3cc
+   \   union <unnamed> _A_TB0CCTL5_L
+   \                     _A_TB0CCTL5_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3ce
+   \   union <unnamed> _A_TB0CCTL6_L
+   \                     _A_TB0CCTL6_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3d2
+   \   union <unnamed> _A_TB0CCR0_L
+   \                     _A_TB0CCR0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3d8
+   \   union <unnamed> _A_TB0CCR3_L
+   \                     _A_TB0CCR3_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3da
+   \   union <unnamed> _A_TB0CCR4_L
+   \                     _A_TB0CCR4_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3dc
+   \   union <unnamed> _A_TB0CCR5_L
+   \                     _A_TB0CCR5_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x3de
+   \   union <unnamed> _A_TB0CCR6_L
+   \                     _A_TB0CCR6_L:
+   \   000000                DS8 2
+      3          #include "functions.h"
+      4          
+      5          
+      6          extern unsigned int Counter_Snapshot;
+      7          extern unsigned int Counter_Snapshot2;
+      8          extern unsigned int counter;
+      9          extern unsigned int counter3;
+     10          extern unsigned int Time_Count;
+     11          extern unsigned int First_Time;
+     12          extern unsigned int First_Time2;
+     13          unsigned extern volatile int counter2;
+     14          
+
+   \                                 In  segment CODE, align 2
+     15          void Init_Timers(void){//initialize timers 
+   \                     Init_Timers:
+     16          Init_Timer_A0();
+   \   000000   ........     CALLA   #Init_Timer_A0
+     17          Init_Timer_A1();
+   \   000004   ........     CALLA   #Init_Timer_A1
+     18          Init_Timer_A2();
+   \   000008   ........     CALLA   #Init_Timer_A2
+     19          Init_Timer_A3();
+   \   00000C   ........     CALLA   #Init_Timer_A3
+     20          Init_Timer_A4();
+   \   000010   ........     CALLA   #Init_Timer_A4
+     21          Init_Timer_B0();
+   \   000014   ........     BRA     #Init_Timer_B0
+     22          }     
+     23          
+
+   \                                 In  segment CODE, align 2
+     24          void Init_Timer_A0(void) {//initialize T0 
+   \                     Init_Timer_A0:
+     25            TA0CTL = TASSEL__SMCLK; // SMCLK source
+   \   000000   B24000024003 MOV.W   #0x200, &0x340
+     26            TA0CTL |= TACLR; // Resets TA0R, clock divider, count direction
+   \   000006   A2D24003     BIS.W   #0x4, &0x340
+     27            TA0CTL |= MC__CONTINOUS; // Continuous up
+   \   00000A   B2D020004003 BIS.W   #0x20, &0x340
+     28            TA0CTL |= ID__2; // Divide clock by 2
+   \   000010   B2D040004003 BIS.W   #0x40, &0x340
+     29            TA0EX0 = TAIDEX_7; // Divide clock by an additional 8
+   \   000016   B24007006003 MOV.W   #0x7, &0x360
+     30            TA0CCR0 = TA0CCR0_INTERVAL; // CCR0
+   \   00001C   B240A8615203 MOV.W   #0x61a8, &0x352
+     31            TA0CCTL0 |= CCIE; // CCR0 enable interrupt
+   \   000022   B2D010004203 BIS.W   #0x10, &0x342
+     32            TA0CTL &= ~TAIE; // Disable Overflow Interrupt
+   \   000028   A2C34003     BIC.W   #0x2, &0x340
+     33            TA0CTL &= ~TAIFG; // Clear Overflow Interrupt flag
+   \   00002C   92C34003     BIC.W   #0x1, &0x340
+     34          }
+   \   000030   1001         RETA
+   \   000032                REQUIRE _A_TA0CTL_L
+   \   000032                REQUIRE _A_TA0EX0_L
+   \   000032                REQUIRE _A_TA0CCR0_L
+   \   000032                REQUIRE _A_TA0CCTL0_L
+     35          
+     36          //debounce timer
+
+   \                                 In  segment CODE, align 2
+     37          void Init_Timer_A1(void) {//initialize T1
+   \                     Init_Timer_A1:
+     38            TA1CTL = TASSEL__SMCLK; // SMCLK source
+   \   000000   B24000028003 MOV.W   #0x200, &0x380
+     39            TA1CTL |= TACLR; // Resets TA0R, clock divider, count direction
+   \   000006   A2D28003     BIS.W   #0x4, &0x380
+     40            TA1CTL |= MC__CONTINOUS; // Continuous up
+   \   00000A   B2D020008003 BIS.W   #0x20, &0x380
+     41            TA1CTL |= ID__2; // Divide clock by 2
+   \   000010   B2D040008003 BIS.W   #0x40, &0x380
+     42            TA1EX0 = TAIDEX_7; // Divide clock by an additional 8
+   \   000016   B2400700A003 MOV.W   #0x7, &0x3a0
+     43            TA1CCR0 = TA0CCR0_INTERVAL; // CCR0
+   \   00001C   B240A8619203 MOV.W   #0x61a8, &0x392
+     44            TA1CCTL0 |= CCIE; // CCR0 enable interrupt
+   \   000022   B2D010008203 BIS.W   #0x10, &0x382
+     45            TA1CTL &= ~TAIE; // Disable Overflow Interrupt
+   \   000028   A2C38003     BIC.W   #0x2, &0x380
+     46            TA1CTL &= ~TAIFG; // Clear Overflow Interrupt flag
+   \   00002C   92C38003     BIC.W   #0x1, &0x380
+     47            counter2=RESET_STATE;
+   \   000030   8243....     MOV.W   #0x0, &counter2
+     48          }
+   \   000034   1001         RETA
+   \   000036                REQUIRE _A_TA1CTL_L
+   \   000036                REQUIRE _A_TA1EX0_L
+   \   000036                REQUIRE _A_TA1CCR0_L
+   \   000036                REQUIRE _A_TA1CCTL0_L
+     49          
+     50          //movement timer
+
+   \                                 In  segment CODE, align 2
+     51          void Init_Timer_A2(void) {//initialize T2
+   \                     Init_Timer_A2:
+     52            TA2CTL = TASSEL__SMCLK; // SMCLK source
+   \   000000   B24000020004 MOV.W   #0x200, &0x400
+     53            TA2CTL |= TACLR; // Resets TA0R, clock divider, count direction
+   \   000006   A2D20004     BIS.W   #0x4, &0x400
+     54            TA2CTL |= MC__CONTINOUS; // Continuous up
+   \   00000A   B2D020000004 BIS.W   #0x20, &0x400
+     55            TA2CTL |= ID__2; // Divide clock by 2
+   \   000010   B2D040000004 BIS.W   #0x40, &0x400
+     56            TA2EX0 = TAIDEX_7; // Divide clock by an additional 8
+   \   000016   B24007002004 MOV.W   #0x7, &0x420
+     57            TA2CCR0 = TA0CCR0_INTERVAL; // CCR0
+   \   00001C   B240A8611204 MOV.W   #0x61a8, &0x412
+     58            TA2CCTL0 |= CCIE; // CCR0 enable interrupt
+   \   000022   B2D010000204 BIS.W   #0x10, &0x402
+     59            TA2CTL &= ~TAIE; // Disable Overflow Interrupt
+   \   000028   A2C30004     BIC.W   #0x2, &0x400
+     60            TA2CTL &= ~TAIFG; // Clear Overflow Interrupt flag
+   \   00002C   92C30004     BIC.W   #0x1, &0x400
+     61            counter3=RESET_STATE;
+   \   000030   8243....     MOV.W   #0x0, &counter3
+     62          }
+   \   000034   1001         RETA
+   \   000036                REQUIRE _A_TA2CTL_L
+   \   000036                REQUIRE _A_TA2EX0_L
+   \   000036                REQUIRE _A_TA2CCR0_L
+   \   000036                REQUIRE _A_TA2CCTL0_L
+     63          
+     64          //ping timer
+
+   \                                 In  segment CODE, align 2
+     65          void Init_Timer_A3(void) {//initialize T3
+   \                     Init_Timer_A3:
+     66            TA3CTL = TASSEL__SMCLK; // SMCLK source
+   \   000000   B24000024004 MOV.W   #0x200, &0x440
+     67            TA3CTL |= TACLR; // Resets TA0R, clock divider, count direction
+   \   000006   A2D24004     BIS.W   #0x4, &0x440
+     68            TA3CTL |= MC__CONTINOUS; // Continuous up
+   \   00000A   B2D020004004 BIS.W   #0x20, &0x440
+     69            TA3CTL |= ID__2; // Divide clock by 2
+   \   000010   B2D040004004 BIS.W   #0x40, &0x440
+     70            TA3EX0 = TAIDEX_7; // Divide clock by an additional 8
+   \   000016   B24007006004 MOV.W   #0x7, &0x460
+     71            TA3CCR0 = TA0CCR0_INTERVAL; // CCR0
+   \   00001C   B240A8615204 MOV.W   #0x61a8, &0x452
+     72            TA3CCTL0 |= CCIE; // CCR0 enable interrupt
+   \   000022   B2D010004204 BIS.W   #0x10, &0x442
+     73            TA3CTL &= ~TAIE; // Disable Overflow Interrupt
+   \   000028   A2C34004     BIC.W   #0x2, &0x440
+     74            TA3CTL &= ~TAIFG; // Clear Overflow Interrupt flag
+   \   00002C   92C34004     BIC.W   #0x1, &0x440
+     75          }
+   \   000030   1001         RETA
+   \   000032                REQUIRE _A_TA3CTL_L
+   \   000032                REQUIRE _A_TA3EX0_L
+   \   000032                REQUIRE _A_TA3CCR0_L
+   \   000032                REQUIRE _A_TA3CCTL0_L
+     76          
+     77          
+     78          //pwm timer for backlight
+
+   \                                 In  segment CODE, align 2
+     79          void Init_Timer_A4(void) {
+   \                     Init_Timer_A4:
+     80          //------------------------------------------------------------------------------
+     81          // SMCLK source, up count mode, PWM Right Side
+     82          // TA4.1 BACKLIGHT
+     83          //------------------------------------------------------------------------------
+     84          TA4CTL = TASSEL__SMCLK; // SMCLK
+   \   000000   B2400002C007 MOV.W   #0x200, &0x7c0
+     85          TA4CTL |= MC__UP; // Up Mode
+   \   000006   B2D01000C007 BIS.W   #0x10, &0x7c0
+     86          TA4CTL |= TACLR; // Clear TAR
+   \   00000C   A2D2C007     BIS.W   #0x4, &0x7c0
+     87          TA4CCR0 = WHEEL_PERIOD; // PWM Period
+   \   000010   B240409CD207 MOV.W   #0x9c40, &0x7d2
+     88          TA4CCTL1 = OUTMOD_7; // CCR1 reset/set
+   \   000016   B240E000C407 MOV.W   #0xe0, &0x7c4
+     89          BACKLIGHT_ON = BACKLIGHT_OFF; // P5.6 Backlight PWM duty cycle
+   \   00001C   8243D407     MOV.W   #0x0, &0x7d4
+     90          //------------------------------------------------------------------------------
+     91          }
+   \   000020   1001         RETA
+   \   000022                REQUIRE _A_TA4CTL_L
+   \   000022                REQUIRE _A_TA4CCR0_L
+   \   000022                REQUIRE _A_TA4CCTL1_L
+   \   000022                REQUIRE _A_TA4CCR1_L
+     92          
+     93          //pwm timer for motors
+
+   \                                 In  segment CODE, align 2
+     94          void Init_Timer_B0(void) {
+   \                     Init_Timer_B0:
+     95          //------------------------------------------------------------------------------
+     96          // SMCLK source, up count mode, PWM Right Side
+     97          // TB0.3 P3.4 L_REVERSE TB0.1 P3.6 R_REVERSE
+     98          // TB0.4 P3.5 L_FORWARD TB0.2 P3.7 R_FORWARD
+     99          //------------------------------------------------------------------------------
+    100          TB0CTL = TBSSEL__SMCLK; // SMCLK
+   \   000000   B2400002C003 MOV.W   #0x200, &0x3c0
+    101          TB0CTL |= MC__UP; // Up Mode
+   \   000006   B2D01000C003 BIS.W   #0x10, &0x3c0
+    102          TB0CTL |= TBCLR; // Clear TAR
+   \   00000C   A2D2C003     BIS.W   #0x4, &0x3c0
+    103          TB0CCR0 = WHEEL_PERIOD; // PWM Period
+   \   000010   B240409CD203 MOV.W   #0x9c40, &0x3d2
+    104          TB0CCTL3 = OUTMOD_7; // CCR1 reset/set
+   \   000016   B240E000C803 MOV.W   #0xe0, &0x3c8
+    105          LEFT_REVERSE_SPEED = WHEEL_OFF; // P3.4 Left Reverse PWM duty cycle
+   \   00001C   8243D803     MOV.W   #0x0, &0x3d8
+    106          TB0CCTL4 = OUTMOD_7; // CCR2 reset/set
+   \   000020   B240E000CA03 MOV.W   #0xe0, &0x3ca
+    107          LEFT_FORWARD_SPEED = WHEEL_OFF; // P3.5 Left Forward PWM duty cycle
+   \   000026   8243DA03     MOV.W   #0x0, &0x3da
+    108          TB0CCTL5 = OUTMOD_7; // CCR1 reset/set
+   \   00002A   B240E000CC03 MOV.W   #0xe0, &0x3cc
+    109          RIGHT_REVERSE_SPEED = WHEEL_OFF; // P3.6 Right Reverse PWM duty cycle
+   \   000030   8243DC03     MOV.W   #0x0, &0x3dc
+    110          TB0CCTL6 = OUTMOD_7; // CCR2 reset/set
+   \   000034   B240E000CE03 MOV.W   #0xe0, &0x3ce
+    111          RIGHT_FORWARD_SPEED = WHEEL_OFF; // P3.7 Right Forward PWM duty cycle
+   \   00003A   8243DE03     MOV.W   #0x0, &0x3de
+    112          //------------------------------------------------------------------------------
+    113          }
+   \   00003E   1001         RETA
+   \   000040                REQUIRE _A_TB0CTL_L
+   \   000040                REQUIRE _A_TB0CCR0_L
+   \   000040                REQUIRE _A_TB0CCTL3_L
+   \   000040                REQUIRE _A_TB0CCR3_L
+   \   000040                REQUIRE _A_TB0CCTL4_L
+   \   000040                REQUIRE _A_TB0CCR4_L
+   \   000040                REQUIRE _A_TB0CCTL5_L
+   \   000040                REQUIRE _A_TB0CCR5_L
+   \   000040                REQUIRE _A_TB0CCTL6_L
+   \   000040                REQUIRE _A_TB0CCR6_L
+    114          
+
+   \                                 In  segment CODE, align 2
+    115          void Reset_Timer_A2(void){//turns off interrupt and resets
+   \                     Reset_Timer_A2:
+    116           TA2CTL = TASSEL__SMCLK; // SMCLK source
+   \   000000   B24000020004 MOV.W   #0x200, &0x400
+    117            TA2CTL |= TACLR; // Resets TA0R, clock divider, count direction
+   \   000006   A2D20004     BIS.W   #0x4, &0x400
+    118            TA2CTL |= MC__CONTINOUS; // Continuous up
+   \   00000A   B2D020000004 BIS.W   #0x20, &0x400
+    119            TA2CTL |= ID__2; // Divide clock by 2
+   \   000010   B2D040000004 BIS.W   #0x40, &0x400
+    120            TA2EX0 = TAIDEX_7; // Divide clock by an additional 8
+   \   000016   B24007002004 MOV.W   #0x7, &0x420
+    121            TA2CCR0 = TA0CCR0_INTERVAL; // CCR0
+   \   00001C   B240A8611204 MOV.W   #0x61a8, &0x412
+    122            TA2CCTL0 &= ~CCIE; // CCR0 enable interrupt
+   \   000022   B2C010000204 BIC.W   #0x10, &0x402
+    123            TA2CTL &= ~TAIE; // Disable Overflow Interrupt
+   \   000028   A2C30004     BIC.W   #0x2, &0x400
+    124            TA2CTL &= ~TAIFG; // Clear Overflow Interrupt flag
+   \   00002C   92C30004     BIC.W   #0x1, &0x400
+    125          }
+   \   000030   1001         RETA
+   \   000032                REQUIRE _A_TA2CTL_L
+   \   000032                REQUIRE _A_TA2EX0_L
+   \   000032                REQUIRE _A_TA2CCR0_L
+   \   000032                REQUIRE _A_TA2CCTL0_L
+    126          
+
+   \                                 In  segment CODE, align 2
+    127          int Wait(int Time){
+   \                     Wait:
+   \   000000   0F4C         MOV.W   R12, R15
+    128            if(First_Time2){
+   \   000002   8293....     CMP.W   #0x0, &First_Time2
+   \   000006   0524         JEQ     ??Wait_0
+    129              Counter_Snapshot2=counter;
+   \   000008   9242........ MOV.W   &counter, &Counter_Snapshot2
+    130              First_Time2=FALSE;
+   \   00000E   8243....     MOV.W   #0x0, &First_Time2
+    131            }
+    132             LEFT_FORWARD_SPEED=WHEEL_OFF;
+   \                     ??Wait_0:
+   \   000012   8243DA03     MOV.W   #0x0, &0x3da
+    133             RIGHT_FORWARD_SPEED=WHEEL_OFF;
+   \   000016   8243DE03     MOV.W   #0x0, &0x3de
+    134             LEFT_REVERSE_SPEED=WHEEL_OFF;
+   \   00001A   8243D803     MOV.W   #0x0, &0x3d8
+    135             RIGHT_REVERSE_SPEED=WHEEL_OFF;
+   \   00001E   8243DC03     MOV.W   #0x0, &0x3dc
+    136            if(counter==(Counter_Snapshot2+Time)){
+   \   000022   0E4F         MOV.W   R15, R14
+   \   000024   1E52....     ADD.W   &Counter_Snapshot2, R14
+   \   000028   829E....     CMP.W   R14, &counter
+   \   00002C   0220         JNE     ??Wait_1
+    137              return TRUE;
+   \   00002E   1C43         MOV.W   #0x1, R12
+   \   000030   1001         RETA
+    138             }
+    139            else
+    140              return FALSE;
+   \                     ??Wait_1:
+   \   000032   0C43         MOV.W   #0x0, R12
+   \   000034   1001         RETA
+   \   000036                REQUIRE _A_TB0CCR4_L
+   \   000036                REQUIRE _A_TB0CCR6_L
+   \   000036                REQUIRE _A_TB0CCR3_L
+   \   000036                REQUIRE _A_TB0CCR5_L
+    141          }
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   Init_Timer_A0
+      4   Init_Timer_A1
+      4   Init_Timer_A2
+      4   Init_Timer_A3
+      4   Init_Timer_A4
+      4   Init_Timer_B0
+      4   Init_Timers
+        4   -> Init_Timer_A0
+        4   -> Init_Timer_A1
+        4   -> Init_Timer_A2
+        4   -> Init_Timer_A3
+        4   -> Init_Timer_A4
+        0   -> Init_Timer_B0
+      4   Reset_Timer_A2
+      4   Wait
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      50  Init_Timer_A0
+      54  Init_Timer_A1
+      54  Init_Timer_A2
+      50  Init_Timer_A3
+      34  Init_Timer_A4
+      64  Init_Timer_B0
+      24  Init_Timers
+      50  Reset_Timer_A2
+      54  Wait
+       2  _A_TA0CCR0_L
+       2  _A_TA0CCTL0_L
+       2  _A_TA0CTL_L
+       2  _A_TA0EX0_L
+       2  _A_TA1CCR0_L
+       2  _A_TA1CCTL0_L
+       2  _A_TA1CTL_L
+       2  _A_TA1EX0_L
+       2  _A_TA2CCR0_L
+       2  _A_TA2CCTL0_L
+       2  _A_TA2CTL_L
+       2  _A_TA2EX0_L
+       2  _A_TA3CCR0_L
+       2  _A_TA3CCTL0_L
+       2  _A_TA3CTL_L
+       2  _A_TA3EX0_L
+       2  _A_TA4CCR0_L
+       2  _A_TA4CCR1_L
+       2  _A_TA4CCTL1_L
+       2  _A_TA4CTL_L
+       2  _A_TB0CCR0_L
+       2  _A_TB0CCR3_L
+       2  _A_TB0CCR4_L
+       2  _A_TB0CCR5_L
+       2  _A_TB0CCR6_L
+       2  _A_TB0CCTL3_L
+       2  _A_TB0CCTL4_L
+       2  _A_TB0CCTL5_L
+       2  _A_TB0CCTL6_L
+       2  _A_TB0CTL_L
+
+ 
+ 434 bytes in segment CODE
+  60 bytes in segment DATA16_AN
+ 
+ 434 bytes of CODE memory
+   0 bytes of DATA memory (+ 60 bytes shared)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,321 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\convert.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW704E.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\convert.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\convert.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\convert.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\convert.c
+      1          #include "macros.h"
+      2          #include "msp430.h"
+      3          #include "functions.h"
+      4          
+
+   \                                 In  segment DATA16_Z, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      5          char string[ARRAY11];
+   \                     string:
+   \   000000                DS8 11
+
+   \                                 In  segment DATA16_Z, align 1, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      6          char string2[ARRAY11];
+   \                     string2:
+   \   000000                DS8 11
+
+   \                                 In  segment DATA16_Z, align 2, align-sorted
+   \   000000                REQUIRE ?cstart_init_zero
+      7          int tens_places[ARRAY4];
+   \                     tens_places:
+   \   000000                DS8 8
+      8          
+
+   \                                 In  segment CODE, align 2
+      9          void convert(int L_detect, int R_detect, int thumb){
+   \                     convert:
+   \   000000   3B15         PUSHM.W #0x4, R11
+   \   000002   0A4C         MOV.W   R12, R10
+   \   000004   0B4D         MOV.W   R13, R11
+   \   000006   084E         MOV.W   R14, R8
+     10            tens_places[ARRAY0]=L_detect%TENS;
+   \   000008   3E400A00     MOV.W   #0xa, R14
+   \   00000C   0C4A         MOV.W   R10, R12
+   \   00000E   ........     CALLA   #?DivMod16s
+   \   000012   824E....     MOV.W   R14, &tens_places
+     11            tens_places[ARRAY1]=(L_detect%HUNDREDS-tens_places[ARRAY0])/TENS;
+   \   000016   3E406400     MOV.W   #0x64, R14
+   \   00001A   0C4A         MOV.W   R10, R12
+   \   00001C   ........     CALLA   #?DivMod16s
+   \   000020   0C4E         MOV.W   R14, R12
+   \   000022   1C82....     SUB.W   &tens_places, R12
+   \   000026   3E400A00     MOV.W   #0xa, R14
+   \   00002A   ........     CALLA   #?DivMod16s
+   \   00002E   824C....     MOV.W   R12, &tens_places + 2
+     12            tens_places[ARRAY2]=(L_detect%THOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS)/HUNDREDS;
+   \   000032   3E40E803     MOV.W   #0x3e8, R14
+   \   000036   0C4A         MOV.W   R10, R12
+   \   000038   ........     CALLA   #?DivMod16s
+   \   00003C   0C4E         MOV.W   R14, R12
+   \   00003E   1C82....     SUB.W   &tens_places, R12
+   \   000042   1F42....     MOV.W   &tens_places + 2, R15
+   \   000046   0F5F         RLA.W   R15
+   \   000048   0E4F         MOV.W   R15, R14
+   \   00004A   5F06         RLAM.W  #0x2, R15
+   \   00004C   0F5E         ADD.W   R14, R15
+   \   00004E   0C8F         SUB.W   R15, R12
+   \   000050   3E406400     MOV.W   #0x64, R14
+   \   000054   ........     CALLA   #?DivMod16s
+   \   000058   824C....     MOV.W   R12, &tens_places + 4
+     13            tens_places[ARRAY3]=(L_detect%TENTHOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS-tens_places[ARRAY2]*HUNDREDS)/THOUSANDS;
+   \   00005C   3E401027     MOV.W   #0x2710, R14
+   \   000060   0C4A         MOV.W   R10, R12
+   \   000062   ........     CALLA   #?DivMod16s
+   \   000066   0C4E         MOV.W   R14, R12
+   \   000068   1C82....     SUB.W   &tens_places, R12
+   \   00006C   1F42....     MOV.W   &tens_places + 2, R15
+   \   000070   0F5F         RLA.W   R15
+   \   000072   0E4F         MOV.W   R15, R14
+   \   000074   5F06         RLAM.W  #0x2, R15
+   \   000076   0F5E         ADD.W   R14, R15
+   \   000078   0C8F         SUB.W   R15, R12
+   \   00007A   1F42....     MOV.W   &tens_places + 4, R15
+   \   00007E   5F06         RLAM.W  #0x2, R15
+   \   000080   0E4F         MOV.W   R15, R14
+   \   000082   5F0A         RLAM.W  #0x3, R15
+   \   000084   0E5F         ADD.W   R15, R14
+   \   000086   0F5F         RLA.W   R15
+   \   000088   0F5E         ADD.W   R14, R15
+   \   00008A   0C8F         SUB.W   R15, R12
+   \   00008C   3E40E803     MOV.W   #0x3e8, R14
+   \   000090   ........     CALLA   #?DivMod16s
+   \   000094   824C....     MOV.W   R12, &tens_places + 6
+     14               
+     15            string[ARRAY0]=tens_places[ARRAY3]+CHAR_INCREMENT;
+   \   000098   5E42....     MOV.B   &tens_places + 6, R14
+   \   00009C   7E503000     ADD.B   #0x30, R14
+   \   0000A0   C24E....     MOV.B   R14, &string
+     16            string[ARRAY1]=tens_places[ARRAY2]+CHAR_INCREMENT;
+   \   0000A4   5E42....     MOV.B   &tens_places + 4, R14
+   \   0000A8   7E503000     ADD.B   #0x30, R14
+   \   0000AC   C24E....     MOV.B   R14, &string + 1
+     17            string[ARRAY2]=tens_places[ARRAY1]+CHAR_INCREMENT;
+   \   0000B0   5E42....     MOV.B   &tens_places + 2, R14
+   \   0000B4   7E503000     ADD.B   #0x30, R14
+   \   0000B8   C24E....     MOV.B   R14, &string + 2
+     18            string[ARRAY3]=tens_places[ARRAY0]+CHAR_INCREMENT;
+   \   0000BC   5E42....     MOV.B   &tens_places, R14
+   \   0000C0   7E503000     ADD.B   #0x30, R14
+   \   0000C4   C24E....     MOV.B   R14, &string + 3
+     19            
+     20            tens_places[ARRAY0]=R_detect%TENS;
+   \   0000C8   3E400A00     MOV.W   #0xa, R14
+   \   0000CC   0C4B         MOV.W   R11, R12
+   \   0000CE   ........     CALLA   #?DivMod16s
+   \   0000D2   824E....     MOV.W   R14, &tens_places
+     21            tens_places[ARRAY1]=(R_detect%HUNDREDS-tens_places[ARRAY0])/TENS;
+   \   0000D6   3E406400     MOV.W   #0x64, R14
+   \   0000DA   0C4B         MOV.W   R11, R12
+   \   0000DC   ........     CALLA   #?DivMod16s
+   \   0000E0   0C4E         MOV.W   R14, R12
+   \   0000E2   1C82....     SUB.W   &tens_places, R12
+   \   0000E6   3E400A00     MOV.W   #0xa, R14
+   \   0000EA   ........     CALLA   #?DivMod16s
+   \   0000EE   824C....     MOV.W   R12, &tens_places + 2
+     22            tens_places[ARRAY2]=(R_detect%THOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS)/HUNDREDS;
+   \   0000F2   3E40E803     MOV.W   #0x3e8, R14
+   \   0000F6   0C4B         MOV.W   R11, R12
+   \   0000F8   ........     CALLA   #?DivMod16s
+   \   0000FC   0C4E         MOV.W   R14, R12
+   \   0000FE   1C82....     SUB.W   &tens_places, R12
+   \   000102   1F42....     MOV.W   &tens_places + 2, R15
+   \   000106   0F5F         RLA.W   R15
+   \   000108   0E4F         MOV.W   R15, R14
+   \   00010A   5F06         RLAM.W  #0x2, R15
+   \   00010C   0F5E         ADD.W   R14, R15
+   \   00010E   0C8F         SUB.W   R15, R12
+   \   000110   3E406400     MOV.W   #0x64, R14
+   \   000114   ........     CALLA   #?DivMod16s
+   \   000118   824C....     MOV.W   R12, &tens_places + 4
+     23            tens_places[ARRAY3]=(R_detect%TENTHOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS-tens_places[ARRAY2]*HUNDREDS)/THOUSANDS;
+   \   00011C   3E401027     MOV.W   #0x2710, R14
+   \   000120   0C4B         MOV.W   R11, R12
+   \   000122   ........     CALLA   #?DivMod16s
+   \   000126   0C4E         MOV.W   R14, R12
+   \   000128   1C82....     SUB.W   &tens_places, R12
+   \   00012C   1F42....     MOV.W   &tens_places + 2, R15
+   \   000130   0F5F         RLA.W   R15
+   \   000132   0E4F         MOV.W   R15, R14
+   \   000134   5F06         RLAM.W  #0x2, R15
+   \   000136   0F5E         ADD.W   R14, R15
+   \   000138   0C8F         SUB.W   R15, R12
+   \   00013A   1F42....     MOV.W   &tens_places + 4, R15
+   \   00013E   5F06         RLAM.W  #0x2, R15
+   \   000140   0E4F         MOV.W   R15, R14
+   \   000142   5F0A         RLAM.W  #0x3, R15
+   \   000144   0E5F         ADD.W   R15, R14
+   \   000146   0F5F         RLA.W   R15
+   \   000148   0F5E         ADD.W   R14, R15
+   \   00014A   0C8F         SUB.W   R15, R12
+   \   00014C   3E40E803     MOV.W   #0x3e8, R14
+   \   000150   ........     CALLA   #?DivMod16s
+   \   000154   824C....     MOV.W   R12, &tens_places + 6
+     24            
+     25            string[ARRAY4]=' ';
+   \   000158   F2402000.... MOV.B   #0x20, &string + 4
+     26            string[ARRAY5]=tens_places[ARRAY3]+CHAR_INCREMENT;
+   \   00015E   5E42....     MOV.B   &tens_places + 6, R14
+   \   000162   7E503000     ADD.B   #0x30, R14
+   \   000166   C24E....     MOV.B   R14, &string + 5
+     27            string[ARRAY6]=tens_places[ARRAY2]+CHAR_INCREMENT;
+   \   00016A   5E42....     MOV.B   &tens_places + 4, R14
+   \   00016E   7E503000     ADD.B   #0x30, R14
+   \   000172   C24E....     MOV.B   R14, &string + 6
+     28            string[ARRAY7]=tens_places[ARRAY1]+CHAR_INCREMENT;
+   \   000176   5E42....     MOV.B   &tens_places + 2, R14
+   \   00017A   7E503000     ADD.B   #0x30, R14
+   \   00017E   C24E....     MOV.B   R14, &string + 7
+     29            string[ARRAY8]=tens_places[ARRAY0]+CHAR_INCREMENT;
+   \   000182   5E42....     MOV.B   &tens_places, R14
+   \   000186   7E503000     ADD.B   #0x30, R14
+   \   00018A   C24E....     MOV.B   R14, &string + 8
+     30            string[ARRAY9]=' ';
+   \   00018E   F2402000.... MOV.B   #0x20, &string + 9
+     31            
+     32            tens_places[ARRAY0]=thumb%TENS;
+   \   000194   3E400A00     MOV.W   #0xa, R14
+   \   000198   0C48         MOV.W   R8, R12
+   \   00019A   ........     CALLA   #?DivMod16s
+   \   00019E   824E....     MOV.W   R14, &tens_places
+     33            tens_places[ARRAY1]=(thumb%HUNDREDS-tens_places[ARRAY0])/TENS;
+   \   0001A2   3E406400     MOV.W   #0x64, R14
+   \   0001A6   0C48         MOV.W   R8, R12
+   \   0001A8   ........     CALLA   #?DivMod16s
+   \   0001AC   0C4E         MOV.W   R14, R12
+   \   0001AE   1C82....     SUB.W   &tens_places, R12
+   \   0001B2   3E400A00     MOV.W   #0xa, R14
+   \   0001B6   ........     CALLA   #?DivMod16s
+   \   0001BA   824C....     MOV.W   R12, &tens_places + 2
+     34            tens_places[ARRAY2]=(thumb%THOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS)/HUNDREDS;
+   \   0001BE   3E40E803     MOV.W   #0x3e8, R14
+   \   0001C2   0C48         MOV.W   R8, R12
+   \   0001C4   ........     CALLA   #?DivMod16s
+   \   0001C8   0C4E         MOV.W   R14, R12
+   \   0001CA   1C82....     SUB.W   &tens_places, R12
+   \   0001CE   1F42....     MOV.W   &tens_places + 2, R15
+   \   0001D2   0F5F         RLA.W   R15
+   \   0001D4   0E4F         MOV.W   R15, R14
+   \   0001D6   5F06         RLAM.W  #0x2, R15
+   \   0001D8   0F5E         ADD.W   R14, R15
+   \   0001DA   0C8F         SUB.W   R15, R12
+   \   0001DC   3E406400     MOV.W   #0x64, R14
+   \   0001E0   ........     CALLA   #?DivMod16s
+   \   0001E4   824C....     MOV.W   R12, &tens_places + 4
+     35            tens_places[ARRAY3]=(thumb%TENTHOUSANDS-tens_places[ARRAY0]-tens_places[ARRAY1]*TENS-tens_places[ARRAY2]*HUNDREDS)/THOUSANDS;
+   \   0001E8   3E401027     MOV.W   #0x2710, R14
+   \   0001EC   0C48         MOV.W   R8, R12
+   \   0001EE   ........     CALLA   #?DivMod16s
+   \   0001F2   0C4E         MOV.W   R14, R12
+   \   0001F4   1C82....     SUB.W   &tens_places, R12
+   \   0001F8   1F42....     MOV.W   &tens_places + 2, R15
+   \   0001FC   0F5F         RLA.W   R15
+   \   0001FE   0E4F         MOV.W   R15, R14
+   \   000200   5F06         RLAM.W  #0x2, R15
+   \   000202   0F5E         ADD.W   R14, R15
+   \   000204   0C8F         SUB.W   R15, R12
+   \   000206   1F42....     MOV.W   &tens_places + 4, R15
+   \   00020A   5F06         RLAM.W  #0x2, R15
+   \   00020C   0E4F         MOV.W   R15, R14
+   \   00020E   5F0A         RLAM.W  #0x3, R15
+   \   000210   0E5F         ADD.W   R15, R14
+   \   000212   0F5F         RLA.W   R15
+   \   000214   0F5E         ADD.W   R14, R15
+   \   000216   0C8F         SUB.W   R15, R12
+   \   000218   3E40E803     MOV.W   #0x3e8, R14
+   \   00021C   ........     CALLA   #?DivMod16s
+   \   000220   824C....     MOV.W   R12, &tens_places + 6
+     36            
+     37            string2[ARRAY0]=' ';
+   \   000224   F2402000.... MOV.B   #0x20, &string2
+     38            string2[ARRAY1]=' ';
+   \   00022A   F2402000.... MOV.B   #0x20, &string2 + 1
+     39            string2[ARRAY2]=' ';
+   \   000230   F2402000.... MOV.B   #0x20, &string2 + 2
+     40            string2[ARRAY3]=tens_places[ARRAY3]+CHAR_INCREMENT;
+   \   000236   5E42....     MOV.B   &tens_places + 6, R14
+   \   00023A   7E503000     ADD.B   #0x30, R14
+   \   00023E   C24E....     MOV.B   R14, &string2 + 3
+     41            string2[ARRAY4]=tens_places[ARRAY2]+CHAR_INCREMENT;
+   \   000242   5E42....     MOV.B   &tens_places + 4, R14
+   \   000246   7E503000     ADD.B   #0x30, R14
+   \   00024A   C24E....     MOV.B   R14, &string2 + 4
+     42            string2[ARRAY5]=tens_places[ARRAY1]+CHAR_INCREMENT;
+   \   00024E   5E42....     MOV.B   &tens_places + 2, R14
+   \   000252   7E503000     ADD.B   #0x30, R14
+   \   000256   C24E....     MOV.B   R14, &string2 + 5
+     43            string2[ARRAY6]=tens_places[ARRAY0]+CHAR_INCREMENT;
+   \   00025A   5E42....     MOV.B   &tens_places, R14
+   \   00025E   7E503000     ADD.B   #0x30, R14
+   \   000262   C24E....     MOV.B   R14, &string2 + 6
+     44            string2[ARRAY7]=' ';
+   \   000266   F2402000.... MOV.B   #0x20, &string2 + 7
+     45            string2[ARRAY8]=' ';
+   \   00026C   F2402000.... MOV.B   #0x20, &string2 + 8
+     46            string2[ARRAY9]=' ';
+   \   000272   F2402000.... MOV.B   #0x20, &string2 + 9
+     47          }
+   \   000278   3817         POPM.W  #0x4, R11
+   \   00027A   1001         RETA
+     48          
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+     12   convert
+       12 ?DivMod16s
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     636  convert
+      11  string
+      11  string2
+       8  tens_places
+
+ 
+ 636 bytes in segment CODE
+  30 bytes in segment DATA16_Z
+ 
+ 636 bytes of CODE memory
+  30 bytes of DATA memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,439 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V7.11.1.983/W32 for MSP430           22/Apr/2018  18:19:21
+# Copyright 1996-2017 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Texas Instruments MSP430, 8K KickStart Edition 7.11
+#
+#    __rt_version  =  3
+#    __double_size =  32
+#    __reg_r4      =  free
+#    __reg_r5      =  free
+#    __pic         =  no
+#    __core        =  430X
+#    __data_model  =  small
+#    __code_model  =  large
+#    Source file   =  C:\Users\Stuart\Desktop\ECE 306\Project 10\adc.c
+#    Command line  =  
+#        -f C:\Users\Stuart\AppData\Local\Temp\EW703E.tmp
+#        ("C:\Users\Stuart\Desktop\ECE 306\Project 10\adc.c" -lC
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List" -o
+#        "C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj" --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --debug
+#        -D__MSP430FR5994__ -e --double=32 --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench 8.0\430\lib\dlib\dl430xlsfn.h"
+#        --core=430X --data_model=small -On --multiplier=32
+#        --hw_workaround=CPU40 --code_model=large)
+#    Locale        =  English_USA.1252
+#    List file     =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\List\adc.lst
+#    Object file   =  
+#        C:\Users\Stuart\Desktop\ECE 306\Project 10\Debug\Obj\adc.r43
+#
+###############################################################################
+
+C:\Users\Stuart\Desktop\ECE 306\Project 10\adc.c
+      1          #include "macros.h"
+      2          #include "functions.h"
+      3          #include "msp430.h"
+
+   \                                 In  segment DATA16_AN, at 0x800
+   \   union <unnamed> _A_ADC12CTL0_L
+   \                     _A_ADC12CTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x802
+   \   union <unnamed> _A_ADC12CTL1_L
+   \                     _A_ADC12CTL1_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x804
+   \   union <unnamed> _A_ADC12CTL2_L
+   \                     _A_ADC12CTL2_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x806
+   \   union <unnamed> _A_ADC12CTL3_L
+   \                     _A_ADC12CTL3_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x812
+   \   union <unnamed> _A_ADC12IER0_L
+   \                     _A_ADC12IER0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x820
+   \   union <unnamed> _A_ADC12MCTL0_L
+   \                     _A_ADC12MCTL0_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x822
+   \   union <unnamed> _A_ADC12MCTL1_L
+   \                     _A_ADC12MCTL1_L:
+   \   000000                DS8 2
+
+   \                                 In  segment DATA16_AN, at 0x824
+   \   union <unnamed> _A_ADC12MCTL2_L
+   \                     _A_ADC12MCTL2_L:
+   \   000000                DS8 2
+      4          
+
+   \                                 In  segment CODE, align 2
+      5          void Init_ADC(void){
+   \                     Init_ADC:
+      6          //------------------------------------------------------------------------------
+      7          // Configure ADC12
+      8           ADC12CTL0 = RESET_STATE;
+   \   000000   82430008     MOV.W   #0x0, &0x800
+      9          // ADC10CTL0 Register Description
+     10          // ADC12SHT1x ADC12_B sample-and-hold time. These bits define the number of ADC12CLK cycles in the sampling period for registers ADC12MEM8 to ADC12MEM23. Can be modified only when ADC12ENC=0.
+     11          // 0000 = 4 ADC12CLK cycles
+     12          // 0001 = 8 ADC12CLK cycles
+     13          // 0010 = 16 ADC12CLK cycles
+     14          // 0011 = 32 ADC12CLK cycles
+     15          // 0100 = 64 ADC12CLK cycles
+     16          // 0101 = 96 ADC12CLK cycles
+     17          // 0110 = 128 ADC12CLK cycles
+     18          // 0111 = 192 ADC12CLK cycles
+     19          // 1000 = 256 ADC12CLK cycles
+     20          // 1001 = 384 ADC12CLK cycles
+     21          // 1010 = 512 ADC12CLK cycles
+     22           ADC12CTL0 |= ADC12SHT0_2; // 16 ADC clocks
+   \   000004   B2D000020008 BIS.W   #0x200, &0x800
+     23          // ADC12SHT0x ADC12_B sample-and-hold time. These bits define the number
+     24          // of ADC12CLK cycles in the sampling period for registers
+     25          // ADC12MEM0 to ADC12MEM7 and ADC12MEM24 to ADC12MEM31.
+     26          // Can be modified only when ADC12ENC = 0.
+     27          // 0000 = 4 ADC12CLK cycles
+     28          // 0001 = 8 ADC12CLK cycles
+     29          // 0010 = 16 ADC12CLK cycles
+     30          // 0011 = 32 ADC12CLK cycles
+     31          // 0100 = 64 ADC12CLK cycles
+     32          // 0101 = 96 ADC12CLK cycles
+     33          // 0110 = 128 ADC12CLK cycles
+     34          // 0111 = 192 ADC12CLK cycles
+     35          // 1000 = 256 ADC12CLK cycles
+     36          // 1001 = 384 ADC12CLK cycles
+     37          // 1010 = 512 ADC12CLK cycles
+     38           ADC12CTL0 |= ADC12SHT1_2; // 16 ADC clocks
+   \   00000A   B2D000200008 BIS.W   #0x2000, &0x800
+     39           // ADC12MSC ADC12_B multiple sample and conversion. Valid only for sequence
+     40          // or repeated modes. Can be modified only when ADC12ENC = 0.
+     41          // 0 = The sampling timer requires a rising edge of the SHI signal
+     42          // to triggereach sample-and-convert.
+     43          // 1 = The incidence of the first rising edge of the SHI signal
+     44          // triggers the sampling timer, but further sample-and-conversions
+     45          // are performed automatically as soon as the prior conversion
+     46          // is completed.
+     47           ADC12CTL0 |= ADC12MSC; // The first rising edge of the SHI signal triggers the sampling timer
+   \   000010   B2D080000008 BIS.W   #0x80, &0x800
+     48          // ADC12ON ADC12_B on. Can be modified only when ADC12ENC = 0.
+     49          // 0 = ADC12_B off
+     50          // 1 = ADC12_B on
+     51           ADC12CTL0 |= ADC12ON; // ADC12 on
+   \   000016   B2D010000008 BIS.W   #0x10, &0x800
+     52          // ADC12ENC ADC12_B enable conversion.
+     53          // 0 = ADC12_B disabled
+     54          // 1 = ADC12_B enabled
+     55          // Enable Conversion - to be done later
+     56          // ADC10CTL0 |= ADC10ENC; // Enable Conversion
+     57          // ADC12SC ADC12_B start conversion. Software-controlled sample-and-conversion
+     58          // start. ADC12SC and ADC12ENC may be set together with one instruction.
+     59          // ADC12SC is reset automatically.
+     60          // 0 = No sample-and-conversion-start
+     61          // 1 = Start sample-and-conversion
+     62          // Start Conversion - to be done later
+     63          // ADC10CTL0 |= ADC10SC; // Start Conversion
+     64          // ADC12CTL1 Register Description
+     65          // ADC12CTL1 Can be modified only when ADC10CTL0 bit ADC10ENC = 0.
+     66           ADC12CTL1 = RESET_STATE;
+   \   00001C   82430208     MOV.W   #0x0, &0x802
+     67          // ADC12PDIV ADC12_B pre divider. This bit pre divides the selected ADC12_B clock source.
+     68          // 00 = Pre divide by 1
+     69          // 01 = Pre divide by 4
+     70          // 10 = Pre divide by 32
+     71          // 11 = Pre divide by 64
+     72           ADC12CTL1 |= ADC12PDIV_0; // Pre divide by 1
+   \   000020   924202080208 MOV.W   &0x802, &0x802
+     73          // ADC12SHSx ADC12_B sample-and-hold source select
+     74          // 000 = ADC12SC bit
+     75          // 001 = see the device-specific data sheet for source
+     76          // 010 = see the device-specific data sheet for source
+     77          // 011 = see the device-specific data sheet for source
+     78          // 100 = see the device-specific data sheet for source
+     79          // 101 = see the device-specific data sheet for source
+     80          // 110 = see the device-specific data sheet for source
+     81          // 111 = see the device-specific data sheet for source
+     82           ADC12CTL1 |= ADC12SHS_0; // sample-and-hold source ADC12SC
+   \   000026   924202080208 MOV.W   &0x802, &0x802
+     83          // ADC12SHP ADC12_B sample-and-hold pulse-mode select. This bit selects
+     84          // the source of the sampling signal (SAMPCON) to be either the
+     85          // output of the sampling timer or the sample-input signal directly.
+     86          // 0 = SAMPCON signal is sourced from the sample-input signal.
+     87          // 1 = SAMPCON signal is sourced from the sampling timer.
+     88           ADC12CTL1 |= ADC12SHP; // sourced from the sampling timer
+   \   00002C   B2D000020208 BIS.W   #0x200, &0x802
+     89          // ADC12ISSH ADC12_B invert signal sample-and-hold.
+     90          // 0 = The sample-input signal is not inverted.
+     91          // 1 = The sample-input signal is inverted.
+     92           ADC12CTL1 |= ADC12ISSH_0; // sample-input signal is not inverted
+   \   000032   924202080208 MOV.W   &0x802, &0x802
+     93           // ADC12DIVx ADC12_B clock divider
+     94          // 000 = /1
+     95          // 001 = /2
+     96          // 010 = /3
+     97          // 011 = /4
+     98          // 100 = /5
+     99          // 101 = /6
+    100          // 110 = /7
+    101          // 111 = /8
+    102           ADC12CTL1 |= ADC12DIV_0; // /1 clock divider
+   \   000038   924202080208 MOV.W   &0x802, &0x802
+    103          // ADC12SSELx ADC12_B clock source select
+    104          // 00 = ADC12OSC (MODOSC)
+    105          // 01 = ACLK
+    106          // 10 = MCLK
+    107          // 11 = SMCLK
+    108           ADC12CTL1 |= ADC12SSEL0; // ADC12OSC (MODOSC)
+   \   00003E   B2D20208     BIS.W   #0x8, &0x802
+    109          // ADC12CONSEQx ADC12_B conversion sequence mode select. This bit should
+    110          // only be modified when ADC12ENC = 0 except to stop a conversion
+    111          // immediately by setting ADC12CONSEQx = 00 when ADC12ENC = 1.
+    112          // 00b = Single-channel, single-conversion
+    113          // 01b = Sequence-of-channels
+    114          // 10b = Repeat-single-channel
+    115          // 11b = Repeat-sequence-of-channels
+    116           ADC12CTL1 |= ADC12CONSEQ_3; // Repeat-sequence-of-channels
+   \   000042   B2D006000208 BIS.W   #0x6, &0x802
+    117          // ADC12BUSY ADC12_B busy. This bit indicates an active sample or conversion
+    118          // operation.
+    119          // 0 = No operation is active.
+    120          // 1 = A sequence, sample, or conversion is active.
+    121          // This is a read value not a set value 
+    122          // ADC12CTL2 Register Description
+    123           ADC12CTL2 = RESET_STATE;
+   \   000048   82430408     MOV.W   #0x0, &0x804
+    124          // ADC12RES ADC12_B resolution. This bit defines the conversion result resolution. This bit
+    125          // should only be modified when ADC12ENC=0.
+    126          // 00b = 8 bit (10 clock cycle conversion time)
+    127          // 01b = 10 bit (12 clock cycle conversion time)
+    128          // 10b = 12 bit (14 clock cycle conversion time)
+    129          // 11b = Reserved
+    130           ADC12CTL2 |= ADC12RES_2; // 12-bit conversion results / 14 clock cycle conversion
+   \   00004C   B2D020000408 BIS.W   #0x20, &0x804
+    131          // ADC12_B data read-back format. Data is always stored in the binary unsigned
+    132          // format.
+    133          // 0b = Binary unsigned. Theoretically for ADC12DIF = 0 and 12-bit mode the
+    134          // analog input voltage – VREF results in 0000h, the analog input
+    135          // voltage + VREF results in 0FFFh.
+    136          // 1b = Signed binary (2s complement), left aligned. Theoretically, for
+    137          // ADC12DIF = 0 and 12-bit mode, the analog input voltage – VREF
+    138          // results in 8000h, the analog input voltage + VREF results in 7FF0h.
+    139           ADC12CTL2 |= ADC12DF_0; // Binary unsigned
+   \   000052   924204080408 MOV.W   &0x804, &0x804
+    140          // Enables ADC low-power mode for ADC12CLK with 1/4 the specified maximum
+    141          // for ADC12PWRMD = 0. This bit should only be modified when ADC12ENC = 0.
+    142          // 0b = Regular power mode where sample rate is not restricted
+    143          // 1b = Low power mode enable, ADC12CLK can not be greater than 1/4 the
+    144          // device-specific data sheet specified maximum for ADC12PWRMD = 0
+    145           ADC12CTL2 |= ADC12PWRMD_0; // Regular power mode where sample rate is not restricted
+   \   000058   924204080408 MOV.W   &0x804, &0x804
+    146           // ADC12CTL3 Register Description
+    147           ADC12CTL3 = RESET_STATE;
+   \   00005E   82430608     MOV.W   #0x0, &0x806
+    148          // ADC12ICH3MAP Controls internal channel 3 selection to ADC input channel A26.
+    149          // Can be modified only when ADC12ENC = 0.
+    150          // 0b = external pin is selected for ADC input channel A26
+    151          // 1b = ADC input channel internal 3 is selected for ADC input channel A26, see
+    152          // device-specific data sheet for availability
+    153           ADC12CTL3 |= ADC12ICH3MAP_0; // external pin is selected for ADC input channel A26
+   \   000062   924206080608 MOV.W   &0x806, &0x806
+    154          // ADC12ICH2MAP Controls internal channel 2 selection to ADC input channel A27.
+    155          // Can be modified only when ADC12ENC = 0.
+    156          // 0b = external pin is selected for ADC input channel A27
+    157          // 1b = ADC input channel internal 3 is selected for ADC input channel A27, see
+    158          // device-specific data sheet for availability
+    159           ADC12CTL3 |= ADC12ICH2MAP_0; // external pin is selected for ADC input channel A27
+   \   000068   924206080608 MOV.W   &0x806, &0x806
+    160          // ADC12ICH1MAP Controls internal channel 1 selection to ADC input channel A28.
+    161          // Can be modified only when ADC12ENC = 0.
+    162          // 0b = external pin is selected for ADC input channel A28
+    163          // 1b = ADC input channel internal 3 is selected for ADC input channel A28, see
+    164          // device-specific data sheet for availability
+    165           ADC12CTL3 |= ADC12ICH1MAP_0; // external pin is selected for ADC input channel A28
+   \   00006E   924206080608 MOV.W   &0x806, &0x806
+    166          // ADC12ICH0MAP Controls internal channel 1 selection to ADC input channel A29.
+    167          // Can be modified only when ADC12ENC = 0.
+    168          // 0b = external pin is selected for ADC input channel A29
+    169          // 1b = ADC input channel internal 3 is selected for ADC input channel A29, see
+    170          // device-specific data sheet for availability
+    171           ADC12CTL3 |= ADC12ICH0MAP_0; // external pin is selected for ADC input channel A29
+   \   000074   924206080608 MOV.W   &0x806, &0x806
+    172          // ADC12TCMAP Controls temperature sensor ADC input channel selection. Can be
+    173          // modified only when ADC12ENC = 0.
+    174          // 0b = external pin is selected for ADC input channel A30
+    175          // 1b = ADC internal temperature sensor channel is selected for ADC input channel A30
+    176           ADC12CTL3 |= ADC12TCMAP_1; // ADC internal temperature sensor channel is
+   \   00007A   B2D080000608 BIS.W   #0x80, &0x806
+    177           // selected for ADC input channel A30
+    178           // ADC12BATMAP Controls 1/2 AVCC ADC input channel selection. Can be modified
+    179          // only when ADC12ENC = 0.
+    180          // 0b = external pin is selected for ADC input channel A31
+    181          // 1b = ADC internal 1/2 x AVCC channel is selected for ADC input channel A31
+    182           ADC12CTL3 |= ADC12BATMAP_1; // ADC internal 1/2 x AVCC channel is selected for
+   \   000080   B2D040000608 BIS.W   #0x40, &0x806
+    183           // ADC input channel A31
+    184          // ADC12CSTARTADDx ADC12_B conversion start address. These bits select which
+    185          // ADC12_B conversion memory register is used for a single
+    186          // conversion or for the first conversion in a sequence. The
+    187          // value of CSTARTADDx is 0h to 1Fh, corresponding to ADC12MEM0
+    188          // to ADC12MEM31. Can be modified only when ADC12ENC = 0.
+    189           ADC12CTL3 |= ADC12CSTARTADD_0; // ADC12MEM0 conversion start address
+   \   000086   924206080608 MOV.W   &0x806, &0x806
+    190           // ADC12MCTL0 Register Description
+    191           ADC12MCTL0 = RESET_STATE;
+   \   00008C   82432008     MOV.W   #0x0, &0x820
+    192          // ADC12WINC Comparator window enable. Can be modified only when ADC12ENC = 0.
+    193          // 0b = Comparator window disabled
+    194          // 1b = Comparator window enabled
+    195          // ADC12DIF Differential mode. Can be modified only when ADC12ENC = 0.
+    196          // 0b = Single-ended mode enabled
+    197          // 1b = Differential mode enabled
+    198          // ADC12VRSEL Selects combinations of VR+ and VR- sources as well as the buffer
+    199          // selection. Note: there is only one buffer so it can be used for
+    200          // either VR+ or VR-, but not both. Can be modified only when ADC12ENC = 0.
+    201          // 0000b = VR+ = AVCC, VR- = AVSS
+    202          // 0001b = VR+ = VREF buffered, VR- = AVSS
+    203          // 0010b = VR+ = VeREF-, VR- = AVSS
+    204          // 0011b = VR+ = VeREF+ buffered, VR- = AVSS
+    205          // 0100b = VR+ = VeREF+, VR- = AVSS
+    206          // 0101b = VR+ = AVCC, VR- = VeREF+ buffered
+    207          // 0110b = VR+ = AVCC, VR- = VeREF+
+    208          // 0111b = VR+ = VREF buffered, VR- = VeREF+
+    209          // 1000b = Reserved
+    210          // 1001b = VR+ = AVCC, VR- = VREF buffered
+    211          // 1010b = Reserved
+    212          // 1011b = VR+ = VeREF+, VR- = VREF buffered
+    213          // 1100b = VR+ = AVCC, VR- = VeREF//
+    214          // 1101b = VR+ = VREF buffered, VR- = VeREF//
+    215          // 1110b = VR+ = VeREF+, VR- = VeREF//
+    216          // 1111b = VR+ = VeREF+ buffered, VR- = VeREF//
+    217          // ADC12EOS End of sequence. Indicates the last conversion in a sequence.
+    218          // Can be modified only when ADC12ENC = 0.
+    219          // 0b = Not end of sequence
+    220          // 1b = End of sequence
+    221          // ADC12INCHx Input channel select. If even channels are set as differential,
+    222          // then odd channel configuration is ignored. Can be modified only
+    223          // when ADC12ENC = 0.
+    224          // 00000b = If ADC12DIF = 0: A0; If ADC12DIF = 1: Ain+ = A0, Ain- = A1
+    225          // 00001b = If ADC12DIF = 0: A1; If ADC12DIF = 1: Ain+ = A0, Ain- = A1
+    226          // 00010b = If ADC12DIF = 0: A2; If ADC12DIF = 1: Ain+ = A2, Ain- = A3
+    227          // 00011b = If ADC12DIF = 0: A3; If ADC12DIF = 1: Ain+ = A2, Ain- = A3
+    228          // 00100b = If ADC12DIF = 0: A4; If ADC12DIF = 1: Ain+ = A4, Ain- = A5
+    229          // 00101b = If ADC12DIF = 0: A5; If ADC12DIF = 1: Ain+ = A4, Ain- = A5
+    230          // 00110b = If ADC12DIF = 0: A6; If ADC12DIF = 1: Ain+ = A6, Ain- = A7
+    231          // 00111b = If ADC12DIF = 0: A7; If ADC12DIF = 1: Ain+ = A6, Ain- = A7
+    232          // 01000b = If ADC12DIF = 0: A8; If ADC12DIF = 1: Ain+ = A8, Ain- = A9
+    233          // 01001b = If ADC12DIF = 0: A9; If ADC12DIF = 1: Ain+ = A8, Ain- = A9
+    234          // 01010b = If ADC12DIF = 0: A10; If ADC12DIF = 1: Ain+ = A10, Ain- = A11
+    235          // 01011b = If ADC12DIF = 0: A11; If ADC12DIF = 1: Ain+ = A10, Ain- = A11
+    236          // 01100b = If ADC12DIF = 0: A12; If ADC12DIF = 1: Ain+ = A12, Ain- = A13
+    237          // 01101b = If ADC12DIF = 0: A13; If ADC12DIF = 1: Ain+ = A12, Ain- = A13
+    238          // 01110b = If ADC12DIF = 0: A14; If ADC12DIF = 1: Ain+ = A14, Ain- = A15
+    239          // 01111b = If ADC12DIF = 0: A15; If ADC12DIF = 1: Ain+ = A14, Ain- = A15
+    240          // 10000b = If ADC12DIF = 0: A16; If ADC12DIF = 1: Ain+ = A16, Ain- = A17
+    241          // 10001b = If ADC12DIF = 0: A17; If ADC12DIF = 1: Ain+ = A16, Ain- = A17
+    242          // 10010b = If ADC12DIF = 0: A18; If ADC12DIF = 1: Ain+ = A18, Ain- = A19
+    243          // 10011b = If ADC12DIF = 0: A19; If ADC12DIF = 1: Ain+ = A18, Ain- = A19
+    244          // 10100b = If ADC12DIF = 0: A20; If ADC12DIF = 1: Ain+ = A20, Ain- = A21
+    245          // 10101b = If ADC12DIF = 0: A21; If ADC12DIF = 1: Ain+ = A20, Ain- = A21
+    246          // 10110b = If ADC12DIF = 0: A22; If ADC12DIF = 1: Ain+ = A22, Ain- = A23
+    247          // 10111b = If ADC12DIF = 0: A23; If ADC12DIF = 1: Ain+ = A22, Ain- = A23
+    248          // 11000b = If ADC12DIF = 0: A24; If ADC12DIF = 1: Ain+ = A24, Ain- = A25
+    249          // 11001b = If ADC12DIF = 0: A25; If ADC12DIF = 1: Ain+ = A24, Ain- = A25
+    250          // 11010b = If ADC12DIF = 0: A26; If ADC12DIF = 1: Ain+ = A26, Ain- =A27
+    251          // 11011b = If ADC12DIF = 0: A27; If ADC12DIF = 1: Ain+ = A26, Ain- = A27
+    252          // 11100b = If ADC12DIF = 0: A28; If ADC12DIF = 1: Ain+ = A28, Ain- = A29
+    253          // 11101b = If ADC12DIF = 0: A29; If ADC12DIF = 1: Ain+ = A28, Ain- = A29
+    254          // 11110b = If ADC12DIF = 0: A30; If ADC12DIF = 1: Ain+ = A30, Ain- = A31
+    255          // 11111b = If ADC12DIF = 0: A31; If ADC12DIF = 1: Ain+ = A30, Ain- = A31
+    256           ADC12MCTL0 = RESET_STATE;
+   \   000090   82432008     MOV.W   #0x0, &0x820
+    257           ADC12MCTL0 |= ADC12WINC_0; // Comparator window disabled
+   \   000094   924220082008 MOV.W   &0x820, &0x820
+    258           ADC12MCTL0 |= ADC12DIF_0; // Single-ended mode enabled
+   \   00009A   924220082008 MOV.W   &0x820, &0x820
+    259           ADC12MCTL0 |= ADC12VRSEL_0; // VR+ = AVCC, VR- = AVSS
+   \   0000A0   924220082008 MOV.W   &0x820, &0x820
+    260           ADC12MCTL0 |= ADC12INCH_2; // channel = A2
+   \   0000A6   A2D32008     BIS.W   #0x2, &0x820
+    261           ADC12MCTL1 = RESET_STATE;
+   \   0000AA   82432208     MOV.W   #0x0, &0x822
+    262           ADC12MCTL1 |= ADC12WINC_0; // Comparator window disabled
+   \   0000AE   924222082208 MOV.W   &0x822, &0x822
+    263           ADC12MCTL1 |= ADC12DIF_0; // Single-ended mode enabled
+   \   0000B4   924222082208 MOV.W   &0x822, &0x822
+    264           ADC12MCTL1 |= ADC12VRSEL_0; // VR+ = AVCC, VR- = AVSS
+   \   0000BA   924222082208 MOV.W   &0x822, &0x822
+    265           ADC12MCTL1 |= ADC12INCH_4; // channel = A4 Right
+   \   0000C0   A2D22208     BIS.W   #0x4, &0x822
+    266           ADC12MCTL2 = RESET_STATE;
+   \   0000C4   82432408     MOV.W   #0x0, &0x824
+    267           ADC12MCTL2 |= ADC12WINC_0; // Comparator window disabled
+   \   0000C8   924224082408 MOV.W   &0x824, &0x824
+    268           ADC12MCTL2 |= ADC12DIF_0; // Single-ended mode enabled
+   \   0000CE   924224082408 MOV.W   &0x824, &0x824
+    269           ADC12MCTL2 |= ADC12VRSEL_0; // VR+ = AVCC, VR- = AVSS
+   \   0000D4   924224082408 MOV.W   &0x824, &0x824
+    270           ADC12MCTL2 |= ADC12INCH_5; // channel = A5 Left
+   \   0000DA   B2D005002408 BIS.W   #0x5, &0x824
+    271           ADC12MCTL2 |= ADC12EOS; // End of Sequence
+   \   0000E0   B2D080002408 BIS.W   #0x80, &0x824
+    272           ADC12IER0 |= ADC12IE2; //Generate Interrupt for MEM2 ADC Data load
+   \   0000E6   A2D21208     BIS.W   #0x4, &0x812
+    273          // ADC12IER0 |= ADC12IE0; // Enable ADC conv complete interrupt
+    274           ADC12CTL0 |= ADC12ENC; // Enable conversion
+   \   0000EA   A2D30008     BIS.W   #0x2, &0x800
+    275           ADC12CTL0 |= ADC12SC; // Start sampling
+   \   0000EE   92D30008     BIS.W   #0x1, &0x800
+    276          //------------------------------------------------------------------------------
+    277          }
+   \   0000F2   1001         RETA
+   \   0000F4                REQUIRE _A_ADC12CTL0_L
+   \   0000F4                REQUIRE _A_ADC12CTL1_L
+   \   0000F4                REQUIRE _A_ADC12CTL2_L
+   \   0000F4                REQUIRE _A_ADC12CTL3_L
+   \   0000F4                REQUIRE _A_ADC12MCTL0_L
+   \   0000F4                REQUIRE _A_ADC12MCTL1_L
+   \   0000F4                REQUIRE _A_ADC12MCTL2_L
+   \   0000F4                REQUIRE _A_ADC12IER0_L
+
+   Maximum stack usage in bytes:
+
+   CSTACK Function
+   ------ --------
+      4   Init_ADC
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     244  Init_ADC
+       2  _A_ADC12CTL0_L
+       2  _A_ADC12CTL1_L
+       2  _A_ADC12CTL2_L
+       2  _A_ADC12CTL3_L
+       2  _A_ADC12IER0_L
+       2  _A_ADC12MCTL0_L
+       2  _A_ADC12MCTL1_L
+       2  _A_ADC12MCTL2_L
+
+ 
+ 244 bytes in segment CODE
+  16 bytes in segment DATA16_AN
+ 
+ 244 bytes of CODE memory
+   0 bytes of DATA memory (+ 16 bytes shared)
+
+Errors: none
+Warnings: none
